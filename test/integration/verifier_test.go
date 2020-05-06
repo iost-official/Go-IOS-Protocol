@@ -2,6 +2,7 @@ package integration
 
 import (
 	"fmt"
+	"github.com/iost-official/go-iost/common/config"
 	"github.com/iost-official/go-iost/core/global"
 	"strconv"
 	"testing"
@@ -693,7 +694,7 @@ func TestGasLimit2(t *testing.T) {
 	defer s.Clear()
 
 	conf := &config.Config{
-		P2P: &common.P2PConfig{
+		P2P: &config.P2PConfig{
 			ChainID: 1024,
 		},
 	}

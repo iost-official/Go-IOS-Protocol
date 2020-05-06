@@ -2,11 +2,11 @@ package integration
 
 import (
 	"fmt"
+	"github.com/iost-official/go-iost/common/config"
 	"testing"
 
 	"github.com/iost-official/go-iost/account"
 
-	"github.com/iost-official/go-iost/common"
 	"github.com/iost-official/go-iost/core/version"
 	"github.com/iost-official/go-iost/ilog"
 	. "github.com/iost-official/go-iost/verifier"
@@ -28,7 +28,7 @@ func Test_Caller(t *testing.T) {
 	prepareToken(t, s, acc)
 
 	conf := &config.Config{
-		P2P: &common.P2PConfig{
+		P2P: &config.P2PConfig{
 			ChainID: 1024,
 		},
 	}
@@ -81,7 +81,7 @@ func Test_TxInfo(t *testing.T) {
 	prepareToken(t, s, acc)
 
 	conf := &config.Config{
-		P2P: &common.P2PConfig{
+		P2P: &config.P2PConfig{
 			ChainID: 1024,
 		},
 	}
@@ -123,7 +123,7 @@ func Test_Transfer(t *testing.T) {
 	prepareToken(t, s, acc0)
 
 	conf := &config.Config{
-		P2P: &common.P2PConfig{
+		P2P: &config.P2PConfig{
 			ChainID: 1024,
 		},
 	}
@@ -203,7 +203,7 @@ func Test_SignerAuth(t *testing.T) {
 	s.SetRAM(a1.ID, 1e5)
 
 	conf := &config.Config{
-		P2P: &common.P2PConfig{
+		P2P: &config.P2PConfig{
 			ChainID: 1024,
 		},
 	}
@@ -270,7 +270,7 @@ func Test_SetCode(t *testing.T) {
 	prepareToken(t, s, acc)
 
 	conf := &config.Config{
-		P2P: &common.P2PConfig{
+		P2P: &config.P2PConfig{
 			ChainID: 1024,
 		},
 	}

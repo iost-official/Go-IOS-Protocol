@@ -2,6 +2,7 @@ package txpool
 
 import (
 	"encoding/json"
+	"github.com/iost-official/go-iost/common/config"
 	"testing"
 	"time"
 
@@ -110,10 +111,10 @@ func TestNewTxPImpl(t *testing.T) {
 		base.EXPECT().AllDelaytx().AnyTimes().Return(nil, nil)
 
 		config := &config.Config{
-			DB: &common.DBConfig{
+			DB: &config.DBConfig{
 				LdbPath: "DB/",
 			},
-			Snapshot: &common.SnapshotConfig{
+			Snapshot: &config.SnapshotConfig{
 				Enable: false,
 			},
 		}
@@ -279,10 +280,10 @@ func TestNewTxPImplB(t *testing.T) {
 		base.EXPECT().AllDelaytx().AnyTimes().Return(nil, nil)
 
 		config := &config.Config{
-			DB: &common.DBConfig{
+			DB: &config.DBConfig{
 				LdbPath: "DB/",
 			},
-			Snapshot: &common.SnapshotConfig{
+			Snapshot: &config.SnapshotConfig{
 				Enable: false,
 			},
 		}

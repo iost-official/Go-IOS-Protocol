@@ -249,7 +249,9 @@ func init() {
 	proto.RegisterType((*SyncHeight)(nil), "msgpb.SyncHeight")
 }
 
-func init() { proto.RegisterFile("consensus/synchro/pb/message.proto", fileDescriptor_b8c018fb18032427) }
+func init() {
+	proto.RegisterFile("consensus/synchro/pb/message.proto", fileDescriptor_b8c018fb18032427)
+}
 
 var fileDescriptor_b8c018fb18032427 = []byte{
 	// 304 bytes of a gzipped FileDescriptorProto

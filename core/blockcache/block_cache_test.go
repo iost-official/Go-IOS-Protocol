@@ -2,6 +2,7 @@ package blockcache
 
 import (
 	"encoding/json"
+	"github.com/iost-official/go-iost/common/config"
 	"os"
 	"testing"
 
@@ -97,10 +98,10 @@ func TestBlockCache(t *testing.T) {
 	base.EXPECT().TxTotal().AnyTimes().Return(int64(10))
 	base.EXPECT().Size().AnyTimes().Return(int64(10000), nil)
 	config := &config.Config{
-		DB: &common.DBConfig{
+		DB: &config.DBConfig{
 			LdbPath: "./",
 		},
-		Snapshot: &common.SnapshotConfig{
+		Snapshot: &config.SnapshotConfig{
 			Enable: false,
 		},
 	}
@@ -244,10 +245,10 @@ func TestVote(t *testing.T) {
 	base.EXPECT().Top().AnyTimes().Return(b0, nil)
 	base.EXPECT().Push(Any()).AnyTimes().Return(nil)
 	config := &config.Config{
-		DB: &common.DBConfig{
+		DB: &config.DBConfig{
 			LdbPath: "./",
 		},
-		Snapshot: &common.SnapshotConfig{
+		Snapshot: &config.SnapshotConfig{
 			Enable: false,
 		},
 	}

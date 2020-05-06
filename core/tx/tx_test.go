@@ -3,6 +3,7 @@ package tx
 import (
 	"bytes"
 	"fmt"
+	"github.com/iost-official/go-iost/core/global"
 	"testing"
 	"time"
 

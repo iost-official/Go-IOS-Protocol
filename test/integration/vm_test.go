@@ -3,6 +3,7 @@ package integration
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/iost-official/go-iost/common/config"
 	"github.com/iost-official/go-iost/core/global"
 	"strings"
 	"testing"
@@ -403,7 +404,7 @@ func Test_SpecialChar(t *testing.T) {
 					"json"
 				],
       			"amountLimit": [{
-      			  "token": global.Token,
+      			  "token": "iost",
       			  "val": "unlimited"
       			}]
 			}
@@ -691,7 +692,7 @@ func Test_MapDel2(t *testing.T) {
 	assert.Nil(t, err)
 
 	conf := &config.Config{
-		P2P: &common.P2PConfig{
+		P2P: &config.P2PConfig{
 			ChainID: 1024,
 		},
 	}

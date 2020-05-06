@@ -2,6 +2,7 @@ package kv
 
 import (
 	"crypto/rand"
+	"github.com/iost-official/go-iost/core/global"
 	"os/exec"
 	"reflect"
 	"testing"

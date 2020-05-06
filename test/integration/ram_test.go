@@ -1,6 +1,7 @@
 package integration
 
 import (
+	"github.com/iost-official/go-iost/core/global"
 	"testing"
 
 	"github.com/iost-official/go-iost/vm/database"

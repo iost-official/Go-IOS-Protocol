@@ -125,17 +125,17 @@ type VersionConfig struct {
 
 // Config provide all configuration for the application
 type Config struct {
-	ACC      *ACCConfig
-	Genesis  string
-	VM       *VMConfig
-	DB       *DBConfig
-	Snapshot *SnapshotConfig
-	P2P      *P2PConfig
-	RPC      *RPCConfig
-	Log      *LogConfig
-	Metrics  *MetricsConfig
-	Debug    *DebugConfig
-	Version  *VersionConfig
+	ACC         *ACCConfig
+	Genesis     string
+	VM          *VMConfig
+	DB          *DBConfig
+	Snapshot    *SnapshotConfig
+	P2P         *P2PConfig
+	RPC         *RPCConfig
+	Log         *LogConfig
+	Metrics     *MetricsConfig
+	Debug       *DebugConfig
+	Version     *VersionConfig
 	NativeToken string
 }
 

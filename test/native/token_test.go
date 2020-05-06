@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/iost-official/go-iost/core/contract"
+	"github.com/iost-official/go-iost/core/global"
 	"github.com/iost-official/go-iost/core/tx"
 	"github.com/iost-official/go-iost/core/version"
 	"github.com/iost-official/go-iost/vm/database"

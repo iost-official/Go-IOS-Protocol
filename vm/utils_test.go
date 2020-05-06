@@ -1,6 +1,7 @@
 package vm
 
 import (
+	"github.com/iost-official/go-iost/core/global"
 	"os"
 	"testing"
 

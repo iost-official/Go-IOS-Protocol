@@ -261,7 +261,7 @@ var ( // nolint: deadcode
 			cost.AddAssign(cost0)
 			freezeTime := h.Context().Value("time").(int64) + UnpledgeFreezeSeconds*1e9
 			_, cost0, err = h.CallWithAuth("token.iost", "transferFreeze",
-				fmt.Sprintf(`[global.Token, "%v", "%v", "%v", %v, ""]`, contractName, pledger, unpledgeAmount.ToString(), freezeTime))
+				fmt.Sprintf(`["%v", "%v", "%v", "%v", %v, ""]`, global.Token, contractName, pledger, unpledgeAmount.ToString(), freezeTime))
 			cost.AddAssign(cost0)
 
 			if err != nil {

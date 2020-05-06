@@ -3,6 +3,7 @@ package integration
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/iost-official/go-iost/core/global"
 	"io/ioutil"
 	"os"
 	"path/filepath"

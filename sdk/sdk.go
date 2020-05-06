@@ -5,6 +5,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"github.com/iost-official/go-iost/core/global"
 	"io/ioutil"
 	"time"
 
@@ -535,7 +536,7 @@ func (s *IOSTDevSDK) CreateNewAccountActions(newID string, ownerKey string, acti
 		acts = append(acts, NewAction("gas.iost", "pledge", fmt.Sprintf(`["%v", "%v", "%v"]`, s.accountName, newID, initialGasPledge)))
 	}
 	if initialCoins > 0 {
-		acts = append(acts, NewAction("token.iost", "transfer", fmt.Sprintf(`[global.Token, "%v", "%v", "%v", ""]`, s.accountName, newID, initialCoins)))
+		acts = append(acts, NewAction("token.iost", "transfer", fmt.Sprintf(`["%v", "%v", "%v", "%v", ""]`, global.Token, s.accountName, newID, initialCoins)))
 	}
 	return acts, nil
 }

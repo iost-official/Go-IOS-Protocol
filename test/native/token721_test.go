@@ -1,6 +1,7 @@
 package native
 
 import (
+	"github.com/iost-official/go-iost/core/global"
 	"strconv"
 	"testing"
 	"time"

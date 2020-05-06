@@ -2,13 +2,14 @@ package integration
 
 import (
 	"encoding/json"
+	"github.com/iost-official/go-iost/common/config"
+	"github.com/iost-official/go-iost/core/global"
 	"testing"
 
 	"github.com/iost-official/go-iost/core/tx"
 
 	"github.com/iost-official/go-iost/ilog"
 
-	"github.com/iost-official/go-iost/common"
 	. "github.com/iost-official/go-iost/verifier"
 	. "github.com/smartystreets/goconvey/convey"
 )
@@ -22,7 +23,7 @@ func prepareIssue(s *Simulator, acc *TestAccount) (*tx.TxReceipt, error) {
 		return r, err
 	}
 
-	witness := common.Witness{
+	witness := config.Witness{
 		ID:      acc0.ID,
 		Owner:   acc0.KeyPair.ReadablePubkey(),
 		Active:  acc0.KeyPair.ReadablePubkey(),
@@ -30,7 +31,7 @@ func prepareIssue(s *Simulator, acc *TestAccount) (*tx.TxReceipt, error) {
 	}
 	params := []interface{}{
 		acc0.ID,
-		common.TokenInfo{
+		config.TokenInfo{
 			FoundationAccount: acc1.ID,
 			IOSTTotalSupply:   90000000000,
 			IOSTDecimal:       8,
