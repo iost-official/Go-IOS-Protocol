@@ -2,6 +2,7 @@ package v8vm
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"strings"
 	"testing"
@@ -899,6 +900,11 @@ func TestV8Safe(t *testing.T) {
 	_, _, err = vmPool.LoadAndCall(host, code, "CVE_2018_6056")
 	if err == nil {
 		t.Fatalf("LoadAndCall V8Safe CVE_2018_6056 should return error")
+	}
+	_, _, err = vmPool.LoadAndCall(host, code, "Test_Intl")
+	fmt.Println(err)
+	if err == nil {
+		t.Fatalf("LoadAndCall V8Safe Test_Intl should return error")
 	}
 }
 

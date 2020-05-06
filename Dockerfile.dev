@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
 
-ENV GOVERSION 1.13
+ENV GOVERSION 1.14
 
 # Install Base Tools
 RUN apt update && \
@@ -8,7 +8,7 @@ RUN apt update && \
         rm -rf /var/lib/apt/lists
 
 # Install nodejs
-RUN curl -sL https://deb.nodesource.com/setup_11.x | bash - && \
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash - && \
         apt install -y nodejs && \
         rm -rf /var/lib/apt/lists
 
@@ -25,7 +25,7 @@ ENV PATH $GOROOT/bin:$GOPATH/bin:$PATH
 ENV GO111MODULE on
 
 # Install golangci-lint
-RUN curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh| sh -s -- -b $(go env GOPATH)/bin v1.21.0
+RUN curl -sfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh| sh -s -- -b $(go env GOPATH)/bin v1.26.0
 
 WORKDIR $GOPATH/src/github.com/iost-official/go-iost
 

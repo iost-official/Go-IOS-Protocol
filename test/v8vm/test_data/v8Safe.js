@@ -93,6 +93,10 @@ class v8Safe {
 
         gc();
     }
+
+    Test_Intl() {
+        return new Intl.DateTimeFormat('en-US');
+    }
 }
 
 module.exports = v8Safe;

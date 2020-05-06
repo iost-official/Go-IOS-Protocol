@@ -217,6 +217,9 @@ var (
 			if err != nil {
 				return nil, cost, err
 			}
+			if tokenSym == "iost" {
+				return nil, cost, fmt.Errorf("token symbol invalid")
+			}
 
 			// config
 			config := make(map[string]interface{})

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/iost-official/go-iost/core/global"
 	"math"
 	"strings"
 	"time"
@@ -76,18 +77,26 @@ func checkLimit(amountLimit map[string]*common.Fixed, token string, amount *comm
 func getAmountLimitMap(h *host.Host, amountList []*contract.Amount) (map[string]*common.Fixed, error) {
 	amountLimit := make(map[string]*common.Fixed)
 	for _, limit := range amountList {
+		token := limit.Token
+		// iost blockchain can be deployed for enterprise
+		// then the native token may not be named as "iost"
+		// but for legacy reasons, if "iost" is in the abi of a contract
+		// we just treat it as the native token
+		if global.Token != "iost" && token == "iost" {
+			token = global.Token
+		}
 		if limit.Val == "unlimited" {
-			amountLimit[limit.Token] = &common.Fixed{Value: math.MaxInt64, Decimal: h.DB().Decimal(limit.Token)}
+			amountLimit[token] = &common.Fixed{Value: math.MaxInt64, Decimal: h.DB().Decimal(token)}
 		} else {
-			decimal := h.DB().Decimal(limit.Token)
-			if limit.Token == "*" {
+			decimal := h.DB().Decimal(token)
+			if token == "*" {
 				decimal = 0
 			}
 			v0, err := common.NewFixed(limit.Val, decimal)
 			if err != nil {
 				return nil, err
 			}
-			amountLimit[limit.Token] = v0
+			amountLimit[token] = v0
 		}
 	}
 	return amountLimit, nil
@@ -123,7 +132,7 @@ func (m *Monitor) Call(h *host.Host, contractName, api string, jarg string) (rtn
 		m.vms[c.Info.Lang] = vm
 	}
 	currentDeadline := h.Deadline()
-	h.SetDeadline(currentDeadline.Add(time.Duration(-100 * time.Microsecond)))
+	h.SetDeadline(currentDeadline.Add(-100 * time.Microsecond))
 
 	oldCacheCost := h.CacheCost()
 	h.ClearCacheCost()
