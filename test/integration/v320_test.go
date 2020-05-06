@@ -27,7 +27,7 @@ func Test_Caller(t *testing.T) {
 	s.SetRAM(acc.ID, 1e5)
 	prepareToken(t, s, acc)
 
-	conf := &common.Config{
+	conf := &config.Config{
 		P2P: &common.P2PConfig{
 			ChainID: 1024,
 		},
@@ -80,7 +80,7 @@ func Test_TxInfo(t *testing.T) {
 	s.SetRAM(acc.ID, 1e5)
 	prepareToken(t, s, acc)
 
-	conf := &common.Config{
+	conf := &config.Config{
 		P2P: &common.P2PConfig{
 			ChainID: 1024,
 		},
@@ -122,7 +122,7 @@ func Test_Transfer(t *testing.T) {
 	createAccountsWithResource(s)
 	prepareToken(t, s, acc0)
 
-	conf := &common.Config{
+	conf := &config.Config{
 		P2P: &common.P2PConfig{
 			ChainID: 1024,
 		},
@@ -202,7 +202,7 @@ func Test_SignerAuth(t *testing.T) {
 	s.SetGas(a1.ID, 1e10)
 	s.SetRAM(a1.ID, 1e5)
 
-	conf := &common.Config{
+	conf := &config.Config{
 		P2P: &common.P2PConfig{
 			ChainID: 1024,
 		},
@@ -269,7 +269,7 @@ func Test_SetCode(t *testing.T) {
 	s.SetRAM(acc.ID, 1e5)
 	prepareToken(t, s, acc)
 
-	conf := &common.Config{
+	conf := &config.Config{
 		P2P: &common.P2PConfig{
 			ChainID: 1024,
 		},

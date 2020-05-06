@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"context"
 	"fmt"
+	"github.com/iost-official/go-iost/common/config"
 	"math/rand"
 	"os"
 	"path/filepath"
@@ -12,7 +13,6 @@ import (
 	"time"
 
 	"github.com/golang/protobuf/proto"
-	"github.com/iost-official/go-iost/common"
 	"github.com/iost-official/go-iost/ilog"
 	p2pb "github.com/iost-official/go-iost/p2p/pb"
 
@@ -75,7 +75,7 @@ type PeerManager struct {
 	started atomic.Int32
 
 	host           host.Host
-	config         *common.P2PConfig
+	config         *config.P2PConfig
 	routingTable   *kbucket.RoutingTable
 	peerStore      peerstore.Peerstore
 	lastUpdateTime atomic.Int64
@@ -94,7 +94,7 @@ type PeerManager struct {
 }
 
 // NewPeerManager returns a new instance of PeerManager struct.
-func NewPeerManager(host host.Host, config *common.P2PConfig) *PeerManager {
+func NewPeerManager(host host.Host, config *config.P2PConfig) *PeerManager {
 	routingTable := kbucket.NewRoutingTable(bucketSize, kbucket.ConvertPeerID(host.ID()), time.Second, host.Peerstore())
 	pm := &PeerManager{
 		neighbors:     make(map[peer.ID]*Peer),

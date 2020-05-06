@@ -62,7 +62,7 @@ func Test_ExchangeIOST(t *testing.T) {
 			createToken(t, s, acc0)
 
 			// set bonus pool
-			s.Call("token.iost", "issue", fmt.Sprintf(`["%v", "%v", "%v"]`, "iost", "bonus.iost", "1000"), acc0.ID, acc0.KeyPair)
+			s.Call("token.iost", "issue", fmt.Sprintf(`["%v", "%v", "%v"]`, global.Token, "bonus.iost", "1000"), acc0.ID, acc0.KeyPair)
 
 			// gain contribute
 			s.Head.Witness = acc1.KeyPair.ReadablePubkey()
@@ -89,8 +89,8 @@ func Test_ExchangeIOST(t *testing.T) {
 			So(err, ShouldBeNil)
 			So(r.Status.Message, ShouldEqual, "")
 			So(s.Visitor.TokenBalance("contribute", acc1.ID), ShouldEqual, int64(138513441))
-			So(s.Visitor.TokenBalance("iost", acc1.ID), ShouldEqual, int64(190000000))
-			So(s.Visitor.TokenBalance("iost", "bonus.iost"), ShouldEqual, int64(99810000000))
+			So(s.Visitor.TokenBalance(global.Token, acc1.ID), ShouldEqual, int64(190000000))
+			So(s.Visitor.TokenBalance(global.Token, "bonus.iost"), ShouldEqual, int64(99810000000))
 		})
 	})
 }
@@ -131,7 +131,7 @@ func Test_UpdateBonus(t *testing.T) {
 				So(r.Status.Message, ShouldEqual, "")
 			}
 
-			So(s.Visitor.TokenBalance("iost", "bonus.iost"), ShouldEqual, int64(397466566222260))
+			So(s.Visitor.TokenBalance(global.Token, "bonus.iost"), ShouldEqual, int64(397466566222260))
 			So(s.Visitor.TokenBalance("contribute", acc1.ID), ShouldEqual, int64(2299780636))
 			So(database.MustUnmarshal(s.Visitor.Get("bonus.iost-blockContrib")), ShouldEqual, `"3.28699990"`)
 
@@ -146,7 +146,7 @@ func Test_UpdateBonus(t *testing.T) {
 				So(r.Status.Message, ShouldEqual, "")
 			}
 
-			So(s.Visitor.TokenBalance("iost", "bonus.iost"), ShouldEqual, int64(795158817680693))
+			So(s.Visitor.TokenBalance(global.Token, "bonus.iost"), ShouldEqual, int64(795158817680693))
 			So(s.Visitor.TokenBalance("contribute", acc1.ID), ShouldEqual, int64(4600867205))
 			So(database.MustUnmarshal(s.Visitor.Get("bonus.iost-blockContrib")), ShouldEqual, `"3.28886629"`)
 		})

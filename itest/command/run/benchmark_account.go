@@ -2,6 +2,7 @@ package run
 
 import (
 	"github.com/iost-official/go-iost/account"
+	"github.com/iost-official/go-iost/core/global"
 	"github.com/iost-official/go-iost/crypto"
 	"os"
 	"os/signal"
@@ -58,7 +59,7 @@ func generateAccountTxs(it *itest.ITest, accounts []*itest.Account, tps int) ([]
 		case tIndex < 5:
 			// signUp
 			from := accounts[rand.Intn(len(accounts))]
-			act11 := tx.NewAction("token.iost", "transfer", fmt.Sprintf(`["iost","%v","%v","%v",""]`, "admin", from.ID, 10))
+			act11 := tx.NewAction("token.iost", "transfer", fmt.Sprintf(`["%v","%v","%v","%v",""]`, global.Token, "admin", from.ID, 10))
 			act12 := tx.NewAction("gas.iost", "pledge", fmt.Sprintf(`["%v","%v","%v"]`, "admin", from.ID, 10))
 			trx1, err := it.GetDefaultAccount().Sign(itest.NewTransaction([]*tx.Action{act11, act12}))
 			if err != nil {

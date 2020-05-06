@@ -3,6 +3,7 @@ package run
 import (
 	"context"
 	"fmt"
+	"github.com/iost-official/go-iost/core/global"
 	"github.com/iost-official/go-iost/rpc/pb"
 	"math/rand"
 	"time"
@@ -88,7 +89,7 @@ func loopGetStorage(it *itest.ITest, interval float64) {
 		} else if r == 2 {
 			_, _, _, err = c.GetContractStorage("token.iost", "TIiost", "totalSupply")
 		} else if r == 3 {
-			_, _, _, err = c.GetContractStorage("token.iost", "TBadmin", "iost")
+			_, _, _, err = c.GetContractStorage("token.iost", "TBadmin", global.Token)
 		} else if r == 4 {
 			_, _, _, err = c.GetContractStorage("vote_producer.iost", "producerTable", "admin")
 		}

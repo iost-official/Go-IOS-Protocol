@@ -4,11 +4,11 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/iost-official/go-iost/common/config"
 	"net"
 	"os"
 	"path/filepath"
 
-	"github.com/iost-official/go-iost/common"
 	"github.com/iost-official/go-iost/ilog"
 
 	libp2p "github.com/libp2p/go-libp2p"
@@ -58,13 +58,13 @@ type NetService struct {
 
 	host        host.Host
 	adminServer *adminServer
-	config      *common.P2PConfig
+	config      *config.P2PConfig
 }
 
 var _ Service = &NetService{}
 
 // NewNetService returns a NetService instance with the config argument.
-func NewNetService(config *common.P2PConfig) (*NetService, error) {
+func NewNetService(config *config.P2PConfig) (*NetService, error) {
 	ns := &NetService{
 		config: config,
 	}

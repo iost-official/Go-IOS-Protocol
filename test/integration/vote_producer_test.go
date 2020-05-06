@@ -3,6 +3,7 @@ package integration
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/iost-official/go-iost/core/global"
 	"testing"
 
 	"github.com/iost-official/go-iost/crypto"
@@ -56,7 +57,7 @@ func prepareNewProducerVote(t *testing.T, s *Simulator, acc1 *TestAccount) {
 	assert.Nil(t, err)
 	assert.Empty(t, r.Status.Message)
 
-	r, err = s.Call("token.iost", "issue", fmt.Sprintf(`["%v", "%v", "%v"]`, "iost", "vote_producer.iost", "1000"), acc1.ID, acc1.KeyPair)
+	r, err = s.Call("token.iost", "issue", fmt.Sprintf(`["%v", "%v", "%v"]`, global.Token, "vote_producer.iost", "1000"), acc1.ID, acc1.KeyPair)
 	assert.Nil(t, err)
 	assert.Empty(t, r.Status.Message)
 
@@ -443,7 +444,7 @@ func Test_Unregister2(t *testing.T) {
 			So(r.Status.Message, ShouldEqual, "")
 		}
 		// So(database.MustUnmarshal(s.Visitor.MGet("vote.iost-voteInfo", fmt.Sprintf(`%d`, 1))), ShouldEqual, "")
-		s.Visitor.SetTokenBalance("iost", acc1.ID, 2e18)
+		s.Visitor.SetTokenBalance(global.Token, acc1.ID, 2e18)
 		for idx, acc := range testAccounts {
 			r, err := s.Call("vote_producer.iost", "vote", fmt.Sprintf(`["%v", "%v", "%v"]`, acc1.ID, acc.ID, (idx+2)*1e7), acc1.ID, acc1.KeyPair)
 			So(err, ShouldBeNil)
@@ -925,7 +926,7 @@ func Test_UnvoteCommon(t *testing.T) {
 		initProducer(t, s)
 
 		s.Head.Number = 1
-		s.Visitor.SetTokenBalance("iost", acc1.ID, 1e15)
+		s.Visitor.SetTokenBalance(global.Token, acc1.ID, 1e15)
 		for idx, acc := range testAccounts[:6] {
 			r, err := s.Call("vote_producer.iost", "vote", fmt.Sprintf(`["%v", "%v", "%v"]`, acc1.ID, acc.ID, idx+2), acc1.ID, acc1.KeyPair)
 			So(err, ShouldBeNil)

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/bitly/go-simplejson"
 	"github.com/iost-official/go-iost/common"
+	"github.com/iost-official/go-iost/core/global"
 	"math"
 	"regexp"
 	"strconv"
@@ -25,7 +26,7 @@ func checkAmount(amount string, token string) error {
 	if math.Abs(f1.ToFloat()-f2) > 1e-4 {
 		return fmt.Errorf("invalid amount: %v, %v", err, amount)
 	}
-	if token == "iost" && f1.Decimal > 8 {
+	if token == global.Token && f1.Decimal > 8 {
 		return fmt.Errorf("invalid decimal: %v", amount)
 	}
 	return nil
@@ -67,7 +68,7 @@ func checkBadAction(action *Action) error { // nolint:gocyclo
 		if err != nil {
 			return fmt.Errorf("invalid amount: %v, %v", err, data)
 		}
-		err = checkAmount(amount, "iost")
+		err = checkAmount(amount, global.Token)
 		if err != nil {
 			return fmt.Errorf("invalid amount: %v, %v", err, data)
 		}

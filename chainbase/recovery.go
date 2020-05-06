@@ -2,13 +2,14 @@ package chainbase
 
 import (
 	"fmt"
+	"github.com/iost-official/go-iost/common/config"
 
 	"github.com/iost-official/go-iost/common"
 	"github.com/iost-official/go-iost/consensus/genesis"
 	"github.com/iost-official/go-iost/ilog"
 )
 
-func (c *ChainBase) checkGenesis(conf *common.Config) error {
+func (c *ChainBase) checkGenesis(conf *config.Config) error {
 	if c.bChain.Length() == int64(0) { //blockchaindb is empty
 		// TODO: remove the module of starting iserver from yaml.
 		ilog.Infof("Genesis is not exist.")
@@ -38,7 +39,7 @@ func (c *ChainBase) checkGenesis(conf *common.Config) error {
 	return nil
 }
 
-func (c *ChainBase) recoverDB(conf *common.Config) error {
+func (c *ChainBase) recoverDB(conf *config.Config) error {
 	blockChain := c.BlockChain()
 
 	length := int64(0)

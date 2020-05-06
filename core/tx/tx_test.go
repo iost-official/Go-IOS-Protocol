@@ -209,7 +209,7 @@ func TestTx_Platform(t *testing.T) {
 	}
 	txx.AmountLimit = []*contract.Amount{
 		{
-			Token: "iost",
+			Token: global.Token,
 			Val:   "123",
 		},
 	}

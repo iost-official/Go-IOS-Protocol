@@ -78,7 +78,7 @@ func TestNewTxPImpl(t *testing.T) {
 			witnessInfo = append(witnessInfo, newAccount.ReadablePubkey())
 			witnessInfo = append(witnessInfo, "100000")
 		}
-		//conf := &common.Config{
+		//conf := &config.Config{
 		//	DB:      &common.DBConfig{},
 		//	Genesis: &common.GenesisConfig{CreateGenesis: true, WitnessInfo: witnessInfo},
 		//}
@@ -109,7 +109,7 @@ func TestNewTxPImpl(t *testing.T) {
 		base.EXPECT().Close().AnyTimes()
 		base.EXPECT().AllDelaytx().AnyTimes().Return(nil, nil)
 
-		config := &common.Config{
+		config := &config.Config{
 			DB: &common.DBConfig{
 				LdbPath: "DB/",
 			},
@@ -247,7 +247,7 @@ func TestNewTxPImplB(t *testing.T) {
 			witnessInfo = append(witnessInfo, newAccount.ReadablePubkey())
 			witnessInfo = append(witnessInfo, "100000")
 		}
-		//conf := &common.Config{
+		//conf := &config.Config{
 		//	DB:      &common.DBConfig{},
 		//	Genesis: &common.GenesisConfig{CreateGenesis: true, WitnessInfo: witnessInfo},
 		//}
@@ -278,7 +278,7 @@ func TestNewTxPImplB(t *testing.T) {
 		base.EXPECT().Close().AnyTimes()
 		base.EXPECT().AllDelaytx().AnyTimes().Return(nil, nil)
 
-		config := &common.Config{
+		config := &config.Config{
 			DB: &common.DBConfig{
 				LdbPath: "DB/",
 			},
@@ -587,7 +587,7 @@ func envInit(b *testing.B) (blockcache.BlockCache, []*account.KeyPair, []string,
 		witnessList = append(witnessList, newAccount.ReadablePubkey())
 	}
 
-	conf := &common.Config{}
+	conf := &config.Config{}
 
 	bChain, _ := block.NewBlockChain(conf.DB.LdbPath + dbPath3)
 	stateDB, _ := db.NewMVCCDB(conf.DB.LdbPath + dbPath2)

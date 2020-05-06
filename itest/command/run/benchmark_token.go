@@ -1,6 +1,7 @@
 package run
 
 import (
+	"github.com/iost-official/go-iost/core/global"
 	"os"
 	"os/signal"
 	"syscall"
@@ -111,17 +112,17 @@ var BenchmarkTokenAction = func(c *cli.Context) error {
 	slotTotal := 0
 	slotStartTime := startTime
 
-	tokenList := []string{"iost"}
+	tokenList := []string{global.Token}
 	tokenMap := make(map[string]*tokenInfo)
-	tokenMap["iost"] = &tokenInfo{
-		sym:     "iost",
+	tokenMap[global.Token] = &tokenInfo{
+		sym:     global.Token,
 		issuer:  "",
 		balance: make(map[string]float64),
 		acclist: make([]string, 0),
 	}
 	for _, acc := range accounts {
-		tokenMap["iost"].balance[acc.ID] = acc.Balance()
-		tokenMap["iost"].acclist = append(tokenMap["iost"].acclist, acc.ID)
+		tokenMap[global.Token].balance[acc.ID] = acc.Balance()
+		tokenMap[global.Token].acclist = append(tokenMap[global.Token].acclist, acc.ID)
 	}
 	tokenPrefix := "t" + strconv.FormatInt(time.Now().UnixNano(), 10)[14:]
 	checkReceiptConcurrent := 64
@@ -304,7 +305,7 @@ var BenchmarkTokenAction = func(c *cli.Context) error {
 				abiName = destroyToken
 				tokenSym := tokenList[rand.Intn(len(tokenList))]
 				if len(tokenMap[tokenSym].balance) == 0 {
-					tokenSym = "iost"
+					tokenSym = global.Token
 				}
 				from := accountMap[tokenMap[tokenSym].acclist[rand.Intn(len(tokenMap[tokenSym].acclist))]]
 				balance := tokenMap[tokenSym].balance[from.ID]
@@ -357,7 +358,7 @@ var BenchmarkTokenAction = func(c *cli.Context) error {
 				abiName = transferFreezeToken
 				tokenSym := tokenList[rand.Intn(len(tokenList))]
 				if len(tokenMap[tokenSym].balance) == 0 {
-					tokenSym = "iost"
+					tokenSym = global.Token
 				}
 				from := accountMap[tokenMap[tokenSym].acclist[rand.Intn(len(tokenMap[tokenSym].acclist))]]
 				to := accounts[rand.Intn(len(accounts))]
@@ -387,7 +388,7 @@ var BenchmarkTokenAction = func(c *cli.Context) error {
 				abiName = transferToken
 				tokenSym := tokenList[rand.Intn(len(tokenList))]
 				if len(tokenMap[tokenSym].balance) == 0 {
-					tokenSym = "iost"
+					tokenSym = global.Token
 				}
 				from := accountMap[tokenMap[tokenSym].acclist[rand.Intn(len(tokenMap[tokenSym].acclist))]]
 				to := accounts[rand.Intn(len(accounts))]

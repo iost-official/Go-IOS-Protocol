@@ -3,12 +3,12 @@ package iserver
 import (
 	"context"
 	"encoding/json"
+	"github.com/iost-official/go-iost/common/config"
 	"net/http"
 	"strconv"
 	"strings"
 	"time"
 
-	"github.com/iost-official/go-iost/common"
 	"github.com/iost-official/go-iost/core/block"
 	"github.com/iost-official/go-iost/core/blockcache"
 	"github.com/iost-official/go-iost/ilog"
@@ -18,14 +18,14 @@ import (
 // DebugServer is a http server for debug
 type DebugServer struct {
 	srv      *http.Server
-	conf     *common.DebugConfig
+	conf     *config.DebugConfig
 	p2p      *p2p.NetService
 	blkCache blockcache.BlockCache
 	blkChain block.Chain
 }
 
 // NewDebugServer returns new debug server
-func NewDebugServer(conf *common.DebugConfig, p2p *p2p.NetService, blkCache blockcache.BlockCache, blkChain block.Chain) *DebugServer {
+func NewDebugServer(conf *config.DebugConfig, p2p *p2p.NetService, blkCache blockcache.BlockCache, blkChain block.Chain) *DebugServer {
 	return &DebugServer{
 		srv:      &http.Server{Addr: conf.ListenAddr},
 		conf:     conf,

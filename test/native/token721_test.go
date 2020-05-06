@@ -79,12 +79,12 @@ func TestToken721_Create(t *testing.T) {
 			host.Context().Set("auth_list", authList)
 			signerList[issuer0+"@active"] = true
 			host.Context().Set("signer_list", signerList)
-			_, _, err := e.LoadAndCall(host, code, "issue", "iost", "user0", "{}")
+			_, _, err := e.LoadAndCall(host, code, "issue", global.Token, "user0", "{}")
 			So(err.Error(), ShouldEqual, "token not exists")
-			_, _, err = e.LoadAndCall(host, code, "transfer", "iost", "issuer0", "user0", "0")
+			_, _, err = e.LoadAndCall(host, code, "transfer", global.Token, "issuer0", "user0", "0")
 			So(err.Error(), ShouldEqual, "token not exists")
 
-			_, _, err = e.LoadAndCall(host, code, "balanceOf", "iost", "issuer0")
+			_, _, err = e.LoadAndCall(host, code, "balanceOf", global.Token, "issuer0")
 			So(err.Error(), ShouldEqual, "token not exists")
 		})
 
@@ -93,7 +93,7 @@ func TestToken721_Create(t *testing.T) {
 			host.Context().Set("auth_list", authList)
 			signerList[issuer0+"@active"] = true
 			host.Context().Set("signer_list", signerList)
-			_, _, err := e.LoadAndCall(host, code, "create", "iost", "issuer0", int64(100))
+			_, _, err := e.LoadAndCall(host, code, "create", global.Token, "issuer0", int64(100))
 			So(err, ShouldBeNil)
 		})
 
@@ -102,10 +102,10 @@ func TestToken721_Create(t *testing.T) {
 			host.Context().Set("auth_list", authList)
 			signerList[issuer0+"@active"] = true
 			host.Context().Set("signer_list", signerList)
-			_, _, err := e.LoadAndCall(host, code, "create", "iost", "issuer0", int64(100))
+			_, _, err := e.LoadAndCall(host, code, "create", global.Token, "issuer0", int64(100))
 			So(err, ShouldBeNil)
 
-			_, _, err = e.LoadAndCall(host, code, "create", "iost", "issuer0", int64(100))
+			_, _, err = e.LoadAndCall(host, code, "create", global.Token, "issuer0", int64(100))
 			So(err.Error(), ShouldEqual, "token exists")
 		})
 
@@ -135,26 +135,26 @@ func TestToken721_Issue(t *testing.T) {
 			host.Context().Set("auth_list", authList)
 			signerList[issuer0+"@active"] = true
 			host.Context().Set("signer_list", signerList)
-			_, _, err := e.LoadAndCall(host, code, "create", "iost", "issuer0", int64(100))
+			_, _, err := e.LoadAndCall(host, code, "create", global.Token, "issuer0", int64(100))
 			So(err, ShouldBeNil)
-			_, cost, err := e.LoadAndCall(host, code, "issue", "iost", "issuer0", "{}")
+			_, cost, err := e.LoadAndCall(host, code, "issue", global.Token, "issuer0", "{}")
 			So(err, ShouldBeNil)
 			So(cost.ToGas(), ShouldBeGreaterThan, 0)
 
-			rs, _, err := e.LoadAndCall(host, code, "balanceOf", "iost", "issuer0")
+			rs, _, err := e.LoadAndCall(host, code, "balanceOf", global.Token, "issuer0")
 			So(err, ShouldBeNil)
 			So(true, ShouldEqual, len(rs) > 0 && rs[0] == int64(1))
 		})
 
 		Convey("issue token without auth", func() {
-			_, _, err := e.LoadAndCall(host, code, "create", "iost", "user0", int64(100))
+			_, _, err := e.LoadAndCall(host, code, "create", global.Token, "user0", int64(100))
 			So(err.Error(), ShouldEqual, "transaction has no permission")
 
 			delete(authList, issuer0)
 			host.Context().Set("auth_list", authList)
 			delete(signerList, issuer0+"@active")
 			host.Context().Set("signer_list", signerList)
-			_, _, err = e.LoadAndCall(host, code, "create", "iost", "issuer0", int64(100))
+			_, _, err = e.LoadAndCall(host, code, "create", global.Token, "issuer0", int64(100))
 			So(err.Error(), ShouldEqual, "transaction has no permission")
 		})
 
@@ -163,15 +163,15 @@ func TestToken721_Issue(t *testing.T) {
 			host.Context().Set("auth_list", authList)
 			signerList[issuer0+"@active"] = true
 			host.Context().Set("signer_list", signerList)
-			_, _, err := e.LoadAndCall(host, code, "create", "iost", "issuer0", int64(1))
+			_, _, err := e.LoadAndCall(host, code, "create", global.Token, "issuer0", int64(1))
 			So(err, ShouldBeNil)
-			_, _, err = e.LoadAndCall(host, code, "issue", "iost", "issuer0", "{}")
+			_, _, err = e.LoadAndCall(host, code, "issue", global.Token, "issuer0", "{}")
 			So(err, ShouldBeNil)
 
-			_, _, err = e.LoadAndCall(host, code, "issue", "iost", "issuer0", "{}")
+			_, _, err = e.LoadAndCall(host, code, "issue", global.Token, "issuer0", "{}")
 			So(true, ShouldEqual, err.Error() == "supply too much")
 
-			rs, _, err := e.LoadAndCall(host, code, "balanceOf", "iost", "issuer0")
+			rs, _, err := e.LoadAndCall(host, code, "balanceOf", global.Token, "issuer0")
 			So(err, ShouldBeNil)
 			So(true, ShouldEqual, len(rs) > 0 && rs[0] == int64(1))
 		})
@@ -201,31 +201,31 @@ func TestToken721_Transfer(t *testing.T) {
 			host.Context().Set("auth_list", authList)
 			signerList[issuer0+"@active"] = true
 			host.Context().Set("signer_list", signerList)
-			_, _, err := e.LoadAndCall(host, code, "create", "iost", "issuer0", int64(100))
+			_, _, err := e.LoadAndCall(host, code, "create", global.Token, "issuer0", int64(100))
 			So(err, ShouldBeNil)
 
 			for i := 0; i < 10; i++ {
-				rs, _, err := e.LoadAndCall(host, code, "issue", "iost", "issuer0", `{"hp": 100}`)
+				rs, _, err := e.LoadAndCall(host, code, "issue", global.Token, "issuer0", `{"hp": 100}`)
 				So(err, ShouldBeNil)
 				So(rs[0].(string), ShouldEqual, fmt.Sprintf(`%v`, i))
 			}
-			_, _, err = e.LoadAndCall(host, code, "transfer", "iost", "issuer0", "user0", "3")
+			_, _, err = e.LoadAndCall(host, code, "transfer", global.Token, "issuer0", "user0", "3")
 			So(err, ShouldBeNil)
 
-			So(host.DB().Token721Balance("iost", "user0"), ShouldEqual, 1)
-			So(fmt.Sprintf("%v", host.DB().Token721IDList("iost", "user0")), ShouldEqual, fmt.Sprintf("%v", []string{"3"}))
-			rs, err := host.DB().Token721Owner("iost", "3")
+			So(host.DB().Token721Balance(global.Token, "user0"), ShouldEqual, 1)
+			So(fmt.Sprintf("%v", host.DB().Token721IDList(global.Token, "user0")), ShouldEqual, fmt.Sprintf("%v", []string{"3"}))
+			rs, err := host.DB().Token721Owner(global.Token, "3")
 			So(err, ShouldBeNil)
 			So(rs, ShouldEqual, "user0")
-			rs, err = host.DB().Token721Metadata("iost", "3")
+			rs, err = host.DB().Token721Metadata(global.Token, "3")
 			So(err, ShouldBeNil)
 			So(rs, ShouldEqual, "{\"hp\": 100}")
 
-			tokenID, _, err := e.LoadAndCall(host, code, "tokenOfOwnerByIndex", "iost", "user0", int64(0))
+			tokenID, _, err := e.LoadAndCall(host, code, "tokenOfOwnerByIndex", global.Token, "user0", int64(0))
 			So(err, ShouldBeNil)
 			So(tokenID[0], ShouldEqual, "3")
 
-			tokenID, _, err = e.LoadAndCall(host, code, "tokenOfOwnerByIndex", "iost", "issuer0", int64(1))
+			tokenID, _, err = e.LoadAndCall(host, code, "tokenOfOwnerByIndex", global.Token, "issuer0", int64(1))
 			So(tokenID[0], ShouldEqual, "1")
 			So(err, ShouldBeNil)
 		})
@@ -235,13 +235,13 @@ func TestToken721_Transfer(t *testing.T) {
 			host.Context().Set("auth_list", authList)
 			signerList[issuer0+"@active"] = true
 			host.Context().Set("signer_list", signerList)
-			_, _, err := e.LoadAndCall(host, code, "create", "iost", "issuer0", int64(100))
+			_, _, err := e.LoadAndCall(host, code, "create", global.Token, "issuer0", int64(100))
 			So(err, ShouldBeNil)
 			delete(authList, issuer0)
 			host.Context().Set("auth_list", authList)
 			delete(signerList, issuer0+"@active")
 			host.Context().Set("signer_list", signerList)
-			_, cost, err := e.LoadAndCall(host, code, "transfer", "iost", "issuer0", "user0", "3")
+			_, cost, err := e.LoadAndCall(host, code, "transfer", global.Token, "issuer0", "user0", "3")
 			So(true, ShouldEqual, err.Error() == "transaction has no permission")
 			So(cost.ToGas(), ShouldBeGreaterThan, 0)
 		})
@@ -253,29 +253,29 @@ func TestToken721_Transfer(t *testing.T) {
 			signerList[issuer0+"@active"] = true
 			signerList["user0"+"@active"] = true
 			host.Context().Set("signer_list", signerList)
-			_, _, err := e.LoadAndCall(host, code, "create", "iost", "issuer0", int64(100))
+			_, _, err := e.LoadAndCall(host, code, "create", global.Token, "issuer0", int64(100))
 			So(err, ShouldBeNil)
 
 			for i := 0; i < 10; i++ {
-				e.LoadAndCall(host, code, "issue", "iost", "issuer0", "{}")
+				e.LoadAndCall(host, code, "issue", global.Token, "issuer0", "{}")
 			}
 
-			_, cost, err := e.LoadAndCall(host, code, "transfer", "iost", "user0", "issuer0", "1")
+			_, cost, err := e.LoadAndCall(host, code, "transfer", global.Token, "user0", "issuer0", "1")
 			So(err.Error(), ShouldContainSubstring, "error token owner isn't from")
 
-			_, cost, err = e.LoadAndCall(host, code, "transfer", "iost", "issuer0", "user0", "10")
+			_, cost, err = e.LoadAndCall(host, code, "transfer", global.Token, "issuer0", "user0", "10")
 			So(err.Error(), ShouldContainSubstring, "error tokenID not exists")
 			So(cost.ToGas(), ShouldBeGreaterThan, 0)
 
-			rs, cost, err := e.LoadAndCall(host, code, "balanceOf", "iost", "issuer0")
+			rs, cost, err := e.LoadAndCall(host, code, "balanceOf", global.Token, "issuer0")
 			So(err, ShouldBeNil)
 			So(true, ShouldEqual, len(rs) > 0 && rs[0] == int64(10))
 
-			rs, cost, err = e.LoadAndCall(host, code, "balanceOf", "iost", "user0")
+			rs, cost, err = e.LoadAndCall(host, code, "balanceOf", global.Token, "user0")
 			So(err, ShouldBeNil)
 			So(true, ShouldEqual, len(rs) > 0 && rs[0] == int64(0))
 
-			rs, cost, err = e.LoadAndCall(host, code, "balanceOf", "iost", "user1")
+			rs, cost, err = e.LoadAndCall(host, code, "balanceOf", global.Token, "user1")
 			So(err, ShouldBeNil)
 			So(true, ShouldEqual, len(rs) > 0 && rs[0] == int64(0))
 		})
@@ -303,20 +303,20 @@ func TestToken721_Metadata(t *testing.T) {
 			host.Context().Set("auth_list", authList)
 			signerList[issuer0+"@active"] = true
 			host.Context().Set("signer_list", signerList)
-			_, _, err := e.LoadAndCall(host, code, "create", "iost", "issuer0", int64(100))
+			_, _, err := e.LoadAndCall(host, code, "create", global.Token, "issuer0", int64(100))
 			So(err, ShouldBeNil)
 
 			for i := 0; i < 10; i++ {
-				e.LoadAndCall(host, code, "issue", "iost", "issuer0", "{\"id\":"+strconv.FormatInt(int64(i), 10)+"}")
+				e.LoadAndCall(host, code, "issue", global.Token, "issuer0", "{\"id\":"+strconv.FormatInt(int64(i), 10)+"}")
 			}
 
-			md, _, err := e.LoadAndCall(host, code, "tokenMetadata", "iost", "3")
+			md, _, err := e.LoadAndCall(host, code, "tokenMetadata", global.Token, "3")
 			So(err, ShouldBeNil)
 			So(md[0], ShouldEqual, "{\"id\":3}")
-			_, _, err = e.LoadAndCall(host, code, "transfer", "iost", "issuer0", "user0", "3")
+			_, _, err = e.LoadAndCall(host, code, "transfer", global.Token, "issuer0", "user0", "3")
 			So(err, ShouldBeNil)
 
-			md, _, err = e.LoadAndCall(host, code, "tokenMetadata", "iost", "3")
+			md, _, err = e.LoadAndCall(host, code, "tokenMetadata", global.Token, "3")
 			So(err, ShouldBeNil)
 			So(md[0], ShouldEqual, "{\"id\":3}")
 		})

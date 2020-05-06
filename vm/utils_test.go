@@ -52,7 +52,7 @@ func ininit(t *testing.T) (*database.Visitor, db.MVCCDB) {
 	}
 	//mvccdb := replaceDB(t)
 	vi := database.NewVisitor(0, mvccdb, version.NewRules(0))
-	vi.SetTokenBalance("iost", testKps[0].ReadablePubkey(), 1000000)
+	vi.SetTokenBalance(global.Token, testKps[0].ReadablePubkey(), 1000000)
 	vi.SetContract(systemContract)
 	vi.Commit()
 	return vi, mvccdb

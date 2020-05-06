@@ -1,13 +1,13 @@
 package main
 
 import (
+	"github.com/iost-official/go-iost/common/config"
 	_ "net/http/pprof"
 	"os"
 	"os/signal"
 	"strings"
 	"syscall"
 
-	"github.com/iost-official/go-iost/common"
 	"github.com/iost-official/go-iost/core/global"
 	"github.com/iost-official/go-iost/core/version"
 	"github.com/iost-official/go-iost/ilog"
@@ -21,7 +21,7 @@ var (
 	help       = flag.BoolP("help", "h", false, "Display available options")
 )
 
-func initMetrics(metricsConfig *common.MetricsConfig) error {
+func initMetrics(metricsConfig *config.MetricsConfig) error {
 	if metricsConfig == nil || !metricsConfig.Enable {
 		return nil
 	}
@@ -33,7 +33,7 @@ func initMetrics(metricsConfig *common.MetricsConfig) error {
 	return metrics.Start()
 }
 
-func initLogger(logConfig *common.LogConfig) {
+func initLogger(logConfig *config.LogConfig) {
 	if logConfig == nil {
 		return
 	}
@@ -64,7 +64,7 @@ func main() {
 		*configFile = os.Getenv("GOPATH") + "/src/github.com/iost-official/go-iost/config/iserver.yml"
 	}
 
-	conf := common.NewConfig(*configFile)
+	conf := config.NewConfig(*configFile)
 
 	global.SetGlobalConf(conf)
 	version.InitChainConf(conf)

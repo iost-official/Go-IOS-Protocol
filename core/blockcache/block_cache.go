@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
+	"github.com/iost-official/go-iost/common/config"
 	"sync"
 
 	"github.com/golang/protobuf/proto"
@@ -272,7 +273,7 @@ func (bc *BlockCacheImpl) nmdel(num int64) {
 }
 
 // NewBlockCache return a new BlockCache instance
-func NewBlockCache(conf *common.Config, bChain block.Chain, stateDB db.MVCCDB) (*BlockCacheImpl, error) {
+func NewBlockCache(conf *config.Config, bChain block.Chain, stateDB db.MVCCDB) (*BlockCacheImpl, error) {
 	w, err := wal.Create(conf.DB.LdbPath+BlockCacheWALDir, []byte("block_cache_wal"))
 	if err != nil {
 		return nil, err

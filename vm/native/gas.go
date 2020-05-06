@@ -3,6 +3,7 @@ package native
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/iost-official/go-iost/core/global"
 
 	"github.com/iost-official/go-iost/ilog"
 	"github.com/iost-official/go-iost/vm/database"
@@ -195,7 +196,7 @@ var ( // nolint: deadcode
 			}
 			contractName, cost0 := h.ContractName()
 			cost.AddAssign(cost0)
-			_, cost0, err = h.Call("token.iost", "transfer", fmt.Sprintf(`["iost", "%v", "%v", "%v", ""]`, pledger, contractName, pledgeAmountStr))
+			_, cost0, err = h.Call("token.iost", "transfer", fmt.Sprintf(`["%v", "%v", "%v", "%v", ""]`, global.Token, pledger, contractName, pledgeAmountStr))
 			cost.AddAssign(cost0)
 			if err != nil {
 				return nil, cost, err
@@ -260,7 +261,7 @@ var ( // nolint: deadcode
 			cost.AddAssign(cost0)
 			freezeTime := h.Context().Value("time").(int64) + UnpledgeFreezeSeconds*1e9
 			_, cost0, err = h.CallWithAuth("token.iost", "transferFreeze",
-				fmt.Sprintf(`["iost", "%v", "%v", "%v", %v, ""]`, contractName, pledger, unpledgeAmount.ToString(), freezeTime))
+				fmt.Sprintf(`[global.Token, "%v", "%v", "%v", %v, ""]`, contractName, pledger, unpledgeAmount.ToString(), freezeTime))
 			cost.AddAssign(cost0)
 
 			if err != nil {

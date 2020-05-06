@@ -1,7 +1,7 @@
 package global
 
 import (
-	"github.com/iost-official/go-iost/common"
+	"github.com/iost-official/go-iost/common/config"
 )
 
 // BuildTime build time
@@ -13,14 +13,20 @@ var GitHash string
 // CodeVersion is the version string of code
 var CodeVersion string
 
-var globalConf *common.Config
+var globalConf *config.Config
+
+// Token is the blockchain native token name
+var Token = "iost"
 
 // SetGlobalConf ...
-func SetGlobalConf(conf *common.Config) {
+func SetGlobalConf(conf *config.Config) {
 	globalConf = conf
+	if conf.NativeToken != "" {
+		Token = conf.NativeToken
+	}
 }
 
 // GetGlobalConf ...
-func GetGlobalConf() *common.Config {
+func GetGlobalConf() *config.Config {
 	return globalConf
 }

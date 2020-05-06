@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"github.com/iost-official/go-iost/core/global"
 	"net"
 	"net/http"
 	"os"
@@ -68,7 +69,7 @@ func newMockAPI() rpcpb.ApiServiceServer {
 			Publisher:  "publisher",
 			ReferredTx: "ccc",
 			AmountLimit: []*rpcpb.AmountLimit{
-				{Token: "iost", Value: "12.2"},
+				{Token: global.Token, Value: "12.2"},
 				{Token: "10st", Value: "21.1"},
 			},
 			TxReceipt: &rpcpb.TxReceipt{
@@ -133,7 +134,7 @@ func newMockAPI() rpcpb.ApiServiceServer {
 					Publisher:  "publisher",
 					ReferredTx: "ccc",
 					AmountLimit: []*rpcpb.AmountLimit{
-						{Token: "iost", Value: "12.2"},
+						{Token: global.Token, Value: "12.2"},
 						{Token: "10st", Value: "21.1"},
 					},
 					TxReceipt: &rpcpb.TxReceipt{
@@ -187,7 +188,7 @@ func newMockAPI() rpcpb.ApiServiceServer {
 					Publisher:  "publisher",
 					ReferredTx: "ccc",
 					AmountLimit: []*rpcpb.AmountLimit{
-						{Token: "iost", Value: "12.2"},
+						{Token: global.Token, Value: "12.2"},
 						{Token: "10st", Value: "21.1"},
 					},
 					TxReceipt: &rpcpb.TxReceipt{
@@ -283,7 +284,7 @@ func newMockAPI() rpcpb.ApiServiceServer {
 				Name: "echo",
 				Args: []string{"a1", "a2"},
 				AmountLimit: []*rpcpb.AmountLimit{
-					{Token: "iost", Value: "1212.2"},
+					{Token: global.Token, Value: "1212.2"},
 				},
 			},
 		},

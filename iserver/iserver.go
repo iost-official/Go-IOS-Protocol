@@ -2,7 +2,7 @@ package iserver
 
 import (
 	"github.com/iost-official/go-iost/chainbase"
-	"github.com/iost-official/go-iost/common"
+	"github.com/iost-official/go-iost/common/config"
 	"github.com/iost-official/go-iost/consensus"
 	"github.com/iost-official/go-iost/core/tx"
 	"github.com/iost-official/go-iost/ilog"
@@ -19,7 +19,7 @@ type Service interface {
 
 // IServer is application for IOST.
 type IServer struct {
-	config    *common.Config
+	config    *config.Config
 	cBase     *chainbase.ChainBase
 	p2p       *p2p.NetService
 	rpcServer *rpc.Server
@@ -29,7 +29,7 @@ type IServer struct {
 }
 
 // New returns a iserver application
-func New(conf *common.Config) *IServer {
+func New(conf *config.Config) *IServer {
 
 	tx.ChainID = conf.P2P.ChainID
 

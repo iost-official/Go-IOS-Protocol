@@ -2,6 +2,7 @@ package pob
 
 import (
 	"fmt"
+	"github.com/iost-official/go-iost/common/config"
 	"sync"
 	"time"
 
@@ -51,7 +52,7 @@ type PoB struct {
 }
 
 // New init a new PoB.
-func New(conf *common.Config, cBase *chainbase.ChainBase, p2pService p2p.Service) *PoB {
+func New(conf *config.Config, cBase *chainbase.ChainBase, p2pService p2p.Service) *PoB {
 	// TODO: Move the code to account struct.
 	accSecKey := conf.ACC.SecKey
 	accAlgo := conf.ACC.Algorithm

@@ -4,12 +4,11 @@ import (
 	"bufio"
 	"flag"
 	"fmt"
+	"github.com/iost-official/go-iost/common/config"
+	"gopkg.in/yaml.v2"
 	"log"
 	"os"
 	"strings"
-
-	"github.com/iost-official/go-iost/common"
-	"gopkg.in/yaml.v2"
 )
 
 var (
@@ -67,9 +66,9 @@ func genconfig() {
 	}
 	file.Close()
 
-	WitnessInfo := make([]*common.Witness, 0)
+	WitnessInfo := make([]*config.Witness, 0)
 	for i := 0; i < *master; i++ {
-		witness := &common.Witness{
+		witness := &config.Witness{
 			ID:             fmt.Sprintf("producer%03d", i),
 			Owner:          ids[i],
 			Active:         ids[i],
@@ -79,27 +78,27 @@ func genconfig() {
 		WitnessInfo = append(WitnessInfo, witness)
 	}
 
-	adminInfo := &common.Witness{
+	adminInfo := &config.Witness{
 		ID:      "admin",
 		Owner:   "Gcv8c2tH8qZrUYnKdEEdTtASsxivic2834MQW6mgxqto",
 		Active:  "Gcv8c2tH8qZrUYnKdEEdTtASsxivic2834MQW6mgxqto",
 		Balance: int64(21000000000),
 	}
 
-	tokenInfo := &common.TokenInfo{
+	tokenInfo := &config.TokenInfo{
 		FoundationAccount: "foundation",
 		IOSTTotalSupply:   90000000000,
 		IOSTDecimal:       8,
 	}
 
-	foundationInfo := &common.Witness{
+	foundationInfo := &config.Witness{
 		ID:      "foundation",
 		Owner:   "Gcv8c2tH8qZrUYnKdEEdTtASsxivic2834MQW6mgxqto",
 		Active:  "Gcv8c2tH8qZrUYnKdEEdTtASsxivic2834MQW6mgxqto",
 		Balance: 0,
 	}
 
-	Genesis := &common.GenesisConfig{
+	Genesis := &config.GenesisConfig{
 		CreateGenesis:    true,
 		TokenInfo:        tokenInfo,
 		WitnessInfo:      WitnessInfo,
@@ -119,18 +118,18 @@ func genconfig() {
 	genesisfile.WriteString(string(bs))
 	genesisfile.Close()
 
-	VM := &common.VMConfig{
+	VM := &config.VMConfig{
 		JsPath:   "vm/v8vm/v8/libjs/",
 		LogLevel: "",
 	}
-	DB := &common.DBConfig{
+	DB := &config.DBConfig{
 		LdbPath: "/data/storage/",
 	}
-	Snapshot := &common.SnapshotConfig{
+	Snapshot := &config.SnapshotConfig{
 		Enable:   false,
 		FilePath: "",
 	}
-	P2P := &common.P2PConfig{
+	P2P := &config.P2PConfig{
 		ListenAddr:   "0.0.0.0:30000",
 		SeedNodes:    seedNodes,
 		ChainID:      1020,
@@ -140,44 +139,44 @@ func genconfig() {
 		OutboundConn: 12,
 		AdminPort:    "30005",
 	}
-	RPC := &common.RPCConfig{
+	RPC := &config.RPCConfig{
 		Enable:       true,
 		GatewayAddr:  "0.0.0.0:30001",
 		GRPCAddr:     "0.0.0.0:30002",
 		TryTx:        false,
 		AllowOrigins: []string{"*"},
 	}
-	Log := &common.LogConfig{
-		FileLog: &common.FileLogConfig{
+	Log := &config.LogConfig{
+		FileLog: &config.FileLogConfig{
 			Path:   "/data/logs/",
 			Level:  "info",
 			Enable: false,
 		},
-		ConsoleLog: &common.ConsoleLogConfig{
+		ConsoleLog: &config.ConsoleLogConfig{
 			Level:  "info",
 			Enable: true,
 		},
 		AsyncWrite:        true,
 		EnableContractLog: false,
 	}
-	Debug := &common.DebugConfig{
+	Debug := &config.DebugConfig{
 		ListenAddr: "0.0.0.0:30003",
 	}
 
 	for i := 0; i < *master+*slave; i++ {
-		ACC := &common.ACCConfig{
+		ACC := &config.ACCConfig{
 			ID:        fmt.Sprintf("producer%03d", i),
 			SecKey:    seckeys[i],
 			Algorithm: "ed25519",
 		}
-		Metrics := &common.MetricsConfig{
+		Metrics := &config.MetricsConfig{
 			PushAddr: pushAddr,
 			Enable:   true,
 			ID:       *cluster + ":node-" + fmt.Sprintf("%d", i),
 			Username: username,
 			Password: password,
 		}
-		c := &common.Config{
+		c := &config.Config{
 			ACC:      ACC,
 			Genesis:  "/var/lib/iserver/",
 			VM:       VM,

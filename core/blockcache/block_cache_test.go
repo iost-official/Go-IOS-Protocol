@@ -96,7 +96,7 @@ func TestBlockCache(t *testing.T) {
 	base.EXPECT().Push(Any()).AnyTimes().Return(nil)
 	base.EXPECT().TxTotal().AnyTimes().Return(int64(10))
 	base.EXPECT().Size().AnyTimes().Return(int64(10000), nil)
-	config := &common.Config{
+	config := &config.Config{
 		DB: &common.DBConfig{
 			LdbPath: "./",
 		},
@@ -243,7 +243,7 @@ func TestVote(t *testing.T) {
 	base := core_mock.NewMockChain(ctl)
 	base.EXPECT().Top().AnyTimes().Return(b0, nil)
 	base.EXPECT().Push(Any()).AnyTimes().Return(nil)
-	config := &common.Config{
+	config := &config.Config{
 		DB: &common.DBConfig{
 			LdbPath: "./",
 		},

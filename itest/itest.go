@@ -2,6 +2,7 @@ package itest
 
 import (
 	"fmt"
+	"github.com/iost-official/go-iost/core/global"
 	"math"
 	"math/rand"
 	"strconv"
@@ -348,7 +349,7 @@ func (t *ITest) TransferN(num int, accounts []*Account, memoSize int, check bool
 				amount := float64(rand.Int63n(int64(math.Min(10000, balance*100)))+1) / 100
 
 				ilog.Debugf("Transfer %v -> %v, amount: %v", A.ID, B.ID, fmt.Sprintf("%0.8f", amount))
-				err := t.Transfer(A, B, "iost", fmt.Sprintf("%0.8f", amount), memoSize, check)
+				err := t.Transfer(A, B, global.Token, fmt.Sprintf("%0.8f", amount), memoSize, check)
 
 				if err == nil {
 					A.AddBalance(-amount)
@@ -438,7 +439,7 @@ func (t *ITest) PledgeGasN(actionType string, num int, accounts []*Account, chec
 func (t *ITest) BuyRAMN(actionType string, num int, accounts []*Account, check bool) (successNum int, firstErr error) {
 	ilog.Infof("Sending %v ram transaction...", num)
 
-	AmountLimit = []*contract.Amount{{Token: "iost", Val: "1000"}, {Token: "ram", Val: "1000"}}
+	AmountLimit = []*contract.Amount{{Token: global.Token, Val: "1000"}, {Token: "ram", Val: "1000"}}
 
 	res := make(chan interface{})
 	go func() {
@@ -657,7 +658,7 @@ func (t *ITest) ExchangeTransfer(sender, recipient *Account, amount string, memo
 	cIndex := rand.Intn(len(t.clients))
 	client := t.clients[cIndex]
 
-	err := client.ExchangeTransfer(sender, recipient, "iost", amount, memoSize, check)
+	err := client.ExchangeTransfer(sender, recipient, global.Token, amount, memoSize, check)
 	if err != nil {
 		return err
 	}

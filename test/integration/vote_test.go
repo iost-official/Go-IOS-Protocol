@@ -3,6 +3,7 @@ package integration
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/iost-official/go-iost/core/global"
 	"testing"
 
 	"github.com/iost-official/go-iost/ilog"
@@ -15,12 +16,12 @@ import (
 )
 
 func prepareToken(t *testing.T, s *Simulator, pubAcc *TestAccount) {
-	r, err := s.Call("token.iost", "create", fmt.Sprintf(`["%v", "%v", %v, {}]`, "iost", acc0.ID, "21000000000"), pubAcc.ID, pubAcc.KeyPair)
+	r, err := s.Call("token.iost", "create", fmt.Sprintf(`["%v", "%v", %v, {}]`, global.Token, acc0.ID, "21000000000"), pubAcc.ID, pubAcc.KeyPair)
 	if err != nil || r.Status.Code != tx.Success {
 		t.Fatal(err, r)
 	}
 	for _, acc := range testAccounts {
-		s.Call("token.iost", "issue", fmt.Sprintf(`["%v", "%v", "%v"]`, "iost", acc.ID, "2000000000"), pubAcc.ID, pubAcc.KeyPair)
+		s.Call("token.iost", "issue", fmt.Sprintf(`["%v", "%v", "%v"]`, global.Token, acc.ID, "2000000000"), pubAcc.ID, pubAcc.KeyPair)
 	}
 	s.Visitor.Commit()
 }
@@ -74,7 +75,7 @@ func Test_NewVote(t *testing.T) {
 		r, err := prepareVote(t, s, acc0)
 		So(err, ShouldBeNil)
 		So(r.Status.Code, ShouldEqual, tx.Success)
-		So(s.Visitor.TokenBalance("iost", acc0.ID), ShouldEqual, int64(2000000000*1e8))
+		So(s.Visitor.TokenBalance(global.Token, acc0.ID), ShouldEqual, int64(2000000000*1e8))
 		So(database.MustUnmarshal(s.Visitor.Get("vote.iost-current_id")), ShouldEqual, `"1"`)
 		So(database.MustUnmarshal(s.Visitor.MGet("vote.iost-voteInfo", "1")), ShouldEqual, `{"deleted":0,"description":"test vote","resultNumber":2,"minVote":10,"anyOption":false,"freezeTime":0,"deposit":"0","optionNum":4,"canVote":true}`)
 		So(database.MustUnmarshal(s.Visitor.MGet("vote.iost-v_1", "option1")), ShouldEqual, `{"votes":"0","deleted":0,"clearTime":-1}`)

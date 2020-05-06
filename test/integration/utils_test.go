@@ -96,22 +96,22 @@ func createAccountsWithResource(s *Simulator) {
 	s.SetContract(native.TokenABI())
 	// used in ram contract
 	s.SetAccount(account.NewInitAccount("deadaddr", "hahaha", "hahaha"))
-	s.Visitor.SetTokenBalance("iost", "deadaddr", 0)
+	s.Visitor.SetTokenBalance(global.Token, "deadaddr", 0)
 	s.Visitor.Commit()
 }
 
 func createToken(t fataler, s *Simulator, acc *TestAccount) error {
 	// create token
-	r, err := s.Call("token.iost", "create", fmt.Sprintf(`["%v", "%v", %v, {}]`, "iost", acc0.ID, 1000000), acc.ID, acc.KeyPair)
+	r, err := s.Call("token.iost", "create", fmt.Sprintf(`["%v", "%v", %v, {}]`, global.Token, acc0.ID, 1000000), acc.ID, acc.KeyPair)
 	if err != nil || r.Status.Code != tx.Success {
 		return fmt.Errorf("err %v, receipt: %v", err, r)
 	}
 	// issue token
-	r, err = s.Call("token.iost", "issue", fmt.Sprintf(`["%v", "%v", "%v"]`, "iost", acc0.ID, "1000"), acc.ID, acc.KeyPair)
+	r, err = s.Call("token.iost", "issue", fmt.Sprintf(`["%v", "%v", "%v"]`, global.Token, acc0.ID, "1000"), acc.ID, acc.KeyPair)
 	if err != nil || r.Status.Code != tx.Success {
 		return fmt.Errorf("err %v, receipt: %v", err, r)
 	}
-	if 1e11 != s.Visitor.TokenBalance("iost", acc0.ID) {
+	if 1e11 != s.Visitor.TokenBalance(global.Token, acc0.ID) {
 		return fmt.Errorf("err %v, receipt: %v", err, r)
 	}
 	s.Visitor.Commit()

@@ -3,11 +3,11 @@ package genesis
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/iost-official/go-iost/common/config"
 	"path/filepath"
 	"time"
 
 	"github.com/iost-official/go-iost/account"
-	"github.com/iost-official/go-iost/common"
 	"github.com/iost-official/go-iost/core/block"
 	"github.com/iost-official/go-iost/core/contract"
 	"github.com/iost-official/go-iost/core/tx"
@@ -23,8 +23,8 @@ var GenesisTxExecTime = 10 * time.Second
 
 // GenGenesisByFile is create a genesis block by config file
 func GenGenesisByFile(db db.MVCCDB, path string) (*block.Block, error) {
-	v := common.LoadYamlAsViper(filepath.Join(path, "genesis.yml"))
-	genesisConfig := &common.GenesisConfig{}
+	v := config.LoadYamlAsViper(filepath.Join(path, "genesis.yml"))
+	genesisConfig := &config.GenesisConfig{}
 	if err := v.Unmarshal(genesisConfig); err != nil {
 		ilog.Fatalf("Unable to decode into struct, %v", err)
 	}
@@ -41,7 +41,7 @@ func compile(id string, path string, name string) (*contract.Contract, error) {
 	return contract.Compile(id, cFilePath, cAbiPath)
 }
 
-func genGenesisTx(gConf *common.GenesisConfig) (*tx.Tx, *account.Account, error) {
+func genGenesisTx(gConf *config.GenesisConfig) (*tx.Tx, *account.Account, error) {
 	witnessInfo := gConf.WitnessInfo
 	// prepare actions
 	var acts []*tx.Action
@@ -179,7 +179,7 @@ func genGenesisTx(gConf *common.GenesisConfig) (*tx.Tx, *account.Account, error)
 }
 
 // GenGenesis is create a genesis block
-func GenGenesis(db db.MVCCDB, gConf *common.GenesisConfig) (*block.Block, error) {
+func GenGenesis(db db.MVCCDB, gConf *config.GenesisConfig) (*block.Block, error) {
 	t, err := time.Parse(time.RFC3339, gConf.InitialTimestamp)
 	if err != nil {
 		ilog.Fatalf("invalid genesis initial time string %v (%v).", gConf.InitialTimestamp, err)

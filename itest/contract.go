@@ -36,7 +36,7 @@ const (
 				],
 				"amountLimit": [
 					{
-						"token": "iost",
+						"token": global.Token,
 						"val": "100"
 					}
 				]

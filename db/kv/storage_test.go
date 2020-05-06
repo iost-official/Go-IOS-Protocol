@@ -108,7 +108,7 @@ func (suite *StorageTestSuite) TestKeys() {
 		},
 		keys,
 	)
-	keys, err = suite.storage.Keys([]byte("iost"))
+	keys, err = suite.storage.Keys([]byte(global.Token))
 	suite.Nil(err)
 	suite.ElementsMatch(
 		[][]byte{

@@ -1,19 +1,10 @@
-package common
+package config
 
 import (
-	"os"
-	"time"
-
 	"github.com/iost-official/go-iost/ilog"
 	"github.com/spf13/viper"
 	"gopkg.in/yaml.v2"
-)
-
-// Constant of limit
-var (
-	MaxBlockGasLimit  = int64(800000000)
-	MaxTxTimeLimit    = 200 * time.Millisecond
-	MaxBlockTimeLimit = 400 * time.Millisecond
+	"os"
 )
 
 // ACCConfig account of the system
@@ -145,6 +136,7 @@ type Config struct {
 	Metrics  *MetricsConfig
 	Debug    *DebugConfig
 	Version  *VersionConfig
+	NativeToken string
 }
 
 // LoadYamlAsViper load yaml file as viper object

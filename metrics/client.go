@@ -2,6 +2,7 @@ package metrics
 
 import (
 	"errors"
+	"github.com/iost-official/go-iost/core/global"
 	"sync/atomic"
 	"time"
 
@@ -40,7 +41,7 @@ func NewClient() *Client {
 
 // SetPusher sets the pusher with the given addr.
 func (c *Client) SetPusher(addr, username, password string) error {
-	c.pusher = push.New(addr, "iost")
+	c.pusher = push.New(addr, global.Token)
 	c.pusher.BasicAuth(username, password)
 	for _, colloctor := range c.collectorCache {
 		c.pusher.Collector(colloctor)

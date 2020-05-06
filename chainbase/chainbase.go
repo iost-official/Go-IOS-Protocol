@@ -2,9 +2,9 @@ package chainbase
 
 import (
 	"fmt"
+	"github.com/iost-official/go-iost/common/config"
 	"sync"
 
-	"github.com/iost-official/go-iost/common"
 	"github.com/iost-official/go-iost/core/block"
 	"github.com/iost-official/go-iost/core/blockcache"
 	"github.com/iost-official/go-iost/core/txpool"
@@ -14,7 +14,7 @@ import (
 
 // ChainBase will maintain blockchain data for memory and hard disk.
 type ChainBase struct {
-	config  *common.Config
+	config  *config.Config
 	bChain  block.Chain
 	bCache  blockcache.BlockCache
 	stateDB db.MVCCDB
@@ -25,7 +25,7 @@ type ChainBase struct {
 }
 
 // New will return a ChainBase.
-func New(conf *common.Config) (*ChainBase, error) {
+func New(conf *config.Config) (*ChainBase, error) {
 	bChain, err := block.NewBlockChain(conf.DB.LdbPath + "BlockChainDB")
 	if err != nil {
 		return nil, fmt.Errorf("new blockchain failed, stop the program. err: %v", err)

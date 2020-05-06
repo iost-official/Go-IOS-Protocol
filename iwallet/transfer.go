@@ -1,6 +1,7 @@
 package iwallet
 
 import (
+	"github.com/iost-official/go-iost/core/global"
 	"github.com/spf13/cobra"
 )
 
@@ -23,7 +24,7 @@ var transferCmd = &cobra.Command{
 		return checkAccount(cmd)
 	},
 	RunE: func(cmd *cobra.Command, args []string) error {
-		return saveOrSendAction("token.iost", "transfer", "iost", accountName, args[0], args[1], memo)
+		return saveOrSendAction("token.iost", "transfer", global.Token, accountName, args[0], args[1], memo)
 	},
 }
 

@@ -1,6 +1,8 @@
 package version
 
-import "github.com/iost-official/go-iost/common"
+import (
+	"github.com/iost-official/go-iost/common/config"
+)
 
 // ChainIDs
 const (
@@ -42,7 +44,7 @@ var (
 var chainConf = defaultChainConf
 
 // InitChainConf ...
-func InitChainConf(conf *common.Config) {
+func InitChainConf(conf *config.Config) {
 	switch conf.P2P.ChainID {
 	case MainNetChainID:
 		chainConf = mainNetChainConf

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/iost-official/go-iost/core/global"
 	"math"
 	"sort"
 
@@ -54,7 +55,7 @@ func setBalance(h *host.Host, tokenSym string, from string, balance int64, ramPa
 	if ok {
 		cost0, _ := h.MapPut(TokenBalanceMapPrefix+from, tokenSym, balance)
 		cost.AddAssign(cost0)
-	} else if (tokenSym == "iost" || tokenSym == "ram") && !strings.HasPrefix(from, "Contract") {
+	} else if (tokenSym == global.Token || tokenSym == "ram") && !strings.HasPrefix(from, "Contract") {
 		cost0, _ := h.MapPut(TokenBalanceMapPrefix+from, tokenSym, balance)
 		cost.AddAssign(cost0)
 	} else {

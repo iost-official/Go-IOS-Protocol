@@ -5,6 +5,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"github.com/iost-official/go-iost/core/global"
 	"math/rand"
 	"strconv"
 	"sync"
@@ -20,7 +21,7 @@ import (
 var (
 	Interval   = 15 * time.Second
 	Timeout    = (90 + 30) * time.Second
-	InitToken  = "iost"
+	InitToken  = global.Token
 	InitAmount = "1000000"
 	InitPledge = "1000000"
 	InitRAM    = "1000000"

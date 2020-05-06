@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/iost-official/go-iost/core/global"
 	"strings"
 
 	"github.com/iost-official/go-iost/common"
@@ -83,7 +84,7 @@ func printRAMUsage(db *leveldb.DB) {
 			}
 			owner = string(ownerRaw)
 			if owner == "" {
-				if !strings.HasSuffix(cid, "iost") {
+				if !strings.HasSuffix(cid, global.Token) {
 					panic("non iost contracts should have owner")
 				}
 				//owner = "OWNER_" + cid
@@ -140,7 +141,7 @@ func main() {
 		panic(err)
 	}
 	printRAMUsage(db)
-	printTokenBalance(db, "iost")
+	printTokenBalance(db, global.Token)
 	printTokenBalance(db, "ram")
 	//printAll(db)
 }

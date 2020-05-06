@@ -2,7 +2,7 @@ package consensus
 
 import (
 	"github.com/iost-official/go-iost/chainbase"
-	"github.com/iost-official/go-iost/common"
+	"github.com/iost-official/go-iost/common/config"
 	"github.com/iost-official/go-iost/consensus/pob"
 	"github.com/iost-official/go-iost/p2p"
 )
@@ -23,7 +23,7 @@ type Consensus interface {
 }
 
 // New returns the different consensus strategy.
-func New(cType Type, conf *common.Config, chainBase *chainbase.ChainBase, service p2p.Service) Consensus {
+func New(cType Type, conf *config.Config, chainBase *chainbase.ChainBase, service p2p.Service) Consensus {
 	switch cType {
 	case Pob:
 		return pob.New(conf, chainBase, service)

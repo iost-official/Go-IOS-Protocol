@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/iost-official/go-iost/common/config"
 	"github.com/syndtr/goleveldb/leveldb/util"
 	"math"
 	"reflect"
@@ -43,13 +44,13 @@ type APIService struct {
 	txpool     txpool.TxPool
 	blockchain block.Chain
 	stateDB    db.MVCCDB
-	config     *common.Config
+	config     *config.Config
 
 	quitCh chan struct{}
 }
 
 // NewAPIService returns a new APIService instance.
-func NewAPIService(tp txpool.TxPool, chainBase *chainbase.ChainBase, config *common.Config, p2pService p2p.Service, quitCh chan struct{}) *APIService {
+func NewAPIService(tp txpool.TxPool, chainBase *chainbase.ChainBase, config *config.Config, p2pService p2p.Service, quitCh chan struct{}) *APIService {
 	return &APIService{
 		p2pService: p2pService,
 		txpool:     tp,
@@ -244,7 +245,7 @@ func (as *APIService) GetAccount(ctx context.Context, req *rpcpb.GetAccountReque
 	ret := toPbAccount(acc)
 
 	// pack balance and ram information
-	balance := dbVisitor.TokenBalanceFixed("iost", req.GetName()).ToFloat()
+	balance := dbVisitor.TokenBalanceFixed(global.Token, req.GetName()).ToFloat()
 	ret.Balance = balance
 	ramInfo := dbVisitor.RAMHandler.GetAccountRAMInfo(req.GetName())
 	ret.RamInfo = &rpcpb.Account_RAMInfo{
@@ -281,7 +282,7 @@ func (as *APIService) GetAccount(ctx context.Context, req *rpcpb.GetAccountReque
 	}
 
 	// pack frozen balance information
-	frozen := dbVisitor.AllFreezedTokenBalanceFixed("iost", req.GetName())
+	frozen := dbVisitor.AllFreezedTokenBalanceFixed(global.Token, req.GetName())
 	unfrozen, stillFrozen := as.getUnfrozenToken(frozen, req.ByLongestChain)
 	ret.FrozenBalances = stillFrozen
 	ret.Balance += unfrozen

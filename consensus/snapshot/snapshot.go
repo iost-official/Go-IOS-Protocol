@@ -5,6 +5,7 @@ import (
 	"bufio"
 	"errors"
 	"fmt"
+	"github.com/iost-official/go-iost/common/config"
 	"io"
 	"os"
 	"path/filepath"
@@ -12,7 +13,6 @@ import (
 
 	"compress/gzip"
 
-	"github.com/iost-official/go-iost/common"
 	"github.com/iost-official/go-iost/db/kv/leveldb"
 )
 
@@ -48,7 +48,7 @@ func Load(db db.MVCCDB) (*block.Block, error) {
 */
 
 // ToSnapshot the function for saving db to snapshot.
-func ToSnapshot(conf *common.Config) error {
+func ToSnapshot(conf *config.Config) error {
 	src := filepath.Join(conf.DB.LdbPath, "StateDB")
 	if _, err := os.Stat(src); err != nil {
 		return fmt.Errorf("Unable to tar files - %v", err.Error())
@@ -94,7 +94,7 @@ func ToSnapshot(conf *common.Config) error {
 }
 
 // FromSnapshot the function for loading db from snapshot.
-func FromSnapshot(conf *common.Config) error {
+func FromSnapshot(conf *config.Config) error {
 	src := filepath.Join(conf.DB.LdbPath, "/StateDB")
 
 	s, err := os.Stat(src)
@@ -148,7 +148,7 @@ func FromSnapshot(conf *common.Config) error {
 }
 
 // ToFile the function for saving db to File.
-func ToFile(conf *common.Config) error {
+func ToFile(conf *config.Config) error {
 	src := filepath.Join(conf.DB.LdbPath, "StateDB")
 
 	if _, err := os.Stat(src); err != nil {

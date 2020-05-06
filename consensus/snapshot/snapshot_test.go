@@ -2,11 +2,11 @@ package snapshot
 
 import (
 	"fmt"
+	"github.com/iost-official/go-iost/common/config"
 	"math/rand"
 	"os"
 	"testing"
 
-	"github.com/iost-official/go-iost/common"
 	"github.com/iost-official/go-iost/db"
 	. "github.com/smartystreets/goconvey/convey"
 )
@@ -37,11 +37,11 @@ func TestSnapshot(t *testing.T) {
 		stateDB.Commit("abc")
 		stateDB.Flush("abc")
 		stateDB.Close()
-		config := &common.Config{
-			DB: &common.DBConfig{
+		config := &config.Config{
+			DB: &config.DBConfig{
 				LdbPath: "DB/",
 			},
-			Snapshot: &common.SnapshotConfig{
+			Snapshot: &config.SnapshotConfig{
 				Enable:   true,
 				FilePath: "DB/Snapshot.tar.gz",
 			},
@@ -70,8 +70,8 @@ func BenchmarkSnapshot(b *testing.B) {
 	stateDB.Commit("abc")
 	stateDB.Flush("abc")
 	stateDB.Close()
-	config := &common.Config{
-		DB: &common.DBConfig{
+	config := &config.Config{
+		DB: &config.DBConfig{
 			LdbPath: "DB/",
 		},
 	}
