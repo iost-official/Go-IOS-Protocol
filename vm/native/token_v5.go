@@ -3,7 +3,9 @@ package native
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"math"
+	"strings"
 
 	"github.com/iost-official/go-iost/core/contract"
 	"github.com/iost-official/go-iost/vm/host"
@@ -23,9 +25,112 @@ func init() {
 	tokenABIsV5.Register(transferTokenABIV3)
 
 	tokenABIsV5.Register(createTokenABIV5)
+	tokenABIsV5.Register(transferTokenNamespace)
+}
+
+// nolint
+func checkTokenNamespace(h *host.Host, namespace string, acc string) error {
+	exist, _ := h.Has(NamespacePrefix + namespace)
+	if exist {
+		res, _ := h.Get(NamespacePrefix + namespace)
+		if res.(string) == acc {
+			return nil
+		} else {
+			return fmt.Errorf("permission denied. namespace belongs to %v", res.(string))
+		}
+	} else {
+		if len(namespace) < 5 {
+			// reserve for admin
+			if acc == "admin" {
+				return nil
+			} else {
+				return fmt.Errorf("short namespace unavailable")
+			}
+		} else {
+			if acc == namespace {
+				return nil
+			} else {
+				return fmt.Errorf("permission denied")
+			}
+		}
+	}
+}
+
+// nolint
+func checkTokenSymValidForUser(h *host.Host, symbol string, acc string) error {
+	if len(symbol) < 2 || len(symbol) > 16 {
+		return fmt.Errorf("token symbol invalid. token symbol length should be between 2,16 got %v", symbol)
+	}
+	dotCount := strings.Count(symbol, ".")
+	if dotCount == 0 {
+		// token sym without namespace
+		for _, ch := range symbol {
+			if !(ch >= 'a' && ch <= 'z' || ch >= '0' && ch <= '9' || ch == '_') {
+				return fmt.Errorf("token symbol invalid. token symbol contains invalid character %v", ch)
+			}
+		}
+		return nil
+	} else if dotCount == 1 {
+		// token sym with namespace
+		splits := strings.Split(symbol, ".")
+		namespace := splits[0]
+		innerSymbol := splits[1]
+		for _, ch := range innerSymbol {
+			if !(ch >= 'a' && ch <= 'z' || ch >= '0' && ch <= '9' || ch == '_') {
+				return fmt.Errorf("token symbol invalid. token symbol contains invalid character %v", ch)
+			}
+		}
+		for _, ch := range namespace {
+			if !(ch >= 'a' && ch <= 'z' || ch >= '0' && ch <= '9' || ch == '_') {
+				return fmt.Errorf("token namespace invalid. token namespace contains invalid character %v", ch)
+			}
+		}
+		return checkTokenNamespace(h, namespace, acc)
+	} else {
+		return fmt.Errorf("token symbol invalid, more than one '.'")
+	}
 }
 
 var (
+	transferTokenNamespace = &abi{
+		name: "transferNamespace",
+		args: []string{"string", "string", "string"},
+		do: func(h *host.Host, args ...interface{}) (rtn []interface{}, cost contract.Cost, err error) {
+			cost = contract.Cost0()
+			cost.AddAssign(host.CommonOpCost(1))
+			tokenNs := args[0].(string)
+			from := args[1].(string)
+			to := args[2].(string)
+			cost.AddAssign(host.CommonOpCost(1))
+			err = checkTokenNamespace(h, tokenNs, from)
+			if err != nil {
+				return nil, cost, err
+			}
+			// ok now we transfer the namespace to the new owner
+			var c contract.Cost
+			c, err = h.Del(NamespacePrefix + tokenNs)
+			cost.AddAssign(c)
+			if err != nil {
+				return nil, cost, err
+			}
+			c, err = h.Put(NamespacePrefix+tokenNs, to, from)
+			cost.AddAssign(c)
+			if err != nil {
+				return nil, cost, err
+			}
+
+			// generate receipt
+			message, err := json.Marshal(args)
+			cost.AddAssign(host.CommonOpCost(1))
+			if err != nil {
+				return nil, cost, err
+			}
+			c = h.Receipt(string(message))
+			cost.AddAssign(c)
+
+			return []interface{}{}, cost, nil
+		},
+	}
 	createTokenABIV5 = &abi{
 		name: "create",
 		args: []string{"string", "string", "number", "json"},
@@ -38,7 +143,7 @@ var (
 			configJSON := args[3].([]byte)
 
 			cost.AddAssign(host.CommonOpCost(1))
-			err = checkTokenSymValid(tokenSym)
+			err = checkTokenSymValidForUser(h, tokenSym, issuer)
 			if err != nil {
 				return nil, cost, err
 			}

@@ -1,6 +1,6 @@
 GO = go
 GO_BUILD = go build -mod vendor
-GO_TEST = go test -mod vendor -race -coverprofile=coverage.txt -covermode=atomic
+GO_TEST := go test -mod vendor -race -coverprofile=coverage.txt -covermode=atomic
 
 VERSION = 3.3.6
 COMMIT = $(shell git rev-parse --short HEAD)
@@ -15,6 +15,7 @@ ifeq ($(shell uname),Darwin)
 	export CGO_LDFLAGS=-L$(shell pwd)/vm/v8vm/v8/libv8/_darwin_amd64
 	export CGO_CFLAGS=-I$(shell pwd)/vm/v8vm/v8/include/_darwin_amd64
 	export DYLD_LIBRARY_PATH=$(shell pwd)/vm/v8vm/v8/libv8/_darwin_amd64
+	GO_TEST := $(GO_TEST) -exec "env DYLD_LIBRARY_PATH=$(DYLD_LIBRARY_PATH)" 
 endif
 
 ifeq ($(shell uname),Linux)

@@ -30,6 +30,8 @@ const (
 	DefaultRateMapField           = "defaultRate"
 	DecimalMapField               = "decimal"
 	FullNameMapField              = "fullName"
+
+	NamespacePrefix = "NS"
 )
 
 func init() {
