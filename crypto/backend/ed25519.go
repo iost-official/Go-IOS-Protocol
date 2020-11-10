@@ -2,11 +2,11 @@ package backend
 
 import (
 	"bytes"
+	"crypto/ed25519"
 	"crypto/rand"
 	"fmt"
 
 	"github.com/iost-official/go-iost/ilog"
-	"golang.org/x/crypto/ed25519"
 )
 
 // Ed25519 is the ed25519 crypto algorithm
