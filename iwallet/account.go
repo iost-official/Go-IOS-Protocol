@@ -80,10 +80,7 @@ var createCmd = &cobra.Command{
 		}
 
 		// Set account since making actions needs accountName.
-		err = LoadAndSetAccountForSDK(iwalletSDK)
-		if err != nil {
-			return err
-		}
+		iwalletSDK.SetAccount(accountName, nil)
 		actions, err := iwalletSDK.CreateNewAccountActions(newName, okey, akey, initialGasPledge, initialRAM, initialBalance)
 		if err != nil {
 			return err
