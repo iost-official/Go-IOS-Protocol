@@ -30,7 +30,7 @@ function getContractFilePathByName(contract) {
   const contractPath = path.join(
     getProjectRoot(),
     "config/genesis/contract",
-    ({ vote: "vote_common" }[contract] || contract) + ".js"
+    ({ vote: "vote_common", auth: "account" }[contract] || contract) + ".js"
   );
   return contractPath;
 }
@@ -113,8 +113,8 @@ async function compareContract(contract) {
 
 async function main() {
   const contract = parseArgs();
-  await compareContract(contract);
-  //await dumpAbi(contract);
+  //await compareContract(contract);
+  await dumpAbi(contract);
 }
 
 main().catch(console.log);
