@@ -145,23 +145,6 @@ func (g *GasManager) setTGasQuota(name string, value *common.Fixed) contract.Cos
 	return g.putFixed(name+database.TransferableGasQuotaKey, value)
 }
 
-// ChangeTGas ...
-func (g *GasManager) ChangeTGas(name string, delta *common.Fixed, changeQuota bool) contract.Cost {
-	oldVal := g.h.ctx.Value("contract_name")
-	g.h.ctx.Set("contract_name", "gas.iost")
-	finalCost := contract.Cost0()
-	f, cost := g.TGas(name)
-	finalCost.AddAssign(cost)
-	cost = g.setTGas(name, f.Add(delta))
-	finalCost.AddAssign(cost)
-	if changeQuota {
-		cost = g.ChangeTGasQuota(name, delta)
-		finalCost.AddAssign(cost)
-	}
-	g.h.ctx.Set("contract_name", oldVal)
-	return cost
-}
-
 // ChangeTGasQuota ...
 func (g *GasManager) ChangeTGasQuota(name string, delta *common.Fixed) contract.Cost {
 	finalCost := contract.Cost0()

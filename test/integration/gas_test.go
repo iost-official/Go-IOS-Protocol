@@ -12,12 +12,10 @@ import (
 
 	. "github.com/smartystreets/goconvey/convey"
 
-	"github.com/iost-official/go-iost/account"
 	"github.com/iost-official/go-iost/common"
 	"github.com/iost-official/go-iost/core/contract"
 	"github.com/iost-official/go-iost/core/tx"
 	"github.com/iost-official/go-iost/core/version"
-	"github.com/iost-official/go-iost/crypto"
 	"github.com/iost-official/go-iost/db"
 	"github.com/iost-official/go-iost/vm/database"
 	"github.com/iost-official/go-iost/vm/host"
@@ -393,84 +391,4 @@ func TestGas_Overflow(t *testing.T) {
 		s.Head.Time += 3 * 24 * 3600 * 1e9
 		So(s.Visitor.PGasAtTime(acc0.ID, s.Head.Time).Value, ShouldBeGreaterThan, 0)
 	})
-}
-
-func TestGas_TGas(t *testing.T) {
-	t.Skip()
-	s := verifier.NewSimulator()
-	defer s.Clear()
-	createAccountsWithResource(s)
-	ca, err := s.Compile("auth.iost", "../../config/genesis/contract/account", "../../config/genesis/contract/account.js")
-	if err != nil {
-		panic(err)
-	}
-	s.SetContract(ca)
-	// deploy issue.iost
-	r, err := setNonNativeContract(s, "issue.iost", "issue.js", ContractPath)
-	So(err, ShouldBeNil)
-	So(r.Status.Message, ShouldEqual, "")
-	s.SetContract(native.GasABI())
-	acc := prepareAuth(t, s)
-	err = createToken(t, s, acc)
-	if err != nil {
-		panic(err)
-	}
-	otherKp, err := account.NewKeyPair(nil, crypto.Secp256k1)
-	otherID := "lispc0"
-	s.Visitor.Put("vote_producer.iost-producerMap", fmt.Sprintf(`s{"%s":"dummy"}`, acc.ID))
-	Convey("test tgas", t, func() {
-		Convey("account referrer should got 3 IOST", func() {
-			oldIOST := s.Visitor.TokenBalanceFixed("iost", acc.ID).Value
-			r, err := s.Call("auth.iost", "signUp", array2json([]interface{}{otherID, otherKp.ReadablePubkey(), otherKp.ReadablePubkey()}), acc.ID, acc.KeyPair)
-			So(err, ShouldBeNil)
-			So(r.Status.Message, ShouldEqual, "")
-			So(s.Visitor.TokenBalanceFixed("iost", acc.ID).Value, ShouldEqual, oldIOST-7*database.IOSTRatio)
-			SkipSo(s.Visitor.TGas(acc.ID).ToString(), ShouldEqual, "30000")
-			r, err = s.Call("gas.iost", "pledge", array2json([]interface{}{acc.ID, otherID, "199"}), acc.ID, acc.KeyPair)
-			So(err, ShouldBeNil)
-			So(r.Status.Message, ShouldBeEmpty)
-		})
-		Convey("referrer get 10% reward", func() {
-			s.Visitor.Commit()
-			r, err := s.Call("token.iost", "transfer", array2json([]interface{}{"iost", otherID, acc.ID, "1", ""}), otherID, otherKp)
-			So(err, ShouldBeNil)
-			So(r.Status.Message, ShouldNotBeEmpty)
-			So(s.Visitor.TGas(acc.ID).ToFloat(), ShouldAlmostEqual, float64(r.GasUsage)/100*0.1)
-		})
-		Convey("tgas can be transferred once and only once", func() {
-			s.SetGas(otherID, 1000000)
-			var testValue int64 = 100
-			var testValueStr = strconv.Itoa(int(testValue))
-			oldTGas := s.Visitor.TGas(acc.ID).ToFloat()
-			r, err := s.Call("gas.iost", "transfer", array2json([]interface{}{acc.ID, otherID, testValueStr}), acc.ID, acc.KeyPair)
-			So(err, ShouldBeNil)
-			So(r.Status.Message, ShouldEqual, "")
-			So(s.Visitor.TGas(otherID).ToFloat(), ShouldAlmostEqual, testValue)
-			So(s.Visitor.TGas(acc.ID).ToFloat(), ShouldAlmostEqual, oldTGas-float64(testValue))
-			r, err = s.Call("gas.iost", "transfer", array2json([]interface{}{otherID, acc.ID, testValueStr}), otherID, otherKp)
-			So(err, ShouldBeNil)
-			So(r.Status.Message, ShouldContainSubstring, "transferable gas not enough 0 < "+testValueStr)
-			So(s.Visitor.TGas(otherID).ToFloat(), ShouldAlmostEqual, testValue)
-			So(s.Visitor.TGas(acc.ID).ToFloat(), ShouldAlmostEqual, oldTGas-float64(testValue)+float64(r.GasUsage)/100*0.1)
-		})
-		Convey("when pgas is used up, tgas will be used", func() {
-			var gas int64 = 123
-			s.SetGas(otherID, gas)
-			v, _ := common.NewFixed("100000", database.GasDecimal)
-			s.Visitor.ChangeTGas(otherID, v)
-			s.Visitor.Commit()
-			oldTGas := s.Visitor.TGas(otherID).ToFloat()
-			trx := tx.NewTx([]*tx.Action{{
-				Contract:   "token.iost",
-				ActionName: "transfer",
-				Data:       array2json([]interface{}{"iost", otherID, acc.ID, "1", ""}),
-			}}, nil, 10000000, 100, s.Head.Time+10000000, 0, 0)
-			trx.Time = s.Head.Time
-			r, err := s.CallTx(trx, otherID, otherKp)
-			So(err, ShouldBeNil)
-			So(r.Status.Message, ShouldNotBeEmpty)
-			So(s.Visitor.TGas(otherID).ToFloat(), ShouldAlmostEqual, oldTGas-float64(r.GasUsage/100-gas))
-		})
-	})
-
 }

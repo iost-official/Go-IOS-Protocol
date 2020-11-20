@@ -3,10 +3,14 @@ package iwallet
 import (
 	"fmt"
 
+	"github.com/iost-official/go-iost/ilog"
+	"github.com/iost-official/go-iost/sdk"
+
 	"github.com/spf13/cobra"
 )
 
 var update bool
+var postCheck string
 
 // publishCmd represents the publish command.
 var publishCmd = &cobra.Command{
@@ -48,6 +52,13 @@ var publishCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
+		if postCheck != "" {
+			if !update {
+				ilog.Warn("Contract is not being updated, skip --post_check")
+			} else {
+				actions = append(actions, sdk.NewAction(conID, postCheck, string(`[]`)))
+			}
+		}
 		tx, err := initTxFromActions(actions)
 		if err != nil {
 			return err
@@ -69,4 +80,7 @@ var publishCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(publishCmd)
 	publishCmd.Flags().BoolVarP(&update, "update", "u", false, "update contract")
+	publishCmd.Flags().StringVarP(&postCheck, "post_check", "", "", "method to call after the publish."+
+		" It this method fails, the whole tx will fail. For example, you can check `can_update` in a method as post publish hook, "+
+		"to prevent disabling `can_update` accidentally")
 }

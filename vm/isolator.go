@@ -279,7 +279,7 @@ func (i *Isolator) PayCost() (*tx.TxReceipt, error) {
 	if i.t.GasLimit < i.h.GasPaid()*i.t.GasRatio {
 		ilog.Fatalf("total gas cost is above limit %v < %v * %v", i.t.GasLimit, i.h.GasPaid(), i.t.GasRatio)
 	}
-	paidGas, err := i.h.DoPay(i.h.Context().Value("witness").(string), i.t.GasRatio)
+	paidGas, err := i.h.DoPay(i.t.GasRatio)
 	if err != nil {
 		ilog.Errorf("DoPay failed, rollback %v", err)
 
@@ -292,7 +292,7 @@ func (i *Isolator) PayCost() (*tx.TxReceipt, error) {
 		i.tr.RAMUsage = make(map[string]int64)
 		i.tr.Status.Code = tx.ErrorBalanceNotEnough
 		i.tr.Status.Message = "balance not enough after executing actions: " + err.Error()
-		paidGas, err = i.h.DoPay(i.h.Context().Value("witness").(string), i.t.GasRatio)
+		paidGas, err = i.h.DoPay(i.t.GasRatio)
 		if err != nil {
 			return nil, err
 		}

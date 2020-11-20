@@ -26,7 +26,6 @@ func init() {
 	gasABIs.Register(constructor)
 	gasABIs.Register(pledgeGas)
 	gasABIs.Register(unpledgeGas)
-	//gasABIs.Register(transferTGas)
 }
 
 // Pledge Change all gas related storage here. If pledgeAmount > 0. pledge. If pledgeAmount < 0, unpledge.
@@ -141,7 +140,7 @@ func pledge(h *host.Host, pledger string, name string, pledgeAmountF *common.Fix
 	return finalCost, nil
 }
 
-var ( // nolint: deadcode
+var (
 	constructor = &abi{
 		name: "constructor",
 		args: []string{},
@@ -266,53 +265,6 @@ var ( // nolint: deadcode
 			if err != nil {
 				return nil, cost, err
 			}
-
-			// generate receipt
-			message, err := json.Marshal(args)
-			cost.AddAssign(host.CommonOpCost(1))
-			if err != nil {
-				return nil, cost, err
-			}
-			cost0 = h.Receipt(string(message))
-			cost.AddAssign(cost0)
-			return []interface{}{}, cost, nil
-		},
-	}
-	transferTGas = &abi{ // nolint
-		name: "transfer",
-		args: []string{"string", "string", "string"},
-		do: func(h *host.Host, args ...interface{}) (rtn []interface{}, cost contract.Cost, err error) {
-			cost = contract.Cost0()
-			from := args[0].(string)
-			if !h.IsValidAccount(from) {
-				return nil, cost, fmt.Errorf("invalid user name %v", from)
-			}
-			to := args[1].(string)
-			if !h.IsValidAccount(to) {
-				return nil, cost, fmt.Errorf("invalid user name %v", to)
-			}
-			auth, cost0 := h.RequireAuth(from, TransferPermission)
-			cost.AddAssign(cost0)
-			if !auth {
-				return nil, cost, host.ErrPermissionLost
-			}
-			f, err := common.NewFixed(args[2].(string), database.GasDecimal)
-			if err != nil {
-				return nil, cost, fmt.Errorf("invalid gas amount %v", err)
-			}
-			minTransferAmount := &common.Fixed{Value: 100 * 100, Decimal: database.GasDecimal}
-			if f.LessThan(minTransferAmount) {
-				return nil, cost, fmt.Errorf("min transfer amount is %v", minTransferAmount.ToString())
-			}
-			quota, cost0 := h.TGasQuota(from)
-			cost.AddAssign(cost0)
-			if quota.LessThan(f) {
-				return nil, cost, fmt.Errorf("transferable gas not enough %v < %v", quota.ToString(), f.ToString())
-			}
-			cost0 = h.ChangeTGas(from, f.Neg(), true)
-			cost.AddAssign(cost0)
-			cost0 = h.ChangeTGas(to, f, false)
-			cost.AddAssign(cost0)
 
 			// generate receipt
 			message, err := json.Marshal(args)

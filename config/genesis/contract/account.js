@@ -1,17 +1,30 @@
 class Account {
     init() {
-
+    }
+    _setAdmin(adminID) {
+        storage.put("adminID", adminID);
     }
     initAdmin(adminID) {
         const bn = block.number;
         if(bn !== 0) {
             throw new Error("init out of genesis block")
         }
-        storage.put("adminID", adminID);
+	this._setAdmin(adminID);
+    }
+    checkAdminPermission() {
+        return blockchain.requireAuth(storage.get("adminID"), "active") || blockchain.requireAuth("admin", "active");
+    }
+    ensureAdminPermission() {
+        if (!this.checkAdminPermission()) {
+            throw new Error("require auth failed");
+        }
+    }
+    setAdmin(adminID) {
+	this.ensureAdminPermission();
+	this._setAdmin(adminID);
     }
     can_update(data) {
-        const admin = storage.get("adminID");
-        return blockchain.requireAuth(admin, "active");
+	return this.checkAdminPermission();
     }
     _saveAccount(account, payer) {
         if (payer === undefined) {
@@ -142,16 +155,6 @@ class Account {
         if (block.number !== 0) {
             const defaultGasPledge = "10";
             blockchain.callWithAuth("gas.iost", "pledge", [referrer, id, defaultGasPledge]);
-
-            const enableReferrerReward = false;
-            if (enableReferrerReward) {
-                const defaultRegisterReward = "3";
-                const producerMap = JSON.parse(storage.globalGet("vote_producer.iost", "producerMap") || "{}");
-                if (producerMap[referrer]) {
-                    blockchain.callWithAuth("issue.iost", "issueIOSTTo", [referrer, defaultRegisterReward]);
-                }
-            }
-
         }
 
         blockchain.receipt(JSON.stringify([id, owner, active]));

@@ -94,15 +94,6 @@ func (g *GasHandler) getFixed(key string) *common.Fixed {
 	return value
 }
 
-// putFixed ...
-func (g *GasHandler) putFixed(key string, value *common.Fixed) {
-	if value.Err != nil {
-		ilog.Fatalf("GasHandler putFixed %v", value)
-	}
-	//fmt.Printf("putFixed %v %v\n", key, value)
-	g.BasicHandler.Put(GasContractName+Separator+key, MustMarshal(value))
-}
-
 // GasPledgeTotal ...
 func (g *GasHandler) GasPledgeTotal(name string) *common.Fixed {
 	f := g.getFixed(name + GasPledgeTotalKey)
@@ -146,13 +137,6 @@ func (g *GasHandler) TGas(name string) *common.Fixed {
 		return EmptyGas()
 	}
 	return f
-}
-
-// ChangeTGas ...
-func (g *GasHandler) ChangeTGas(name string, delta *common.Fixed) {
-	oldValue := g.TGas(name)
-	newValue := oldValue.Add(delta)
-	g.putFixed(name+TransferableGasKey, newValue)
 }
 
 // GasPledge ...
