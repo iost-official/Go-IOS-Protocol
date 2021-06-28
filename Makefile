@@ -121,9 +121,6 @@ devpush: dev_image_tag
 release: devimage devpush release_image
 	docker push $(DOCKER_RELEASE_IMAGE)
 
-swagger:
-	./script/gen_swagger.sh
-
 protobuf:
 	./script/gen_protobuf.sh
 

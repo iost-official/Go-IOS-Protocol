@@ -13,15 +13,14 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/golang/protobuf/descriptor"
-	"github.com/golang/protobuf/proto"
-	"github.com/grpc-ecosystem/grpc-gateway/runtime"
-	"github.com/grpc-ecosystem/grpc-gateway/utilities"
+	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
+	"github.com/grpc-ecosystem/grpc-gateway/v2/utilities"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/grpclog"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
+	"google.golang.org/protobuf/proto"
 )
 
 // Suppress "imported and not used" errors
@@ -30,7 +29,6 @@ var _ io.Reader
 var _ status.Status
 var _ = runtime.String
 var _ = utilities.NewDoubleArray
-var _ = descriptor.ForMessage
 var _ = metadata.Join
 
 func request_ApiService_GetNodeInfo_0(ctx context.Context, marshaler runtime.Marshaler, client ApiServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
@@ -104,7 +102,6 @@ func request_ApiService_GetTxByHash_0(ctx context.Context, marshaler runtime.Mar
 	}
 
 	protoReq.Hash, err = runtime.String(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "hash", err)
 	}
@@ -131,7 +128,6 @@ func local_request_ApiService_GetTxByHash_0(ctx context.Context, marshaler runti
 	}
 
 	protoReq.Hash, err = runtime.String(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "hash", err)
 	}
@@ -158,7 +154,6 @@ func request_ApiService_GetTxReceiptByTxHash_0(ctx context.Context, marshaler ru
 	}
 
 	protoReq.Hash, err = runtime.String(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "hash", err)
 	}
@@ -185,7 +180,6 @@ func local_request_ApiService_GetTxReceiptByTxHash_0(ctx context.Context, marsha
 	}
 
 	protoReq.Hash, err = runtime.String(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "hash", err)
 	}
@@ -212,7 +206,6 @@ func request_ApiService_GetBlockByHash_0(ctx context.Context, marshaler runtime.
 	}
 
 	protoReq.Hash, err = runtime.String(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "hash", err)
 	}
@@ -223,7 +216,6 @@ func request_ApiService_GetBlockByHash_0(ctx context.Context, marshaler runtime.
 	}
 
 	protoReq.Complete, err = runtime.Bool(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "complete", err)
 	}
@@ -250,7 +242,6 @@ func local_request_ApiService_GetBlockByHash_0(ctx context.Context, marshaler ru
 	}
 
 	protoReq.Hash, err = runtime.String(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "hash", err)
 	}
@@ -261,7 +252,6 @@ func local_request_ApiService_GetBlockByHash_0(ctx context.Context, marshaler ru
 	}
 
 	protoReq.Complete, err = runtime.Bool(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "complete", err)
 	}
@@ -288,7 +278,6 @@ func request_ApiService_GetBlockByNumber_0(ctx context.Context, marshaler runtim
 	}
 
 	protoReq.Number, err = runtime.Int64(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "number", err)
 	}
@@ -299,7 +288,6 @@ func request_ApiService_GetBlockByNumber_0(ctx context.Context, marshaler runtim
 	}
 
 	protoReq.Complete, err = runtime.Bool(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "complete", err)
 	}
@@ -326,7 +314,6 @@ func local_request_ApiService_GetBlockByNumber_0(ctx context.Context, marshaler 
 	}
 
 	protoReq.Number, err = runtime.Int64(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "number", err)
 	}
@@ -337,7 +324,6 @@ func local_request_ApiService_GetBlockByNumber_0(ctx context.Context, marshaler 
 	}
 
 	protoReq.Complete, err = runtime.Bool(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "complete", err)
 	}
@@ -364,7 +350,6 @@ func request_ApiService_GetRawBlockByNumber_0(ctx context.Context, marshaler run
 	}
 
 	protoReq.Number, err = runtime.Int64(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "number", err)
 	}
@@ -375,7 +360,6 @@ func request_ApiService_GetRawBlockByNumber_0(ctx context.Context, marshaler run
 	}
 
 	protoReq.Complete, err = runtime.Bool(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "complete", err)
 	}
@@ -402,7 +386,6 @@ func local_request_ApiService_GetRawBlockByNumber_0(ctx context.Context, marshal
 	}
 
 	protoReq.Number, err = runtime.Int64(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "number", err)
 	}
@@ -413,7 +396,6 @@ func local_request_ApiService_GetRawBlockByNumber_0(ctx context.Context, marshal
 	}
 
 	protoReq.Complete, err = runtime.Bool(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "complete", err)
 	}
@@ -474,7 +456,6 @@ func request_ApiService_GetAccount_0(ctx context.Context, marshaler runtime.Mars
 	}
 
 	protoReq.Name, err = runtime.String(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
 	}
@@ -485,7 +466,6 @@ func request_ApiService_GetAccount_0(ctx context.Context, marshaler runtime.Mars
 	}
 
 	protoReq.ByLongestChain, err = runtime.Bool(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "by_longest_chain", err)
 	}
@@ -512,7 +492,6 @@ func local_request_ApiService_GetAccount_0(ctx context.Context, marshaler runtim
 	}
 
 	protoReq.Name, err = runtime.String(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
 	}
@@ -523,7 +502,6 @@ func local_request_ApiService_GetAccount_0(ctx context.Context, marshaler runtim
 	}
 
 	protoReq.ByLongestChain, err = runtime.Bool(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "by_longest_chain", err)
 	}
@@ -550,7 +528,6 @@ func request_ApiService_GetTokenBalance_0(ctx context.Context, marshaler runtime
 	}
 
 	protoReq.Account, err = runtime.String(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "account", err)
 	}
@@ -561,7 +538,6 @@ func request_ApiService_GetTokenBalance_0(ctx context.Context, marshaler runtime
 	}
 
 	protoReq.Token, err = runtime.String(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "token", err)
 	}
@@ -572,7 +548,6 @@ func request_ApiService_GetTokenBalance_0(ctx context.Context, marshaler runtime
 	}
 
 	protoReq.ByLongestChain, err = runtime.Bool(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "by_longest_chain", err)
 	}
@@ -599,7 +574,6 @@ func local_request_ApiService_GetTokenBalance_0(ctx context.Context, marshaler r
 	}
 
 	protoReq.Account, err = runtime.String(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "account", err)
 	}
@@ -610,7 +584,6 @@ func local_request_ApiService_GetTokenBalance_0(ctx context.Context, marshaler r
 	}
 
 	protoReq.Token, err = runtime.String(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "token", err)
 	}
@@ -621,7 +594,6 @@ func local_request_ApiService_GetTokenBalance_0(ctx context.Context, marshaler r
 	}
 
 	protoReq.ByLongestChain, err = runtime.Bool(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "by_longest_chain", err)
 	}
@@ -648,7 +620,6 @@ func request_ApiService_GetToken721Balance_0(ctx context.Context, marshaler runt
 	}
 
 	protoReq.Account, err = runtime.String(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "account", err)
 	}
@@ -659,7 +630,6 @@ func request_ApiService_GetToken721Balance_0(ctx context.Context, marshaler runt
 	}
 
 	protoReq.Token, err = runtime.String(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "token", err)
 	}
@@ -670,7 +640,6 @@ func request_ApiService_GetToken721Balance_0(ctx context.Context, marshaler runt
 	}
 
 	protoReq.ByLongestChain, err = runtime.Bool(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "by_longest_chain", err)
 	}
@@ -697,7 +666,6 @@ func local_request_ApiService_GetToken721Balance_0(ctx context.Context, marshale
 	}
 
 	protoReq.Account, err = runtime.String(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "account", err)
 	}
@@ -708,7 +676,6 @@ func local_request_ApiService_GetToken721Balance_0(ctx context.Context, marshale
 	}
 
 	protoReq.Token, err = runtime.String(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "token", err)
 	}
@@ -719,7 +686,6 @@ func local_request_ApiService_GetToken721Balance_0(ctx context.Context, marshale
 	}
 
 	protoReq.ByLongestChain, err = runtime.Bool(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "by_longest_chain", err)
 	}
@@ -746,7 +712,6 @@ func request_ApiService_GetToken721Metadata_0(ctx context.Context, marshaler run
 	}
 
 	protoReq.Token, err = runtime.String(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "token", err)
 	}
@@ -757,7 +722,6 @@ func request_ApiService_GetToken721Metadata_0(ctx context.Context, marshaler run
 	}
 
 	protoReq.TokenId, err = runtime.String(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "token_id", err)
 	}
@@ -768,7 +732,6 @@ func request_ApiService_GetToken721Metadata_0(ctx context.Context, marshaler run
 	}
 
 	protoReq.ByLongestChain, err = runtime.Bool(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "by_longest_chain", err)
 	}
@@ -795,7 +758,6 @@ func local_request_ApiService_GetToken721Metadata_0(ctx context.Context, marshal
 	}
 
 	protoReq.Token, err = runtime.String(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "token", err)
 	}
@@ -806,7 +768,6 @@ func local_request_ApiService_GetToken721Metadata_0(ctx context.Context, marshal
 	}
 
 	protoReq.TokenId, err = runtime.String(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "token_id", err)
 	}
@@ -817,7 +778,6 @@ func local_request_ApiService_GetToken721Metadata_0(ctx context.Context, marshal
 	}
 
 	protoReq.ByLongestChain, err = runtime.Bool(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "by_longest_chain", err)
 	}
@@ -844,7 +804,6 @@ func request_ApiService_GetToken721Owner_0(ctx context.Context, marshaler runtim
 	}
 
 	protoReq.Token, err = runtime.String(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "token", err)
 	}
@@ -855,7 +814,6 @@ func request_ApiService_GetToken721Owner_0(ctx context.Context, marshaler runtim
 	}
 
 	protoReq.TokenId, err = runtime.String(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "token_id", err)
 	}
@@ -866,7 +824,6 @@ func request_ApiService_GetToken721Owner_0(ctx context.Context, marshaler runtim
 	}
 
 	protoReq.ByLongestChain, err = runtime.Bool(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "by_longest_chain", err)
 	}
@@ -893,7 +850,6 @@ func local_request_ApiService_GetToken721Owner_0(ctx context.Context, marshaler 
 	}
 
 	protoReq.Token, err = runtime.String(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "token", err)
 	}
@@ -904,7 +860,6 @@ func local_request_ApiService_GetToken721Owner_0(ctx context.Context, marshaler 
 	}
 
 	protoReq.TokenId, err = runtime.String(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "token_id", err)
 	}
@@ -915,7 +870,6 @@ func local_request_ApiService_GetToken721Owner_0(ctx context.Context, marshaler 
 	}
 
 	protoReq.ByLongestChain, err = runtime.Bool(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "by_longest_chain", err)
 	}
@@ -960,7 +914,6 @@ func request_ApiService_GetProducerVoteInfo_0(ctx context.Context, marshaler run
 	}
 
 	protoReq.Account, err = runtime.String(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "account", err)
 	}
@@ -971,7 +924,6 @@ func request_ApiService_GetProducerVoteInfo_0(ctx context.Context, marshaler run
 	}
 
 	protoReq.ByLongestChain, err = runtime.Bool(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "by_longest_chain", err)
 	}
@@ -998,7 +950,6 @@ func local_request_ApiService_GetProducerVoteInfo_0(ctx context.Context, marshal
 	}
 
 	protoReq.Account, err = runtime.String(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "account", err)
 	}
@@ -1009,7 +960,6 @@ func local_request_ApiService_GetProducerVoteInfo_0(ctx context.Context, marshal
 	}
 
 	protoReq.ByLongestChain, err = runtime.Bool(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "by_longest_chain", err)
 	}
@@ -1036,7 +986,6 @@ func request_ApiService_GetContract_0(ctx context.Context, marshaler runtime.Mar
 	}
 
 	protoReq.Id, err = runtime.String(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
 	}
@@ -1047,7 +996,6 @@ func request_ApiService_GetContract_0(ctx context.Context, marshaler runtime.Mar
 	}
 
 	protoReq.ByLongestChain, err = runtime.Bool(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "by_longest_chain", err)
 	}
@@ -1074,7 +1022,6 @@ func local_request_ApiService_GetContract_0(ctx context.Context, marshaler runti
 	}
 
 	protoReq.Id, err = runtime.String(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
 	}
@@ -1085,7 +1032,6 @@ func local_request_ApiService_GetContract_0(ctx context.Context, marshaler runti
 	}
 
 	protoReq.ByLongestChain, err = runtime.Bool(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "by_longest_chain", err)
 	}
@@ -1112,7 +1058,6 @@ func request_ApiService_GetContractVote_0(ctx context.Context, marshaler runtime
 	}
 
 	protoReq.Id, err = runtime.String(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
 	}
@@ -1123,7 +1068,6 @@ func request_ApiService_GetContractVote_0(ctx context.Context, marshaler runtime
 	}
 
 	protoReq.ByLongestChain, err = runtime.Bool(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "by_longest_chain", err)
 	}
@@ -1150,7 +1094,6 @@ func local_request_ApiService_GetContractVote_0(ctx context.Context, marshaler r
 	}
 
 	protoReq.Id, err = runtime.String(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "id", err)
 	}
@@ -1161,7 +1104,6 @@ func local_request_ApiService_GetContractVote_0(ctx context.Context, marshaler r
 	}
 
 	protoReq.ByLongestChain, err = runtime.Bool(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "by_longest_chain", err)
 	}
@@ -1417,7 +1359,6 @@ func request_ApiService_GetVoterBonus_0(ctx context.Context, marshaler runtime.M
 	}
 
 	protoReq.Name, err = runtime.String(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
 	}
@@ -1428,7 +1369,6 @@ func request_ApiService_GetVoterBonus_0(ctx context.Context, marshaler runtime.M
 	}
 
 	protoReq.ByLongestChain, err = runtime.Bool(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "by_longest_chain", err)
 	}
@@ -1455,7 +1395,6 @@ func local_request_ApiService_GetVoterBonus_0(ctx context.Context, marshaler run
 	}
 
 	protoReq.Name, err = runtime.String(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
 	}
@@ -1466,7 +1405,6 @@ func local_request_ApiService_GetVoterBonus_0(ctx context.Context, marshaler run
 	}
 
 	protoReq.ByLongestChain, err = runtime.Bool(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "by_longest_chain", err)
 	}
@@ -1493,7 +1431,6 @@ func request_ApiService_GetCandidateBonus_0(ctx context.Context, marshaler runti
 	}
 
 	protoReq.Name, err = runtime.String(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
 	}
@@ -1504,7 +1441,6 @@ func request_ApiService_GetCandidateBonus_0(ctx context.Context, marshaler runti
 	}
 
 	protoReq.ByLongestChain, err = runtime.Bool(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "by_longest_chain", err)
 	}
@@ -1531,7 +1467,6 @@ func local_request_ApiService_GetCandidateBonus_0(ctx context.Context, marshaler
 	}
 
 	protoReq.Name, err = runtime.String(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "name", err)
 	}
@@ -1542,7 +1477,6 @@ func local_request_ApiService_GetCandidateBonus_0(ctx context.Context, marshaler
 	}
 
 	protoReq.ByLongestChain, err = runtime.Bool(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "by_longest_chain", err)
 	}
@@ -1569,7 +1503,6 @@ func request_ApiService_GetTokenInfo_0(ctx context.Context, marshaler runtime.Ma
 	}
 
 	protoReq.Symbol, err = runtime.String(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "symbol", err)
 	}
@@ -1580,7 +1513,6 @@ func request_ApiService_GetTokenInfo_0(ctx context.Context, marshaler runtime.Ma
 	}
 
 	protoReq.ByLongestChain, err = runtime.Bool(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "by_longest_chain", err)
 	}
@@ -1607,7 +1539,6 @@ func local_request_ApiService_GetTokenInfo_0(ctx context.Context, marshaler runt
 	}
 
 	protoReq.Symbol, err = runtime.String(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "symbol", err)
 	}
@@ -1618,7 +1549,6 @@ func local_request_ApiService_GetTokenInfo_0(ctx context.Context, marshaler runt
 	}
 
 	protoReq.ByLongestChain, err = runtime.Bool(val)
-
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "by_longest_chain", err)
 	}
@@ -1640,7 +1570,7 @@ func RegisterApiServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/rpcpb.ApiService/GetNodeInfo", runtime.WithHTTPPathPattern("/getNodeInfo"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1663,7 +1593,7 @@ func RegisterApiServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/rpcpb.ApiService/GetChainInfo", runtime.WithHTTPPathPattern("/getChainInfo"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1686,7 +1616,7 @@ func RegisterApiServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/rpcpb.ApiService/GetRAMInfo", runtime.WithHTTPPathPattern("/getRAMInfo"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1709,7 +1639,7 @@ func RegisterApiServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/rpcpb.ApiService/GetTxByHash", runtime.WithHTTPPathPattern("/getTxByHash/{hash}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1732,7 +1662,7 @@ func RegisterApiServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/rpcpb.ApiService/GetTxReceiptByTxHash", runtime.WithHTTPPathPattern("/getTxReceiptByTxHash/{hash}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1755,7 +1685,7 @@ func RegisterApiServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/rpcpb.ApiService/GetBlockByHash", runtime.WithHTTPPathPattern("/getBlockByHash/{hash}/{complete}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1778,7 +1708,7 @@ func RegisterApiServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/rpcpb.ApiService/GetBlockByNumber", runtime.WithHTTPPathPattern("/getBlockByNumber/{number}/{complete}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1801,7 +1731,7 @@ func RegisterApiServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/rpcpb.ApiService/GetRawBlockByNumber", runtime.WithHTTPPathPattern("/getRawBlockByNumber/{number}/{complete}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1824,7 +1754,7 @@ func RegisterApiServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/rpcpb.ApiService/GetBlockHeaderByRange", runtime.WithHTTPPathPattern("/getBlockHeaderByRange"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1847,7 +1777,7 @@ func RegisterApiServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/rpcpb.ApiService/GetAccount", runtime.WithHTTPPathPattern("/getAccount/{name}/{by_longest_chain}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1870,7 +1800,7 @@ func RegisterApiServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/rpcpb.ApiService/GetTokenBalance", runtime.WithHTTPPathPattern("/getTokenBalance/{account}/{token}/{by_longest_chain}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1893,7 +1823,7 @@ func RegisterApiServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/rpcpb.ApiService/GetToken721Balance", runtime.WithHTTPPathPattern("/getToken721Balance/{account}/{token}/{by_longest_chain}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1916,7 +1846,7 @@ func RegisterApiServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/rpcpb.ApiService/GetToken721Metadata", runtime.WithHTTPPathPattern("/getToken721Metadata/{token}/{token_id}/{by_longest_chain}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1939,7 +1869,7 @@ func RegisterApiServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/rpcpb.ApiService/GetToken721Owner", runtime.WithHTTPPathPattern("/getToken721Owner/{token}/{token_id}/{by_longest_chain}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1962,7 +1892,7 @@ func RegisterApiServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/rpcpb.ApiService/GetGasRatio", runtime.WithHTTPPathPattern("/getGasRatio"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1985,7 +1915,7 @@ func RegisterApiServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/rpcpb.ApiService/GetProducerVoteInfo", runtime.WithHTTPPathPattern("/getProducerVoteInfo/{account}/{by_longest_chain}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2008,7 +1938,7 @@ func RegisterApiServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/rpcpb.ApiService/GetContract", runtime.WithHTTPPathPattern("/getContract/{id}/{by_longest_chain}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2031,7 +1961,7 @@ func RegisterApiServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/rpcpb.ApiService/GetContractVote", runtime.WithHTTPPathPattern("/getContractVote/{id}/{by_longest_chain}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2054,7 +1984,7 @@ func RegisterApiServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/rpcpb.ApiService/GetContractStorage", runtime.WithHTTPPathPattern("/getContractStorage"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2077,7 +2007,7 @@ func RegisterApiServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/rpcpb.ApiService/GetBatchContractStorage", runtime.WithHTTPPathPattern("/getBatchContractStorage"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2100,7 +2030,7 @@ func RegisterApiServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/rpcpb.ApiService/ListContractStorage", runtime.WithHTTPPathPattern("/listContractStorage"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2123,7 +2053,7 @@ func RegisterApiServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/rpcpb.ApiService/GetContractStorageFields", runtime.WithHTTPPathPattern("/getContractStorageFields"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2146,7 +2076,7 @@ func RegisterApiServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/rpcpb.ApiService/SendTransaction", runtime.WithHTTPPathPattern("/sendTx"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2169,7 +2099,7 @@ func RegisterApiServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/rpcpb.ApiService/ExecTransaction", runtime.WithHTTPPathPattern("/execTx"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2199,7 +2129,7 @@ func RegisterApiServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/rpcpb.ApiService/GetVoterBonus", runtime.WithHTTPPathPattern("/getVoterBonus/{name}/{by_longest_chain}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2222,7 +2152,7 @@ func RegisterApiServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/rpcpb.ApiService/GetCandidateBonus", runtime.WithHTTPPathPattern("/getCandidateBonus/{name}/{by_longest_chain}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2245,7 +2175,7 @@ func RegisterApiServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/rpcpb.ApiService/GetTokenInfo", runtime.WithHTTPPathPattern("/getTokenInfo/{symbol}/{by_longest_chain}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2307,7 +2237,7 @@ func RegisterApiServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/rpcpb.ApiService/GetNodeInfo", runtime.WithHTTPPathPattern("/getNodeInfo"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2327,7 +2257,7 @@ func RegisterApiServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/rpcpb.ApiService/GetChainInfo", runtime.WithHTTPPathPattern("/getChainInfo"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2347,7 +2277,7 @@ func RegisterApiServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/rpcpb.ApiService/GetRAMInfo", runtime.WithHTTPPathPattern("/getRAMInfo"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2367,7 +2297,7 @@ func RegisterApiServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/rpcpb.ApiService/GetTxByHash", runtime.WithHTTPPathPattern("/getTxByHash/{hash}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2387,7 +2317,7 @@ func RegisterApiServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/rpcpb.ApiService/GetTxReceiptByTxHash", runtime.WithHTTPPathPattern("/getTxReceiptByTxHash/{hash}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2407,7 +2337,7 @@ func RegisterApiServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/rpcpb.ApiService/GetBlockByHash", runtime.WithHTTPPathPattern("/getBlockByHash/{hash}/{complete}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2427,7 +2357,7 @@ func RegisterApiServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/rpcpb.ApiService/GetBlockByNumber", runtime.WithHTTPPathPattern("/getBlockByNumber/{number}/{complete}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2447,7 +2377,7 @@ func RegisterApiServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/rpcpb.ApiService/GetRawBlockByNumber", runtime.WithHTTPPathPattern("/getRawBlockByNumber/{number}/{complete}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2467,7 +2397,7 @@ func RegisterApiServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/rpcpb.ApiService/GetBlockHeaderByRange", runtime.WithHTTPPathPattern("/getBlockHeaderByRange"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2487,7 +2417,7 @@ func RegisterApiServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/rpcpb.ApiService/GetAccount", runtime.WithHTTPPathPattern("/getAccount/{name}/{by_longest_chain}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2507,7 +2437,7 @@ func RegisterApiServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/rpcpb.ApiService/GetTokenBalance", runtime.WithHTTPPathPattern("/getTokenBalance/{account}/{token}/{by_longest_chain}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2527,7 +2457,7 @@ func RegisterApiServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/rpcpb.ApiService/GetToken721Balance", runtime.WithHTTPPathPattern("/getToken721Balance/{account}/{token}/{by_longest_chain}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2547,7 +2477,7 @@ func RegisterApiServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/rpcpb.ApiService/GetToken721Metadata", runtime.WithHTTPPathPattern("/getToken721Metadata/{token}/{token_id}/{by_longest_chain}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2567,7 +2497,7 @@ func RegisterApiServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/rpcpb.ApiService/GetToken721Owner", runtime.WithHTTPPathPattern("/getToken721Owner/{token}/{token_id}/{by_longest_chain}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2587,7 +2517,7 @@ func RegisterApiServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/rpcpb.ApiService/GetGasRatio", runtime.WithHTTPPathPattern("/getGasRatio"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2607,7 +2537,7 @@ func RegisterApiServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/rpcpb.ApiService/GetProducerVoteInfo", runtime.WithHTTPPathPattern("/getProducerVoteInfo/{account}/{by_longest_chain}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2627,7 +2557,7 @@ func RegisterApiServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/rpcpb.ApiService/GetContract", runtime.WithHTTPPathPattern("/getContract/{id}/{by_longest_chain}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2647,7 +2577,7 @@ func RegisterApiServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/rpcpb.ApiService/GetContractVote", runtime.WithHTTPPathPattern("/getContractVote/{id}/{by_longest_chain}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2667,7 +2597,7 @@ func RegisterApiServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/rpcpb.ApiService/GetContractStorage", runtime.WithHTTPPathPattern("/getContractStorage"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2687,7 +2617,7 @@ func RegisterApiServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/rpcpb.ApiService/GetBatchContractStorage", runtime.WithHTTPPathPattern("/getBatchContractStorage"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2707,7 +2637,7 @@ func RegisterApiServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/rpcpb.ApiService/ListContractStorage", runtime.WithHTTPPathPattern("/listContractStorage"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2727,7 +2657,7 @@ func RegisterApiServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/rpcpb.ApiService/GetContractStorageFields", runtime.WithHTTPPathPattern("/getContractStorageFields"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2747,7 +2677,7 @@ func RegisterApiServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/rpcpb.ApiService/SendTransaction", runtime.WithHTTPPathPattern("/sendTx"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2767,7 +2697,7 @@ func RegisterApiServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/rpcpb.ApiService/ExecTransaction", runtime.WithHTTPPathPattern("/execTx"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2787,7 +2717,7 @@ func RegisterApiServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/rpcpb.ApiService/Subscribe", runtime.WithHTTPPathPattern("/subscribe"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2807,7 +2737,7 @@ func RegisterApiServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/rpcpb.ApiService/GetVoterBonus", runtime.WithHTTPPathPattern("/getVoterBonus/{name}/{by_longest_chain}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2827,7 +2757,7 @@ func RegisterApiServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/rpcpb.ApiService/GetCandidateBonus", runtime.WithHTTPPathPattern("/getCandidateBonus/{name}/{by_longest_chain}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2847,7 +2777,7 @@ func RegisterApiServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/rpcpb.ApiService/GetTokenInfo", runtime.WithHTTPPathPattern("/getTokenInfo/{symbol}/{by_longest_chain}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -2867,61 +2797,61 @@ func RegisterApiServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 }
 
 var (
-	pattern_ApiService_GetNodeInfo_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"getNodeInfo"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ApiService_GetNodeInfo_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"getNodeInfo"}, ""))
 
-	pattern_ApiService_GetChainInfo_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"getChainInfo"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ApiService_GetChainInfo_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"getChainInfo"}, ""))
 
-	pattern_ApiService_GetRAMInfo_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"getRAMInfo"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ApiService_GetRAMInfo_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"getRAMInfo"}, ""))
 
-	pattern_ApiService_GetTxByHash_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1}, []string{"getTxByHash", "hash"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ApiService_GetTxByHash_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1}, []string{"getTxByHash", "hash"}, ""))
 
-	pattern_ApiService_GetTxReceiptByTxHash_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1}, []string{"getTxReceiptByTxHash", "hash"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ApiService_GetTxReceiptByTxHash_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1}, []string{"getTxReceiptByTxHash", "hash"}, ""))
 
-	pattern_ApiService_GetBlockByHash_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2}, []string{"getBlockByHash", "hash", "complete"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ApiService_GetBlockByHash_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2}, []string{"getBlockByHash", "hash", "complete"}, ""))
 
-	pattern_ApiService_GetBlockByNumber_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2}, []string{"getBlockByNumber", "number", "complete"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ApiService_GetBlockByNumber_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2}, []string{"getBlockByNumber", "number", "complete"}, ""))
 
-	pattern_ApiService_GetRawBlockByNumber_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2}, []string{"getRawBlockByNumber", "number", "complete"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ApiService_GetRawBlockByNumber_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2}, []string{"getRawBlockByNumber", "number", "complete"}, ""))
 
-	pattern_ApiService_GetBlockHeaderByRange_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"getBlockHeaderByRange"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ApiService_GetBlockHeaderByRange_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"getBlockHeaderByRange"}, ""))
 
-	pattern_ApiService_GetAccount_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2}, []string{"getAccount", "name", "by_longest_chain"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ApiService_GetAccount_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2}, []string{"getAccount", "name", "by_longest_chain"}, ""))
 
-	pattern_ApiService_GetTokenBalance_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3}, []string{"getTokenBalance", "account", "token", "by_longest_chain"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ApiService_GetTokenBalance_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3}, []string{"getTokenBalance", "account", "token", "by_longest_chain"}, ""))
 
-	pattern_ApiService_GetToken721Balance_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3}, []string{"getToken721Balance", "account", "token", "by_longest_chain"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ApiService_GetToken721Balance_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3}, []string{"getToken721Balance", "account", "token", "by_longest_chain"}, ""))
 
-	pattern_ApiService_GetToken721Metadata_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3}, []string{"getToken721Metadata", "token", "token_id", "by_longest_chain"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ApiService_GetToken721Metadata_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3}, []string{"getToken721Metadata", "token", "token_id", "by_longest_chain"}, ""))
 
-	pattern_ApiService_GetToken721Owner_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3}, []string{"getToken721Owner", "token", "token_id", "by_longest_chain"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ApiService_GetToken721Owner_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3}, []string{"getToken721Owner", "token", "token_id", "by_longest_chain"}, ""))
 
-	pattern_ApiService_GetGasRatio_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"getGasRatio"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ApiService_GetGasRatio_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"getGasRatio"}, ""))
 
-	pattern_ApiService_GetProducerVoteInfo_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2}, []string{"getProducerVoteInfo", "account", "by_longest_chain"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ApiService_GetProducerVoteInfo_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2}, []string{"getProducerVoteInfo", "account", "by_longest_chain"}, ""))
 
-	pattern_ApiService_GetContract_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2}, []string{"getContract", "id", "by_longest_chain"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ApiService_GetContract_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2}, []string{"getContract", "id", "by_longest_chain"}, ""))
 
-	pattern_ApiService_GetContractVote_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2}, []string{"getContractVote", "id", "by_longest_chain"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ApiService_GetContractVote_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2}, []string{"getContractVote", "id", "by_longest_chain"}, ""))
 
-	pattern_ApiService_GetContractStorage_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"getContractStorage"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ApiService_GetContractStorage_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"getContractStorage"}, ""))
 
-	pattern_ApiService_GetBatchContractStorage_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"getBatchContractStorage"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ApiService_GetBatchContractStorage_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"getBatchContractStorage"}, ""))
 
-	pattern_ApiService_ListContractStorage_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"listContractStorage"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ApiService_ListContractStorage_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"listContractStorage"}, ""))
 
-	pattern_ApiService_GetContractStorageFields_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"getContractStorageFields"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ApiService_GetContractStorageFields_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"getContractStorageFields"}, ""))
 
-	pattern_ApiService_SendTransaction_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"sendTx"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ApiService_SendTransaction_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"sendTx"}, ""))
 
-	pattern_ApiService_ExecTransaction_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"execTx"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ApiService_ExecTransaction_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"execTx"}, ""))
 
-	pattern_ApiService_Subscribe_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"subscribe"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ApiService_Subscribe_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"subscribe"}, ""))
 
-	pattern_ApiService_GetVoterBonus_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2}, []string{"getVoterBonus", "name", "by_longest_chain"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ApiService_GetVoterBonus_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2}, []string{"getVoterBonus", "name", "by_longest_chain"}, ""))
 
-	pattern_ApiService_GetCandidateBonus_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2}, []string{"getCandidateBonus", "name", "by_longest_chain"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ApiService_GetCandidateBonus_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2}, []string{"getCandidateBonus", "name", "by_longest_chain"}, ""))
 
-	pattern_ApiService_GetTokenInfo_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2}, []string{"getTokenInfo", "symbol", "by_longest_chain"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_ApiService_GetTokenInfo_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1, 1, 0, 4, 1, 5, 2}, []string{"getTokenInfo", "symbol", "by_longest_chain"}, ""))
 )
 
 var (

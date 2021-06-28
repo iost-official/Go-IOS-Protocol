@@ -36,6 +36,7 @@ linters:
     - rowserrcheck
     - testpackage
     - whitespace
+    - unused
   disable:
     - errcheck
     - unparam
@@ -59,4 +60,3 @@ linters:
     - gocognit
     - goconst
     - gocyclo
-    - unused
