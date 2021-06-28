@@ -14,15 +14,17 @@ import (
 	"github.com/iost-official/go-iost/v3/ilog"
 	"github.com/iost-official/go-iost/v3/p2p"
 	rpcpb "github.com/iost-official/go-iost/v3/rpc/pb"
+
 	"github.com/rs/cors"
 	"golang.org/x/net/netutil"
 
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_recovery "github.com/grpc-ecosystem/go-grpc-middleware/recovery"
-	"github.com/grpc-ecosystem/grpc-gateway/runtime"
+	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+	"google.golang.org/protobuf/encoding/protojson"
 )
 
 const (
@@ -102,9 +104,11 @@ func (s *Server) startGrpc() error {
 }
 
 func (s *Server) startGateway() error {
-	mux := runtime.NewServeMux(
-		runtime.WithMarshalerOption(runtime.MIMEWildcard, &runtime.JSONPb{OrigName: true, EmitDefaults: true}),
-		runtime.WithProtoErrorHandler(errorHandler))
+	marshaler := &runtime.JSONPb{
+		MarshalOptions: protojson.MarshalOptions{UseProtoNames: true, EmitUnpopulated: true}}
+	marshalerOption := runtime.WithMarshalerOption(runtime.MIMEWildcard, marshaler)
+	errOption := runtime.WithErrorHandler(errorHandler)
+	mux := runtime.NewServeMux(marshalerOption, errOption)
 	opts := []grpc.DialOption{grpc.WithInsecure()}
 	err := rpcpb.RegisterApiServiceHandlerFromEndpoint(context.Background(), mux, s.grpcAddr, opts)
 	if err != nil {
@@ -129,9 +133,9 @@ func (s *Server) startGateway() error {
 
 func errorHandler(_ context.Context, _ *runtime.ServeMux, _ runtime.Marshaler, w http.ResponseWriter, _ *http.Request, err error) {
 	w.WriteHeader(400)
-	s, ok := status.FromError(err)
-	if !ok {
-		s = status.New(codes.Unknown, err.Error())
+	s, _ := status.FromError(err)
+	if s.Code() == codes.NotFound {
+		s = status.New(codes.Unimplemented, http.StatusText(http.StatusNotImplemented))
 	}
 	bytes, e := json.Marshal(s.Proto())
 	if e != nil {

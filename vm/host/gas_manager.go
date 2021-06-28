@@ -22,21 +22,21 @@ func NewGasManager(h *Host) GasManager {
 	}
 }
 
-func emptyGas() *common.Fixed {
-	return &common.Fixed{
-		Value:   0,
-		Decimal: database.GasDecimal,
+func emptyGas() *common.Decimal {
+	return &common.Decimal{
+		Value: 0,
+		Scale: database.GasDecimal,
 	}
 }
 
 // If no key exists, return 0
-func (g *GasManager) getFixed(key string) (*common.Fixed, contract.Cost) {
+func (g *GasManager) getFixed(key string) (*common.Decimal, contract.Cost) {
 	result, cost := g.h.Get(key)
 	if result == nil {
 		// ilog.Errorf("GasManager failed %v", key)
 		return nil, cost
 	}
-	value, ok := result.(*common.Fixed)
+	value, ok := result.(*common.Decimal)
 	if !ok {
 		ilog.Errorf("GasManager failed %v %v", key, result)
 		return nil, cost
@@ -45,7 +45,7 @@ func (g *GasManager) getFixed(key string) (*common.Fixed, contract.Cost) {
 }
 
 // putFixed ...
-func (g *GasManager) putFixed(key string, value *common.Fixed) contract.Cost {
+func (g *GasManager) putFixed(key string, value *common.Decimal) contract.Cost {
 	if value.Err != nil {
 		ilog.Fatalf("GasHandler putFixed %v", value)
 	}
@@ -58,7 +58,7 @@ func (g *GasManager) putFixed(key string, value *common.Fixed) contract.Cost {
 }
 
 // GasPledgeTotal ...
-func (g *GasManager) GasPledgeTotal(name string) (*common.Fixed, contract.Cost) {
+func (g *GasManager) GasPledgeTotal(name string) (*common.Decimal, contract.Cost) {
 	f, cost := g.getFixed(name + database.GasPledgeTotalKey)
 	if f == nil {
 		return emptyGas(), cost
@@ -67,12 +67,12 @@ func (g *GasManager) GasPledgeTotal(name string) (*common.Fixed, contract.Cost) 
 }
 
 // SetGasPledgeTotal ...
-func (g *GasManager) SetGasPledgeTotal(name string, r *common.Fixed) contract.Cost {
+func (g *GasManager) SetGasPledgeTotal(name string, r *common.Decimal) contract.Cost {
 	return g.putFixed(name+database.GasPledgeTotalKey, r)
 }
 
 // GasLimit ...
-func (g *GasManager) GasLimit(name string) (*common.Fixed, contract.Cost) {
+func (g *GasManager) GasLimit(name string) (*common.Decimal, contract.Cost) {
 	f, cost := g.getFixed(name + database.GasLimitKey)
 	if f == nil {
 		return emptyGas(), cost
@@ -81,7 +81,7 @@ func (g *GasManager) GasLimit(name string) (*common.Fixed, contract.Cost) {
 }
 
 // SetGasLimit ...
-func (g *GasManager) SetGasLimit(name string, l *common.Fixed) contract.Cost {
+func (g *GasManager) SetGasLimit(name string, l *common.Decimal) contract.Cost {
 	return g.putFixed(name+database.GasLimitKey, l)
 }
 
@@ -105,7 +105,7 @@ func (g *GasManager) SetGasUpdateTime(name string, t int64) contract.Cost {
 }
 
 // GasStock `gasStock` means the gas amount at last update time.
-func (g *GasManager) GasStock(name string) (*common.Fixed, contract.Cost) {
+func (g *GasManager) GasStock(name string) (*common.Decimal, contract.Cost) {
 	f, cost := g.getFixed(name + database.GasStockKey)
 	if f == nil {
 		return emptyGas(), cost
@@ -114,25 +114,25 @@ func (g *GasManager) GasStock(name string) (*common.Fixed, contract.Cost) {
 }
 
 // SetGasStock ...
-func (g *GasManager) SetGasStock(name string, gas *common.Fixed) contract.Cost {
+func (g *GasManager) SetGasStock(name string, gas *common.Decimal) contract.Cost {
 	//ilog.Debugf("SetGasStock %v %v", name, g)
 	return g.putFixed(name+database.GasStockKey, gas)
 }
 
 // GasPledge ...
-func (g *GasManager) GasPledge(name string, pledger string) (*common.Fixed, contract.Cost) {
+func (g *GasManager) GasPledge(name string, pledger string) (*common.Decimal, contract.Cost) {
 	finalCost := contract.Cost0()
 	ok, cost := g.h.MapHas(pledger+database.GasPledgeKey, name)
 	finalCost.AddAssign(cost)
 	if !ok {
-		return &common.Fixed{
-			Value:   0,
-			Decimal: 8,
+		return &common.Decimal{
+			Value: 0,
+			Scale: 8,
 		}, finalCost
 	}
 	result, cost := g.h.MapGet(pledger+database.GasPledgeKey, name)
 	finalCost.AddAssign(cost)
-	value, ok := result.(*common.Fixed)
+	value, ok := result.(*common.Decimal)
 	if !ok {
 		return nil, finalCost
 	}
@@ -140,7 +140,7 @@ func (g *GasManager) GasPledge(name string, pledger string) (*common.Fixed, cont
 }
 
 // SetGasPledge ...
-func (g *GasManager) SetGasPledge(name string, pledger string, p *common.Fixed) contract.Cost {
+func (g *GasManager) SetGasPledge(name string, pledger string, p *common.Decimal) contract.Cost {
 	cost, err := g.h.MapPut(pledger+database.GasPledgeKey, name, p)
 	if err != nil {
 		panic(fmt.Errorf("gas manager set gas pledge err %v", err))
@@ -157,7 +157,7 @@ func (g *GasManager) DelGasPledge(name string, pledger string) contract.Cost {
 	return cost
 }
 
-func (g *GasManager) refreshPGasWithValue(name string, value *common.Fixed) (contract.Cost, error) {
+func (g *GasManager) refreshPGasWithValue(name string, value *common.Decimal) (contract.Cost, error) {
 	finalCost := contract.Cost0()
 	cost := g.SetGasStock(name, value)
 	finalCost.AddAssign(cost)
@@ -167,12 +167,12 @@ func (g *GasManager) refreshPGasWithValue(name string, value *common.Fixed) (con
 }
 
 // PGas returns the current total gas of a user. It is dynamically calculated
-func (g *GasManager) PGas(name string) *common.Fixed {
+func (g *GasManager) PGas(name string) *common.Decimal {
 	return g.h.DB().PGasAtTime(name, g.h.ctx.Value("time").(int64))
 }
 
 // TotalGas ...
-func (g *GasManager) TotalGas(name string) *common.Fixed {
+func (g *GasManager) TotalGas(name string) *common.Decimal {
 	return g.h.DB().TotalGasAtTime(name, g.h.ctx.Value("time").(int64))
 }
 
@@ -186,7 +186,7 @@ func (g *GasManager) RefreshPGas(name string) (contract.Cost, error) {
 }
 
 // CostGas subtract gas of a user. It is not called in a contract. Need a better design here
-func (g *GasManager) CostGas(name string, gasCost *common.Fixed) error {
+func (g *GasManager) CostGas(name string, gasCost *common.Decimal) error {
 	// todo modify CostGas
 	oldVal := g.h.ctx.Value("contract_name")
 	g.h.ctx.Set("contract_name", "gas.iost")
@@ -196,7 +196,7 @@ func (g *GasManager) CostGas(name string, gasCost *common.Fixed) error {
 	}
 	currentGas, _ := g.GasStock(name)
 	if currentGas.LessThan(gasCost) {
-		return fmt.Errorf("gas not enough! Now: %v(tgas:0,pgas:%v), Need %v", currentGas.ToString(), currentGas.ToString(), gasCost.ToString())
+		return fmt.Errorf("gas not enough! Now: %v(tgas:0,pgas:%v), Need %v", currentGas.String(), currentGas.String(), gasCost.String())
 	}
 	newGas := currentGas.Sub(gasCost)
 	g.SetGasStock(name, newGas)

@@ -4,6 +4,11 @@
     "title": "rpc/pb/rpc.proto",
     "version": "version not set"
   },
+  "tags": [
+    {
+      "name": "ApiService"
+    }
+  ],
   "consumes": [
     "application/json"
   ],
@@ -25,7 +30,7 @@
           "default": {
             "description": "An unexpected error response.",
             "schema": {
-              "$ref": "#/definitions/runtimeError"
+              "$ref": "#/definitions/googlerpcStatus"
             }
           }
         },
@@ -44,7 +49,7 @@
         ]
       }
     },
-    "/getAccount/{name}/{by_longest_chain}": {
+    "/getAccount/{name}/{byLongestChain}": {
       "get": {
         "summary": "get account",
         "operationId": "ApiService_GetAccount",
@@ -58,7 +63,7 @@
           "default": {
             "description": "An unexpected error response.",
             "schema": {
-              "$ref": "#/definitions/runtimeError"
+              "$ref": "#/definitions/googlerpcStatus"
             }
           }
         },
@@ -71,7 +76,7 @@
             "type": "string"
           },
           {
-            "name": "by_longest_chain",
+            "name": "byLongestChain",
             "description": "get account by longest chain's head block or last irreversible block",
             "in": "path",
             "required": true,
@@ -97,7 +102,7 @@
           "default": {
             "description": "An unexpected error response.",
             "schema": {
-              "$ref": "#/definitions/runtimeError"
+              "$ref": "#/definitions/googlerpcStatus"
             }
           }
         },
@@ -130,7 +135,7 @@
           "default": {
             "description": "An unexpected error response.",
             "schema": {
-              "$ref": "#/definitions/runtimeError"
+              "$ref": "#/definitions/googlerpcStatus"
             }
           }
         },
@@ -169,7 +174,7 @@
           "default": {
             "description": "An unexpected error response.",
             "schema": {
-              "$ref": "#/definitions/runtimeError"
+              "$ref": "#/definitions/googlerpcStatus"
             }
           }
         },
@@ -209,7 +214,7 @@
           "default": {
             "description": "An unexpected error response.",
             "schema": {
-              "$ref": "#/definitions/runtimeError"
+              "$ref": "#/definitions/googlerpcStatus"
             }
           }
         },
@@ -228,7 +233,7 @@
         ]
       }
     },
-    "/getCandidateBonus/{name}/{by_longest_chain}": {
+    "/getCandidateBonus/{name}/{byLongestChain}": {
       "get": {
         "operationId": "ApiService_GetCandidateBonus",
         "responses": {
@@ -241,7 +246,7 @@
           "default": {
             "description": "An unexpected error response.",
             "schema": {
-              "$ref": "#/definitions/runtimeError"
+              "$ref": "#/definitions/googlerpcStatus"
             }
           }
         },
@@ -254,7 +259,7 @@
             "type": "string"
           },
           {
-            "name": "by_longest_chain",
+            "name": "byLongestChain",
             "description": "get account by longest chain's head block or last irreversible block",
             "in": "path",
             "required": true,
@@ -280,7 +285,7 @@
           "default": {
             "description": "An unexpected error response.",
             "schema": {
-              "$ref": "#/definitions/runtimeError"
+              "$ref": "#/definitions/googlerpcStatus"
             }
           }
         },
@@ -289,7 +294,7 @@
         ]
       }
     },
-    "/getContract/{id}/{by_longest_chain}": {
+    "/getContract/{id}/{byLongestChain}": {
       "get": {
         "summary": "get contract",
         "operationId": "ApiService_GetContract",
@@ -303,7 +308,7 @@
           "default": {
             "description": "An unexpected error response.",
             "schema": {
-              "$ref": "#/definitions/runtimeError"
+              "$ref": "#/definitions/googlerpcStatus"
             }
           }
         },
@@ -316,7 +321,7 @@
             "type": "string"
           },
           {
-            "name": "by_longest_chain",
+            "name": "byLongestChain",
             "description": "get data by longest chain's head block or last irreversible block",
             "in": "path",
             "required": true,
@@ -342,7 +347,7 @@
           "default": {
             "description": "An unexpected error response.",
             "schema": {
-              "$ref": "#/definitions/runtimeError"
+              "$ref": "#/definitions/googlerpcStatus"
             }
           }
         },
@@ -375,7 +380,7 @@
           "default": {
             "description": "An unexpected error response.",
             "schema": {
-              "$ref": "#/definitions/runtimeError"
+              "$ref": "#/definitions/googlerpcStatus"
             }
           }
         },
@@ -394,7 +399,7 @@
         ]
       }
     },
-    "/getContractVote/{id}/{by_longest_chain}": {
+    "/getContractVote/{id}/{byLongestChain}": {
       "get": {
         "summary": "get contract vote",
         "operationId": "ApiService_GetContractVote",
@@ -408,7 +413,7 @@
           "default": {
             "description": "An unexpected error response.",
             "schema": {
-              "$ref": "#/definitions/runtimeError"
+              "$ref": "#/definitions/googlerpcStatus"
             }
           }
         },
@@ -421,7 +426,7 @@
             "type": "string"
           },
           {
-            "name": "by_longest_chain",
+            "name": "byLongestChain",
             "description": "get data by longest chain's head block or last irreversible block",
             "in": "path",
             "required": true,
@@ -447,7 +452,7 @@
           "default": {
             "description": "An unexpected error response.",
             "schema": {
-              "$ref": "#/definitions/runtimeError"
+              "$ref": "#/definitions/googlerpcStatus"
             }
           }
         },
@@ -470,7 +475,7 @@
           "default": {
             "description": "An unexpected error response.",
             "schema": {
-              "$ref": "#/definitions/runtimeError"
+              "$ref": "#/definitions/googlerpcStatus"
             }
           }
         },
@@ -479,7 +484,7 @@
         ]
       }
     },
-    "/getProducerVoteInfo/{account}/{by_longest_chain}": {
+    "/getProducerVoteInfo/{account}/{byLongestChain}": {
       "get": {
         "summary": "get producer vote infomation",
         "operationId": "ApiService_GetProducerVoteInfo",
@@ -493,7 +498,7 @@
           "default": {
             "description": "An unexpected error response.",
             "schema": {
-              "$ref": "#/definitions/runtimeError"
+              "$ref": "#/definitions/googlerpcStatus"
             }
           }
         },
@@ -506,7 +511,7 @@
             "type": "string"
           },
           {
-            "name": "by_longest_chain",
+            "name": "byLongestChain",
             "description": "get data by longest chain's head block or last irreversible block",
             "in": "path",
             "required": true,
@@ -532,7 +537,7 @@
           "default": {
             "description": "An unexpected error response.",
             "schema": {
-              "$ref": "#/definitions/runtimeError"
+              "$ref": "#/definitions/googlerpcStatus"
             }
           }
         },
@@ -555,7 +560,7 @@
           "default": {
             "description": "An unexpected error response.",
             "schema": {
-              "$ref": "#/definitions/runtimeError"
+              "$ref": "#/definitions/googlerpcStatus"
             }
           }
         },
@@ -581,7 +586,7 @@
         ]
       }
     },
-    "/getToken721Balance/{account}/{token}/{by_longest_chain}": {
+    "/getToken721Balance/{account}/{token}/{byLongestChain}": {
       "get": {
         "summary": "get token721 balance",
         "operationId": "ApiService_GetToken721Balance",
@@ -595,7 +600,7 @@
           "default": {
             "description": "An unexpected error response.",
             "schema": {
-              "$ref": "#/definitions/runtimeError"
+              "$ref": "#/definitions/googlerpcStatus"
             }
           }
         },
@@ -615,7 +620,7 @@
             "type": "string"
           },
           {
-            "name": "by_longest_chain",
+            "name": "byLongestChain",
             "description": "get data by longest chain's head block or last irreversible block",
             "in": "path",
             "required": true,
@@ -627,7 +632,7 @@
         ]
       }
     },
-    "/getToken721Metadata/{token}/{token_id}/{by_longest_chain}": {
+    "/getToken721Metadata/{token}/{tokenId}/{byLongestChain}": {
       "get": {
         "summary": "get token721 metadata",
         "operationId": "ApiService_GetToken721Metadata",
@@ -641,7 +646,7 @@
           "default": {
             "description": "An unexpected error response.",
             "schema": {
-              "$ref": "#/definitions/runtimeError"
+              "$ref": "#/definitions/googlerpcStatus"
             }
           }
         },
@@ -654,14 +659,14 @@
             "type": "string"
           },
           {
-            "name": "token_id",
+            "name": "tokenId",
             "description": "token id",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
-            "name": "by_longest_chain",
+            "name": "byLongestChain",
             "description": "get data by longest chain's head block or last irreversible block",
             "in": "path",
             "required": true,
@@ -673,7 +678,7 @@
         ]
       }
     },
-    "/getToken721Owner/{token}/{token_id}/{by_longest_chain}": {
+    "/getToken721Owner/{token}/{tokenId}/{byLongestChain}": {
       "get": {
         "summary": "get token721 owner",
         "operationId": "ApiService_GetToken721Owner",
@@ -687,7 +692,7 @@
           "default": {
             "description": "An unexpected error response.",
             "schema": {
-              "$ref": "#/definitions/runtimeError"
+              "$ref": "#/definitions/googlerpcStatus"
             }
           }
         },
@@ -700,14 +705,14 @@
             "type": "string"
           },
           {
-            "name": "token_id",
+            "name": "tokenId",
             "description": "token id",
             "in": "path",
             "required": true,
             "type": "string"
           },
           {
-            "name": "by_longest_chain",
+            "name": "byLongestChain",
             "description": "get data by longest chain's head block or last irreversible block",
             "in": "path",
             "required": true,
@@ -719,7 +724,7 @@
         ]
       }
     },
-    "/getTokenBalance/{account}/{token}/{by_longest_chain}": {
+    "/getTokenBalance/{account}/{token}/{byLongestChain}": {
       "get": {
         "summary": "get token balance",
         "operationId": "ApiService_GetTokenBalance",
@@ -733,7 +738,7 @@
           "default": {
             "description": "An unexpected error response.",
             "schema": {
-              "$ref": "#/definitions/runtimeError"
+              "$ref": "#/definitions/googlerpcStatus"
             }
           }
         },
@@ -753,7 +758,7 @@
             "type": "string"
           },
           {
-            "name": "by_longest_chain",
+            "name": "byLongestChain",
             "description": "get data by longest chain's head block or last irreversible block",
             "in": "path",
             "required": true,
@@ -765,7 +770,7 @@
         ]
       }
     },
-    "/getTokenInfo/{symbol}/{by_longest_chain}": {
+    "/getTokenInfo/{symbol}/{byLongestChain}": {
       "get": {
         "operationId": "ApiService_GetTokenInfo",
         "responses": {
@@ -778,7 +783,7 @@
           "default": {
             "description": "An unexpected error response.",
             "schema": {
-              "$ref": "#/definitions/runtimeError"
+              "$ref": "#/definitions/googlerpcStatus"
             }
           }
         },
@@ -791,7 +796,7 @@
             "type": "string"
           },
           {
-            "name": "by_longest_chain",
+            "name": "byLongestChain",
             "description": "get tokeninfo by longest chain's head block or last irreversible block",
             "in": "path",
             "required": true,
@@ -817,7 +822,7 @@
           "default": {
             "description": "An unexpected error response.",
             "schema": {
-              "$ref": "#/definitions/runtimeError"
+              "$ref": "#/definitions/googlerpcStatus"
             }
           }
         },
@@ -849,7 +854,7 @@
           "default": {
             "description": "An unexpected error response.",
             "schema": {
-              "$ref": "#/definitions/runtimeError"
+              "$ref": "#/definitions/googlerpcStatus"
             }
           }
         },
@@ -867,7 +872,7 @@
         ]
       }
     },
-    "/getVoterBonus/{name}/{by_longest_chain}": {
+    "/getVoterBonus/{name}/{byLongestChain}": {
       "get": {
         "operationId": "ApiService_GetVoterBonus",
         "responses": {
@@ -880,7 +885,7 @@
           "default": {
             "description": "An unexpected error response.",
             "schema": {
-              "$ref": "#/definitions/runtimeError"
+              "$ref": "#/definitions/googlerpcStatus"
             }
           }
         },
@@ -893,7 +898,7 @@
             "type": "string"
           },
           {
-            "name": "by_longest_chain",
+            "name": "byLongestChain",
             "description": "get account by longest chain's head block or last irreversible block",
             "in": "path",
             "required": true,
@@ -918,7 +923,7 @@
           "default": {
             "description": "An unexpected error response.",
             "schema": {
-              "$ref": "#/definitions/runtimeError"
+              "$ref": "#/definitions/googlerpcStatus"
             }
           }
         },
@@ -951,7 +956,7 @@
           "default": {
             "description": "An unexpected error response.",
             "schema": {
-              "$ref": "#/definitions/runtimeError"
+              "$ref": "#/definitions/googlerpcStatus"
             }
           }
         },
@@ -984,7 +989,7 @@
                   "$ref": "#/definitions/rpcpbSubscribeResponse"
                 },
                 "error": {
-                  "$ref": "#/definitions/runtimeStreamError"
+                  "$ref": "#/definitions/googlerpcStatus"
                 }
               },
               "title": "Stream result of rpcpbSubscribeResponse"
@@ -993,7 +998,7 @@
           "default": {
             "description": "An unexpected error response.",
             "schema": {
-              "$ref": "#/definitions/runtimeError"
+              "$ref": "#/definitions/googlerpcStatus"
             }
           }
         },
@@ -1017,20 +1022,20 @@
     "AccountGasInfo": {
       "type": "object",
       "properties": {
-        "current_total": {
+        "currentTotal": {
           "type": "number",
           "format": "double",
           "title": "current total gas amount"
         },
-        "transferable_gas": {
+        "transferableGas": {
           "type": "number",
           "format": "double"
         },
-        "pledge_gas": {
+        "pledgeGas": {
           "type": "number",
           "format": "double"
         },
-        "increase_speed": {
+        "increaseSpeed": {
           "type": "number",
           "format": "double",
           "title": "gas increase speed"
@@ -1040,7 +1045,7 @@
           "format": "double",
           "title": "gas limit"
         },
-        "pledged_info": {
+        "pledgedInfo": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/AccountPledgeInfo"
@@ -1074,7 +1079,7 @@
           "type": "string",
           "title": "permission name or key pair id"
         },
-        "is_key_pair": {
+        "isKeyPair": {
           "type": "boolean",
           "title": "whether it's a key pair"
         },
@@ -1097,7 +1102,7 @@
           "type": "string",
           "title": "permission name"
         },
-        "group_names": {
+        "groupNames": {
           "type": "array",
           "items": {
             "type": "string"
@@ -1213,7 +1218,7 @@
     "SubscribeRequestFilter": {
       "type": "object",
       "properties": {
-        "contract_id": {
+        "contractId": {
           "type": "string",
           "title": "contract id"
         }
@@ -1330,10 +1335,28 @@
         }
       }
     },
+    "googlerpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
     "protobufAny": {
       "type": "object",
       "properties": {
-        "type_url": {
+        "typeUrl": {
           "type": "string"
         },
         "value": {
@@ -1354,11 +1377,11 @@
           "format": "double",
           "title": "account balance"
         },
-        "gas_info": {
+        "gasInfo": {
           "$ref": "#/definitions/AccountGasInfo",
           "title": "gas information"
         },
-        "ram_info": {
+        "ramInfo": {
           "$ref": "#/definitions/AccountRAMInfo",
           "title": "ram information"
         },
@@ -1376,14 +1399,14 @@
           },
           "title": "account groups"
         },
-        "frozen_balances": {
+        "frozenBalances": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/rpcpbFrozenBalance"
           },
           "title": "frozen balance information"
         },
-        "vote_infos": {
+        "voteInfos": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/rpcpbVoteInfo"
@@ -1400,7 +1423,7 @@
           "type": "string",
           "title": "contract name"
         },
-        "action_name": {
+        "actionName": {
           "type": "string",
           "title": "action name"
         },
@@ -1437,15 +1460,15 @@
           "format": "int64",
           "title": "block version"
         },
-        "parent_hash": {
+        "parentHash": {
           "type": "string",
           "title": "parent block hash"
         },
-        "tx_merkle_hash": {
+        "txMerkleHash": {
           "type": "string",
           "title": "transaction merkle tree root hash"
         },
-        "tx_receipt_merkle_hash": {
+        "txReceiptMerkleHash": {
           "type": "string",
           "title": "transaction receipt merkle tree root hash"
         },
@@ -1463,12 +1486,12 @@
           "format": "int64",
           "title": "block timestamp"
         },
-        "gas_usage": {
+        "gasUsage": {
           "type": "number",
           "format": "double",
           "title": "block gas usage"
         },
-        "tx_count": {
+        "txCount": {
           "type": "string",
           "format": "int64",
           "title": "transaction count"
@@ -1477,7 +1500,7 @@
           "$ref": "#/definitions/rpcpbBlockInfo",
           "title": "extra information"
         },
-        "orig_info": {
+        "origInfo": {
           "type": "string",
           "title": "original info bytes"
         },
@@ -1494,7 +1517,7 @@
     "rpcpbBlockHeaderByRangeResponse": {
       "type": "object",
       "properties": {
-        "block_list": {
+        "blockList": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/blockpbBlock"
@@ -1515,7 +1538,7 @@
           "format": "int32",
           "title": "transaction execution thread number"
         },
-        "batch_index": {
+        "batchIndex": {
           "type": "array",
           "items": {
             "type": "integer",
@@ -1562,64 +1585,64 @@
     "rpcpbChainInfoResponse": {
       "type": "object",
       "properties": {
-        "net_name": {
+        "netName": {
           "type": "string",
           "title": "the name of network, such mainnet or testnet"
         },
-        "protocol_version": {
+        "protocolVersion": {
           "type": "string",
           "title": "the iost protocol version"
         },
-        "chain_id": {
+        "chainId": {
           "type": "integer",
           "format": "int64",
           "title": "chain id"
         },
-        "head_block": {
+        "headBlock": {
           "type": "string",
           "format": "int64",
           "title": "head block height"
         },
-        "head_block_hash": {
+        "headBlockHash": {
           "type": "string",
           "title": "head block hash"
         },
-        "lib_block": {
+        "libBlock": {
           "type": "string",
           "format": "int64",
           "title": "last irreversible block number"
         },
-        "lib_block_hash": {
+        "libBlockHash": {
           "type": "string",
           "title": "last irreversible block hash"
         },
-        "witness_list": {
+        "witnessList": {
           "type": "array",
           "items": {
             "type": "string"
           },
           "title": "the current witness list"
         },
-        "lib_witness_list": {
+        "libWitnessList": {
           "type": "array",
           "items": {
             "type": "string"
           },
           "title": "the active witness list of lat irreversible block"
         },
-        "pending_witness_list": {
+        "pendingWitnessList": {
           "type": "array",
           "items": {
             "type": "string"
           },
           "title": "the pending witness list"
         },
-        "head_block_time": {
+        "headBlockTime": {
           "type": "string",
           "format": "int64",
           "title": "the head block time"
         },
-        "lib_block_time": {
+        "libBlockTime": {
           "type": "string",
           "format": "int64",
           "title": "the last irreversible block time"
@@ -1646,7 +1669,7 @@
           "type": "string",
           "title": "contract version"
         },
-        "orig_code": {
+        "origCode": {
           "type": "string",
           "title": "original contract code"
         },
@@ -1674,7 +1697,7 @@
           },
           "title": "abi arguments"
         },
-        "amount_limit": {
+        "amountLimit": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/rpcpbAmountLimit"
@@ -1687,7 +1710,7 @@
     "rpcpbContractVote": {
       "type": "object",
       "properties": {
-        "vote_infos": {
+        "voteInfos": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/rpcpbVoteInfo"
@@ -1735,12 +1758,12 @@
     "rpcpbGasRatioResponse": {
       "type": "object",
       "properties": {
-        "lowest_gas_ratio": {
+        "lowestGasRatio": {
           "type": "number",
           "format": "double",
           "title": "lowest gas ratio in head block"
         },
-        "median_gas_ratio": {
+        "medianGasRatio": {
           "type": "number",
           "format": "double",
           "title": "median gas ratio in head block"
@@ -1754,14 +1777,14 @@
           "type": "string",
           "title": "contract id"
         },
-        "key_fields": {
+        "keyFields": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/GetBatchContractStorageRequestKeyField"
           },
           "title": "the batch query"
         },
-        "by_longest_chain": {
+        "byLongestChain": {
           "type": "boolean",
           "title": "get data by longest chain's head block or last irreversible block"
         }
@@ -1778,11 +1801,11 @@
           },
           "title": "the repeated json string data"
         },
-        "block_hash": {
+        "blockHash": {
           "type": "string",
           "title": "block hash"
         },
-        "block_number": {
+        "blockNumber": {
           "type": "string",
           "format": "int64",
           "title": "block number"
@@ -1815,7 +1838,7 @@
           "type": "string",
           "title": "get the fields from StateDB"
         },
-        "by_longest_chain": {
+        "byLongestChain": {
           "type": "boolean",
           "title": "get data by longest chain's head block or last irreversible block"
         }
@@ -1832,11 +1855,11 @@
           },
           "description": "the fields."
         },
-        "block_hash": {
+        "blockHash": {
           "type": "string",
           "title": "block hash"
         },
-        "block_number": {
+        "blockNumber": {
           "type": "string",
           "format": "int64",
           "title": "block number"
@@ -1859,7 +1882,7 @@
           "type": "string",
           "title": "get the value from StateDB, field is needed if StateDB[key] is a map.(we get StateDB[key][field] in this case)"
         },
-        "by_longest_chain": {
+        "byLongestChain": {
           "type": "boolean",
           "title": "get data by longest chain's head block or last irreversible block"
         }
@@ -1873,11 +1896,11 @@
           "type": "string",
           "title": "the json string data"
         },
-        "block_hash": {
+        "blockHash": {
           "type": "string",
           "title": "block hash"
         },
-        "block_number": {
+        "blockNumber": {
           "type": "string",
           "format": "int64",
           "title": "block number"
@@ -1900,11 +1923,11 @@
           "type": "string",
           "title": "producer's url"
         },
-        "net_id": {
+        "netId": {
           "type": "string",
           "title": "producer's net id"
         },
-        "is_producer": {
+        "isProducer": {
           "type": "boolean",
           "title": "is producer"
         },
@@ -1969,7 +1992,7 @@
           "format": "double",
           "title": "token balance"
         },
-        "frozen_balances": {
+        "frozenBalances": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/rpcpbFrozenBalance"
@@ -2004,7 +2027,7 @@
           "format": "int64",
           "title": "max count to return. up to 100"
         },
-        "by_longest_chain": {
+        "byLongestChain": {
           "type": "boolean",
           "title": "get data by longest chain's head block or last irreversible block"
         }
@@ -2019,11 +2042,11 @@
             "$ref": "#/definitions/ListContractStorageResponseData"
           }
         },
-        "block_hash": {
+        "blockHash": {
           "type": "string",
           "title": "block hash"
         },
-        "block_number": {
+        "blockNumber": {
           "type": "string",
           "format": "int64",
           "title": "block number"
@@ -2037,7 +2060,7 @@
           "type": "string",
           "title": "local network ID"
         },
-        "peer_count": {
+        "peerCount": {
           "type": "integer",
           "format": "int32",
           "title": "peer connection count"
@@ -2048,11 +2071,11 @@
     "rpcpbNodeInfoResponse": {
       "type": "object",
       "properties": {
-        "build_time": {
+        "buildTime": {
           "type": "string",
           "title": "build time"
         },
-        "git_hash": {
+        "gitHash": {
           "type": "string",
           "title": "git hash"
         },
@@ -2064,11 +2087,11 @@
           "$ref": "#/definitions/rpcpbNetworkInfo",
           "title": "network connection information"
         },
-        "code_version": {
+        "codeVersion": {
           "type": "string",
           "title": "code version string"
         },
-        "server_time": {
+        "serverTime": {
           "type": "string",
           "format": "int64",
           "title": "server time"
@@ -2079,27 +2102,27 @@
     "rpcpbRAMInfoResponse": {
       "type": "object",
       "properties": {
-        "used_ram": {
+        "usedRam": {
           "type": "string",
           "format": "int64",
           "title": "how many bytes have been used"
         },
-        "available_ram": {
+        "availableRam": {
           "type": "string",
           "format": "int64",
           "title": "how many bytes have not been used"
         },
-        "total_ram": {
+        "totalRam": {
           "type": "string",
           "format": "int64",
           "title": "total ram byte"
         },
-        "sell_price": {
+        "sellPrice": {
           "type": "number",
           "format": "double",
           "title": "User can sell NUM bytes RAM to system to get `NUM * sell_price` IOSTs"
         },
-        "buy_price": {
+        "buyPrice": {
           "type": "number",
           "format": "double",
           "title": "User can spend approximate `NUM * buy_price` IOSTs for NUM bytes RAM"
@@ -2136,7 +2159,7 @@
           "type": "string",
           "title": "the final transaction hash"
         },
-        "pre_tx_receipt": {
+        "preTxReceipt": {
           "$ref": "#/definitions/rpcpbTxReceipt",
           "title": "the tx_receipt of execution in advance"
         }
@@ -2155,7 +2178,7 @@
           "format": "byte",
           "title": "signature bytes"
         },
-        "public_key": {
+        "publicKey": {
           "type": "string",
           "format": "byte",
           "title": "public key"
@@ -2194,7 +2217,7 @@
           "type": "string",
           "title": "token symbol"
         },
-        "full_name": {
+        "fullName": {
           "type": "string",
           "title": "token full name"
         },
@@ -2202,12 +2225,12 @@
           "type": "string",
           "title": "token issuer"
         },
-        "total_supply": {
+        "totalSupply": {
           "type": "string",
           "format": "int64",
           "title": "the amount of total supply, the result is total_supply_float multiplied by deciaml"
         },
-        "current_supply": {
+        "currentSupply": {
           "type": "string",
           "format": "int64",
           "title": "the amount of current supply, the result is current_supply_float multiplied by deciaml"
@@ -2217,20 +2240,20 @@
           "format": "int32",
           "title": "token decimal"
         },
-        "can_transfer": {
+        "canTransfer": {
           "type": "boolean",
           "title": "whether the token can be transfered"
         },
-        "only_issuer_can_transfer": {
+        "onlyIssuerCanTransfer": {
           "type": "boolean",
           "title": "whether the token can only be transfered by issuer"
         },
-        "total_supply_float": {
+        "totalSupplyFloat": {
           "type": "number",
           "format": "double",
           "title": "the amount of total supply"
         },
-        "current_supply_float": {
+        "currentSupplyFloat": {
           "type": "number",
           "format": "double",
           "title": "the amount of current supply"
@@ -2255,12 +2278,12 @@
           "format": "int64",
           "title": "expiration timestamp"
         },
-        "gas_ratio": {
+        "gasRatio": {
           "type": "number",
           "format": "double",
           "title": "gas gas_ratio"
         },
-        "gas_limit": {
+        "gasLimit": {
           "type": "number",
           "format": "double",
           "title": "gas limit"
@@ -2270,7 +2293,7 @@
           "format": "int64",
           "title": "delay nanoseconds"
         },
-        "chain_id": {
+        "chainId": {
           "type": "integer",
           "format": "int64",
           "title": "chain id"
@@ -2293,18 +2316,18 @@
           "type": "string",
           "title": "publisher"
         },
-        "referred_tx": {
+        "referredTx": {
           "type": "string",
           "title": "referred transaction hash"
         },
-        "amount_limit": {
+        "amountLimit": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/rpcpbAmountLimit"
           },
           "title": "amount limit"
         },
-        "tx_receipt": {
+        "txReceipt": {
           "$ref": "#/definitions/rpcpbTxReceipt",
           "title": "transaction receipt"
         }
@@ -2324,12 +2347,12 @@
           "format": "int64",
           "title": "expiration timestamp"
         },
-        "gas_ratio": {
+        "gasRatio": {
           "type": "number",
           "format": "double",
           "title": "gas price"
         },
-        "gas_limit": {
+        "gasLimit": {
           "type": "number",
           "format": "double",
           "title": "gas limit"
@@ -2339,7 +2362,7 @@
           "format": "int64",
           "title": "delay nanoseconds"
         },
-        "chain_id": {
+        "chainId": {
           "type": "integer",
           "format": "int64",
           "title": "chain id"
@@ -2351,7 +2374,7 @@
           },
           "title": "action list"
         },
-        "amount_limit": {
+        "amountLimit": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/rpcpbAmountLimit"
@@ -2376,7 +2399,7 @@
           "type": "string",
           "title": "publisher"
         },
-        "publisher_sigs": {
+        "publisherSigs": {
           "type": "array",
           "items": {
             "$ref": "#/definitions/rpcpbSignature"
@@ -2397,7 +2420,7 @@
           "$ref": "#/definitions/rpcpbTransaction",
           "title": "transaction"
         },
-        "block_number": {
+        "blockNumber": {
           "type": "string",
           "format": "int64",
           "title": "block number"
@@ -2418,16 +2441,16 @@
     "rpcpbTxReceipt": {
       "type": "object",
       "properties": {
-        "tx_hash": {
+        "txHash": {
           "type": "string",
           "title": "transaction hash"
         },
-        "gas_usage": {
+        "gasUsage": {
           "type": "number",
           "format": "double",
           "title": "gas usage"
         },
-        "ram_usage": {
+        "ramUsage": {
           "type": "object",
           "additionalProperties": {
             "type": "string",
@@ -2435,7 +2458,7 @@
           },
           "title": "ram usage"
         },
-        "status_code": {
+        "statusCode": {
           "$ref": "#/definitions/TxReceiptStatusCode",
           "title": "status code"
         },
@@ -2463,7 +2486,7 @@
     "rpcpbTxReceiptReceipt": {
       "type": "object",
       "properties": {
-        "func_name": {
+        "funcName": {
           "type": "string",
           "title": "function name"
         },
@@ -2486,7 +2509,7 @@
           "format": "double",
           "title": "votes"
         },
-        "cleared_votes": {
+        "clearedVotes": {
           "type": "number",
           "format": "double",
           "title": "cleared votes"
@@ -2512,52 +2535,6 @@
         }
       },
       "description": "The message defines the getVoterBonus response."
-    },
-    "runtimeError": {
-      "type": "object",
-      "properties": {
-        "error": {
-          "type": "string"
-        },
-        "code": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "message": {
-          "type": "string"
-        },
-        "details": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/protobufAny"
-          }
-        }
-      }
-    },
-    "runtimeStreamError": {
-      "type": "object",
-      "properties": {
-        "grpc_code": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "http_code": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "message": {
-          "type": "string"
-        },
-        "http_status": {
-          "type": "string"
-        },
-        "details": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/protobufAny"
-          }
-        }
-      }
     },
     "sigpbSignature": {
       "type": "object",
@@ -2663,7 +2640,7 @@
           "type": "string",
           "format": "int64"
         },
-        "chain_id": {
+        "chainId": {
           "type": "integer",
           "format": "int64"
         },

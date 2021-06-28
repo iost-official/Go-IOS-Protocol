@@ -166,7 +166,7 @@ func (h *Host) CheckAmountLimit(amountLimit []*contract.Amount) error {
 			return fmt.Errorf("token not exists in amountLimit, %v", limit)
 		}
 		if limit.Val != "unlimited" {
-			_, err := common.NewFixed(limit.Val, decimal)
+			_, err := common.NewDecimalFromString(limit.Val, decimal)
 			if err != nil {
 				return err
 			}

@@ -22,8 +22,8 @@ type VoteHandler struct {
 // AccountVoteInfo ...
 type AccountVoteInfo struct {
 	Option       string
-	Votes        *common.Fixed
-	ClearedVotes *common.Fixed
+	Votes        *common.Decimal
+	ClearedVotes *common.Decimal
 }
 
 var statusList = []string{
@@ -62,11 +62,11 @@ func (v *VoteHandler) GetAccountVoteInfo(account string) []*AccountVoteInfo {
 	}
 	result := []*AccountVoteInfo{}
 	for pro := range userVote.MustMap() {
-		votes, err := common.NewFixed(userVote.Get(pro).GetIndex(0).MustString(), 8)
+		votes, err := common.NewDecimalFromString(userVote.Get(pro).GetIndex(0).MustString(), 8)
 		if err != nil {
 			return nil
 		}
-		cleared, err := common.NewFixed(userVote.Get(pro).GetIndex(2).MustString(), 8)
+		cleared, err := common.NewDecimalFromString(userVote.Get(pro).GetIndex(2).MustString(), 8)
 		if err != nil {
 			return nil
 		}
@@ -104,7 +104,7 @@ func (v *VoteHandler) GetProducerVoteInfo(account string) (*ProducerVoteInfo, er
 }
 
 // GetProducerVotes ...
-func (v *VoteHandler) GetProducerVotes(account string) (*common.Fixed, error) {
+func (v *VoteHandler) GetProducerVotes(account string) (*common.Decimal, error) {
 	idVal := v.Get(VoteProducerContractName + "-voteId")
 	voteID, ok := Unmarshal(idVal).(string)
 	if !ok {
@@ -119,5 +119,5 @@ func (v *VoteHandler) GetProducerVotes(account string) (*common.Fixed, error) {
 	if err != nil {
 		return nil, err
 	}
-	return common.NewFixed(voteInfo.Get("votes").MustString("0"), 8)
+	return common.NewDecimalFromString(voteInfo.Get("votes").MustString("0"), 8)
 }

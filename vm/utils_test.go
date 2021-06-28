@@ -2,7 +2,6 @@ package vm
 
 import (
 	"encoding/json"
-	"os"
 	"testing"
 
 	"github.com/golang/mock/gomock"
@@ -11,11 +10,9 @@ import (
 	"github.com/iost-official/go-iost/v3/core/tx"
 	"github.com/iost-official/go-iost/v3/core/version"
 	"github.com/iost-official/go-iost/v3/crypto"
-	"github.com/iost-official/go-iost/v3/db"
 	"github.com/iost-official/go-iost/v3/ilog"
 	"github.com/iost-official/go-iost/v3/vm/database"
 	"github.com/iost-official/go-iost/v3/vm/host"
-	"github.com/iost-official/go-iost/v3/vm/native"
 )
 
 var testKps = make([]*account.KeyPair, 0)
@@ -42,31 +39,11 @@ func init() {
 	}
 }
 
-var systemContract = native.SystemABI()
-
-func ininit(t *testing.T) (*database.Visitor, db.MVCCDB) {
-	mvccdb, err := db.NewMVCCDB("mvcc")
-	if err != nil {
-		t.Fatal(err)
-	}
-	//mvccdb := replaceDB(t)
-	vi := database.NewVisitor(0, mvccdb, version.NewRules(0))
-	vi.SetTokenBalance("iost", testKps[0].ReadablePubkey(), 1000000)
-	vi.SetContract(systemContract)
-	vi.Commit()
-	return vi, mvccdb
-}
-
-func closeMVCCDB(m db.MVCCDB) {
-	m.Close()
-	os.RemoveAll("mvcc")
-}
-
 func TestCheckPublisher(t *testing.T) {
 	tr := tx.NewTx([]*tx.Action{{
-		"system.iost",
-		"Transfer",
-		"[]",
+		Contract:   "system.iost",
+		ActionName: "Transfer",
+		Data:       "[]",
 	}}, []string{}, 10000, 1, 10000, 0, 0)
 
 	kp := testKps[0]
@@ -136,11 +113,12 @@ func TestCheckSigners(t *testing.T) {
 	kp := testKps[0]
 	kp2 := testKps[1]
 
-	tr := tx.NewTx([]*tx.Action{{
-		"system.iost",
-		"Transfer",
-		"[]",
-	}}, []string{"a@acitve", "b@acitve"}, 10000, 1, 10000, 0, 0)
+	tr := tx.NewTx([]*tx.Action{
+		{
+			Contract:   "system.iost",
+			ActionName: "Transfer",
+			Data:       "[]",
+		}}, []string{"a@acitve", "b@acitve"}, 10000, 1, 10000, 0, 0)
 
 	sig1, err := tx.SignTxContent(tr, "a", kp)
 	if err != nil {

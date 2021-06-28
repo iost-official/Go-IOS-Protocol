@@ -39,11 +39,11 @@ func printTokenBalance(db *leveldb.DB, tokenType string) {
 			panic(err)
 		}
 		v := database.MustUnmarshal(string(rawValue))
-		f := common.Fixed{Value: v.(int64), Decimal: int(decimal.(int64))}
+		f := common.Decimal{Value: v.(int64), Scale: int(decimal.(int64))}
 		tmp := string(k)[len(prefix):]
 		user := tmp[:len(tmp)-len(suffix)]
 		user = padTo(user, " ", 20)
-		fmt.Printf("%v\t%v\n", user, f.ToString())
+		fmt.Printf("%v\t%v\n", user, f.String())
 	}
 	fmt.Println()
 }

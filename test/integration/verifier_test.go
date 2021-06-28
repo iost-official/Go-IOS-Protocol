@@ -198,30 +198,30 @@ func TestAmountLimit(t *testing.T) {
 
 			So(err, ShouldBeNil)
 			So(r.Status.Code, ShouldEqual, tx.Success)
-			balance0 := common.Fixed{Value: s.Visitor.TokenBalance("iost", acc0.ID), Decimal: s.Visitor.Decimal("iost")}
-			balance1 := common.Fixed{Value: s.Visitor.TokenBalance("iost", acc1.ID), Decimal: s.Visitor.Decimal("iost")}
-			So(balance0.ToString(), ShouldEqual, "990")
-			So(balance1.ToString(), ShouldEqual, "10")
+			balance0 := common.Decimal{Value: s.Visitor.TokenBalance("iost", acc0.ID), Scale: s.Visitor.Decimal("iost")}
+			balance1 := common.Decimal{Value: s.Visitor.TokenBalance("iost", acc1.ID), Scale: s.Visitor.Decimal("iost")}
+			So(balance0.String(), ShouldEqual, "990")
+			So(balance1.String(), ShouldEqual, "10")
 
 			r, err = s.Call("Contracttransfer", "transfer1", fmt.Sprintf(`["%v", "%v", "%v"]`, acc0.ID, acc1.ID, "10"), acc0.ID, acc0.KeyPair)
 			s.Visitor.Commit()
 
 			So(err, ShouldBeNil)
 			So(r.Status.Message, ShouldEqual, "")
-			balance0 = common.Fixed{Value: s.Visitor.TokenBalance("iost", acc0.ID), Decimal: s.Visitor.Decimal("iost")}
-			balance1 = common.Fixed{Value: s.Visitor.TokenBalance("iost", acc1.ID), Decimal: s.Visitor.Decimal("iost")}
-			So(balance0.ToString(), ShouldEqual, "980")
-			So(balance1.ToString(), ShouldEqual, "20")
+			balance0 = common.Decimal{Value: s.Visitor.TokenBalance("iost", acc0.ID), Scale: s.Visitor.Decimal("iost")}
+			balance1 = common.Decimal{Value: s.Visitor.TokenBalance("iost", acc1.ID), Scale: s.Visitor.Decimal("iost")}
+			So(balance0.String(), ShouldEqual, "980")
+			So(balance1.String(), ShouldEqual, "20")
 
 			r, err = s.Call("Contracttransfer", "transfer2", fmt.Sprintf(`["%v", "%v", "%v"]`, acc0.ID, acc1.ID, "9"), acc0.ID, acc0.KeyPair)
 			s.Visitor.Commit()
 
 			So(err, ShouldBeNil)
 			So(r.Status.Message, ShouldEqual, "")
-			balance0 = common.Fixed{Value: s.Visitor.TokenBalance("iost", acc0.ID), Decimal: s.Visitor.Decimal("iost")}
-			balance1 = common.Fixed{Value: s.Visitor.TokenBalance("iost", acc1.ID), Decimal: s.Visitor.Decimal("iost")}
-			So(balance0.ToString(), ShouldEqual, "971")
-			So(balance1.ToString(), ShouldEqual, "29")
+			balance0 = common.Decimal{Value: s.Visitor.TokenBalance("iost", acc0.ID), Scale: s.Visitor.Decimal("iost")}
+			balance1 = common.Decimal{Value: s.Visitor.TokenBalance("iost", acc1.ID), Scale: s.Visitor.Decimal("iost")}
+			So(balance0.String(), ShouldEqual, "971")
+			So(balance1.String(), ShouldEqual, "29")
 
 			r, err = s.Call("Contracttransfer", "transfer2", fmt.Sprintf(`["%v", "%v", "%v"]`, acc0.ID, acc1.ID, "9.9"), acc0.ID, acc0.KeyPair)
 			s.Visitor.Commit()
@@ -233,10 +233,10 @@ func TestAmountLimit(t *testing.T) {
 
 			So(err, ShouldBeNil)
 			So(r.Status.Message, ShouldEqual, "")
-			balance0 = common.Fixed{Value: s.Visitor.TokenBalance("iost", acc0.ID), Decimal: s.Visitor.Decimal("iost")}
-			balance1 = common.Fixed{Value: s.Visitor.TokenBalance("iost", acc1.ID), Decimal: s.Visitor.Decimal("iost")}
-			So(balance0.ToString(), ShouldEqual, "960.9")
-			So(balance1.ToString(), ShouldEqual, "39.1")
+			balance0 = common.Decimal{Value: s.Visitor.TokenBalance("iost", acc0.ID), Scale: s.Visitor.Decimal("iost")}
+			balance1 = common.Decimal{Value: s.Visitor.TokenBalance("iost", acc1.ID), Scale: s.Visitor.Decimal("iost")}
+			So(balance0.String(), ShouldEqual, "960.9")
+			So(balance1.String(), ShouldEqual, "39.1")
 
 			r, err = s.Call("Contracttransfer", "transfer4", fmt.Sprintf(`["%v", "%v", "%v"]`, acc0.ID, acc1.ID, "10"), acc0.ID, acc0.KeyPair)
 			s.Visitor.Commit()
@@ -251,16 +251,16 @@ func TestAmountLimit(t *testing.T) {
 
 			So(err, ShouldBeNil)
 			So(r.Status.Message, ShouldEqual, "")
-			balance0 := common.Fixed{Value: s.Visitor.TokenBalance("iost", acc0.ID), Decimal: s.Visitor.Decimal("iost")}
-			So(balance0.ToString(), ShouldEqual, "1000")
+			balance0 := common.Decimal{Value: s.Visitor.TokenBalance("iost", acc0.ID), Scale: s.Visitor.Decimal("iost")}
+			So(balance0.String(), ShouldEqual, "1000")
 
 			r, err = s.Call("Contracttransfer", "transferFreeze", fmt.Sprintf(`["%v", "%v", "%v"]`, acc0.ID, acc0.ID, "100"), acc0.ID, acc0.KeyPair)
 			s.Visitor.Commit()
 
 			So(err, ShouldBeNil)
 			So(r.Status.Message, ShouldEqual, "")
-			balance0 = common.Fixed{Value: s.Visitor.TokenBalance("iost", acc0.ID), Decimal: s.Visitor.Decimal("iost")}
-			So(balance0.ToString(), ShouldEqual, "900")
+			balance0 = common.Decimal{Value: s.Visitor.TokenBalance("iost", acc0.ID), Scale: s.Visitor.Decimal("iost")}
+			So(balance0.String(), ShouldEqual, "900")
 		})
 
 		Convey("test amount limit transferFreeze", func() {
@@ -276,8 +276,8 @@ func TestAmountLimit(t *testing.T) {
 
 			So(err, ShouldBeNil)
 			So(r.Status.Message, ShouldEqual, "")
-			balance0 := common.Fixed{Value: s.Visitor.TokenBalance("iost", acc0.ID), Decimal: s.Visitor.Decimal("iost")}
-			So(balance0.ToString(), ShouldEqual, "900")
+			balance0 := common.Decimal{Value: s.Visitor.TokenBalance("iost", acc0.ID), Scale: s.Visitor.Decimal("iost")}
+			So(balance0.String(), ShouldEqual, "900")
 		})
 
 		Convey("test amount limit destroy", func() {
@@ -293,8 +293,8 @@ func TestAmountLimit(t *testing.T) {
 
 			So(err, ShouldBeNil)
 			So(r.Status.Message, ShouldEqual, "")
-			balance0 := common.Fixed{Value: s.Visitor.TokenBalance("iost", acc0.ID), Decimal: s.Visitor.Decimal("iost")}
-			So(balance0.ToString(), ShouldEqual, "900")
+			balance0 := common.Decimal{Value: s.Visitor.TokenBalance("iost", acc0.ID), Scale: s.Visitor.Decimal("iost")}
+			So(balance0.String(), ShouldEqual, "900")
 		})
 
 		Convey("test out of amount limit, use signers ID", func() {
@@ -321,10 +321,10 @@ func TestAmountLimit(t *testing.T) {
 
 			So(err, ShouldBeNil)
 			So(r.Status.Message, ShouldEqual, "")
-			balance0 := common.Fixed{Value: s.Visitor.TokenBalance("iost", acc0.ID), Decimal: s.Visitor.Decimal("iost")}
-			balance1 := common.Fixed{Value: s.Visitor.TokenBalance("iost", acc1.ID), Decimal: s.Visitor.Decimal("iost")}
-			So(balance0.ToString(), ShouldEqual, "880")
-			So(balance1.ToString(), ShouldEqual, "120")
+			balance0 := common.Decimal{Value: s.Visitor.TokenBalance("iost", acc0.ID), Scale: s.Visitor.Decimal("iost")}
+			balance1 := common.Decimal{Value: s.Visitor.TokenBalance("iost", acc1.ID), Scale: s.Visitor.Decimal("iost")}
+			So(balance0.String(), ShouldEqual, "880")
+			So(balance1.String(), ShouldEqual, "120")
 		})
 
 		Convey("test amount limit transfer from multi signers", func() {
@@ -349,12 +349,12 @@ func TestAmountLimit(t *testing.T) {
 			So(err, ShouldBeNil)
 			So(r.Status.Message, ShouldEqual, "")
 
-			balance0 := common.Fixed{Value: s.Visitor.TokenBalance("iost", acc0.ID), Decimal: s.Visitor.Decimal("iost")}
-			balance1 := common.Fixed{Value: s.Visitor.TokenBalance("iost", acc1.ID), Decimal: s.Visitor.Decimal("iost")}
-			balance2 := common.Fixed{Value: s.Visitor.TokenBalance("iost", acc2.ID), Decimal: s.Visitor.Decimal("iost")}
-			So(balance0.ToString(), ShouldEqual, "940")
-			So(balance1.ToString(), ShouldEqual, "120")
-			So(balance2.ToString(), ShouldEqual, "940")
+			balance0 := common.Decimal{Value: s.Visitor.TokenBalance("iost", acc0.ID), Scale: s.Visitor.Decimal("iost")}
+			balance1 := common.Decimal{Value: s.Visitor.TokenBalance("iost", acc1.ID), Scale: s.Visitor.Decimal("iost")}
+			balance2 := common.Decimal{Value: s.Visitor.TokenBalance("iost", acc2.ID), Scale: s.Visitor.Decimal("iost")}
+			So(balance0.String(), ShouldEqual, "940")
+			So(balance1.String(), ShouldEqual, "120")
+			So(balance2.String(), ShouldEqual, "940")
 
 			trx = tx.NewTx([]*tx.Action{{
 				Contract:   "Contracttransfer",
@@ -415,10 +415,10 @@ func TestTxAmountLimit(t *testing.T) {
 
 			So(err, ShouldBeNil)
 			So(r.Status.Code, ShouldEqual, tx.Success)
-			balance0 := common.Fixed{Value: s.Visitor.TokenBalance("iost", acc0.ID), Decimal: s.Visitor.Decimal("iost")}
-			balance2 := common.Fixed{Value: s.Visitor.TokenBalance("iost", acc1.ID), Decimal: s.Visitor.Decimal("iost")}
-			So(balance0.ToString(), ShouldEqual, "990")
-			So(balance2.ToString(), ShouldEqual, "10")
+			balance0 := common.Decimal{Value: s.Visitor.TokenBalance("iost", acc0.ID), Scale: s.Visitor.Decimal("iost")}
+			balance2 := common.Decimal{Value: s.Visitor.TokenBalance("iost", acc1.ID), Scale: s.Visitor.Decimal("iost")}
+			So(balance0.String(), ShouldEqual, "990")
+			So(balance2.String(), ShouldEqual, "10")
 		})
 
 		Convey("test out of amount limit", func() {
@@ -486,10 +486,10 @@ func TestTxAmountLimit(t *testing.T) {
 
 			So(err, ShouldBeNil)
 			So(r.Status.Code, ShouldEqual, tx.Success)
-			balance0 := common.Fixed{Value: s.Visitor.TokenBalance("iost", acc0.ID), Decimal: s.Visitor.Decimal("iost")}
-			balance2 := common.Fixed{Value: s.Visitor.TokenBalance("iost", acc1.ID), Decimal: s.Visitor.Decimal("iost")}
-			So(balance0.ToString(), ShouldEqual, "900")
-			So(balance2.ToString(), ShouldEqual, "100")
+			balance0 := common.Decimal{Value: s.Visitor.TokenBalance("iost", acc0.ID), Scale: s.Visitor.Decimal("iost")}
+			balance2 := common.Decimal{Value: s.Visitor.TokenBalance("iost", acc1.ID), Scale: s.Visitor.Decimal("iost")}
+			So(balance0.String(), ShouldEqual, "900")
+			So(balance2.String(), ShouldEqual, "100")
 		})
 
 		Convey("test multi action out of amount limit", func() {
@@ -574,7 +574,7 @@ func TestNativeVM_GasPledgeShortCut(t *testing.T) {
 		So(err, ShouldBeNil)
 		var pledgeAmount int64 = 100
 		var initialBalance int64 = 1000
-		var expectedGasAfterPlegde = pledgeAmount * int64(database.GasImmediateReward.ToFloat())
+		var expectedGasAfterPlegde = pledgeAmount * int64(database.GasImmediateReward.Float64())
 		pledgeAction := &tx.Action{
 			Contract:   "gas.iost",
 			ActionName: "pledge",
@@ -591,7 +591,7 @@ func TestNativeVM_GasPledgeShortCut(t *testing.T) {
 			So(r.Status.Message, ShouldEqual, "")
 			txGasUsage := r.GasUsage / 100
 			So(s.GetGas(acc0.ID), ShouldEqual, expectedGasAfterPlegde-txGasUsage)
-			So(s.Visitor.TokenBalanceFixed("iost", acc0.ID).ToString(), ShouldEqual, strconv.Itoa(int(initialBalance-pledgeAmount)))
+			So(s.Visitor.TokenBalanceFixed("iost", acc0.ID).String(), ShouldEqual, strconv.Itoa(int(initialBalance-pledgeAmount)))
 		})
 		SkipConvey("vm can kill tx if gas limit is not enough(TODO it is not possible in current code)", func() {
 			s.SetGas(acc0.ID, 0)
@@ -609,7 +609,7 @@ func TestNativeVM_GasPledgeShortCut(t *testing.T) {
 			So(r.Status.Message, ShouldContainSubstring, "out of gas")
 			So(r.Status.Code, ShouldEqual, tx.ErrorRuntime)
 			So(s.GetGas(acc0.ID), ShouldEqual, expectedGasAfterPlegde-txGasLimit)
-			So(s.Visitor.TokenBalanceFixed("iost", acc0.ID).ToString(), ShouldEqual, strconv.Itoa(int(initialBalance-pledgeAmount)))
+			So(s.Visitor.TokenBalanceFixed("iost", acc0.ID).String(), ShouldEqual, strconv.Itoa(int(initialBalance-pledgeAmount)))
 		})
 	})
 }
@@ -727,10 +727,10 @@ func TestGasLimit2(t *testing.T) {
 	assert.Nil(t, err)
 	assert.Equal(t, "", r.Status.Message)
 	assert.Equal(t, int64(7516900), r.GasUsage)
-	balance0 := common.Fixed{Value: s.Visitor.TokenBalance("iost", acc0.ID), Decimal: s.Visitor.Decimal("iost")}
-	balance2 := common.Fixed{Value: s.Visitor.TokenBalance("iost", acc1.ID), Decimal: s.Visitor.Decimal("iost")}
-	assert.Equal(t, "980", balance0.ToString())
-	assert.Equal(t, "20", balance2.ToString())
+	balance0 := common.Decimal{Value: s.Visitor.TokenBalance("iost", acc0.ID), Scale: s.Visitor.Decimal("iost")}
+	balance2 := common.Decimal{Value: s.Visitor.TokenBalance("iost", acc1.ID), Scale: s.Visitor.Decimal("iost")}
+	assert.Equal(t, "980", balance0.String())
+	assert.Equal(t, "20", balance2.String())
 
 	// out of gas
 	s.Visitor.SetTokenBalanceFixed("iost", acc0.ID, "1000")

@@ -15,7 +15,7 @@ func checkAmount(amount string, token string) error {
 	if err != nil || !matched {
 		return fmt.Errorf("invalid amount: %v", amount)
 	}
-	f1, err := common.NewFixed(amount, -1)
+	f1, err := common.NewDecimalFromString(amount, -1)
 	if err != nil {
 		return fmt.Errorf("invalid amount: %v, %v", err, amount)
 	}
@@ -23,10 +23,10 @@ func checkAmount(amount string, token string) error {
 	if err != nil {
 		return fmt.Errorf("invalid amount: %v, %v", err, amount)
 	}
-	if math.Abs(f1.ToFloat()-f2) > 1e-4 {
+	if math.Abs(f1.Float64()-f2) > 1e-4 {
 		return fmt.Errorf("invalid amount: %v, %v", err, amount)
 	}
-	if token == "iost" && f1.Decimal > 8 {
+	if token == "iost" && f1.Scale > 8 {
 		return fmt.Errorf("invalid decimal: %v", amount)
 	}
 	return nil
@@ -72,11 +72,11 @@ func checkBadAction(action *Action) error { // nolint:gocyclo
 		if err != nil {
 			return fmt.Errorf("invalid amount: %v, %v", err, data)
 		}
-		f, err := common.NewFixed(amount, -1)
+		f, err := common.NewDecimalFromString(amount, -1)
 		if err != nil {
 			return fmt.Errorf("invalid amount: %v, %v", err, data)
 		}
-		if f.ShrinkDecimal().Decimal > 2 {
+		if f.ShrinkScale().Scale > 2 {
 			return fmt.Errorf("decimal should not exceed 2: %v", data)
 		}
 	}

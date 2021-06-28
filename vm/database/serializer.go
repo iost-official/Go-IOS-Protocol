@@ -43,7 +43,7 @@ func Marshal(in interface{}, extras ...string) (string, error) {
 		return BoolPrefix + boolToString(in) + RAMOwnerSeparator + extra, nil
 	case SerializedJSON:
 		return JSONPrefix + string(in) + RAMOwnerSeparator + extra, nil
-	case *common.Fixed:
+	case *common.Decimal:
 		return FixPointPrefix + in.Marshal() + RAMOwnerSeparator + extra, nil
 	}
 	return "", errTypeNotSupport
@@ -78,7 +78,7 @@ func unmarshalInner(o string) interface{} {
 		// seems useless...
 		return strings.Split(o, "@")[1:]
 	case FixPointPrefix:
-		ret, err := common.UnmarshalFixed(o[1:])
+		ret, err := common.UnmarshalDecimal(o[1:])
 		if err != nil {
 			return err
 		}

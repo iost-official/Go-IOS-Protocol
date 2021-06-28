@@ -51,8 +51,8 @@ func Test_callWithAuth(t *testing.T) {
 
 			So(err, ShouldBeNil)
 			So(r.Status.Message, ShouldEqual, "")
-			balance := common.Fixed{Value: s.Visitor.TokenBalance("iost", cname), Decimal: s.Visitor.Decimal("iost")}
-			So(balance.ToString(), ShouldEqual, "990")
+			balance := common.Decimal{Value: s.Visitor.TokenBalance("iost", cname), Scale: s.Visitor.Decimal("iost")}
+			So(balance.String(), ShouldEqual, "990")
 		})
 
 		Convey("test of callWithoutAuth after callWithAuth", func() {
@@ -440,7 +440,7 @@ func Test_SpecialChar(t *testing.T) {
 		r, err := s.Call(cname, "transfer", string(paramsByte), acc.ID, acc.KeyPair)
 		So(err, ShouldBeNil)
 		So(r.Status.Message, ShouldEqual, "")
-		So(s.Visitor.TokenBalanceFixed("iost", acc1.ID).ToString(), ShouldEqual, "2000")
+		So(s.Visitor.TokenBalanceFixed("iost", acc1.ID).String(), ShouldEqual, "2000")
 	})
 }
 

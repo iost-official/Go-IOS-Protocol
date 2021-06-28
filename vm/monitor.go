@@ -60,7 +60,7 @@ func (m *Monitor) prepareContract(h *host.Host, contractName, api, jarg string) 
 	return
 }
 
-func checkLimit(amountLimit map[string]*common.Fixed, token string, amount *common.Fixed) bool {
+func checkLimit(amountLimit map[string]*common.Decimal, token string, amount *common.Decimal) bool {
 	if amount.IsPositive() {
 		if limit, ok := amountLimit[token]; ok {
 			return !limit.LessThan(amount)
@@ -72,17 +72,17 @@ func checkLimit(amountLimit map[string]*common.Fixed, token string, amount *comm
 	return true
 }
 
-func getAmountLimitMap(h *host.Host, amountList []*contract.Amount) (map[string]*common.Fixed, error) {
-	amountLimit := make(map[string]*common.Fixed)
+func getAmountLimitMap(h *host.Host, amountList []*contract.Amount) (map[string]*common.Decimal, error) {
+	amountLimit := make(map[string]*common.Decimal)
 	for _, limit := range amountList {
 		if limit.Val == "unlimited" {
-			amountLimit[limit.Token] = &common.Fixed{Value: math.MaxInt64, Decimal: h.DB().Decimal(limit.Token)}
+			amountLimit[limit.Token] = &common.Decimal{Value: math.MaxInt64, Scale: h.DB().Decimal(limit.Token)}
 		} else {
 			decimal := h.DB().Decimal(limit.Token)
 			if limit.Token == "*" {
 				decimal = 0
 			}
-			v0, err := common.NewFixed(limit.Val, decimal)
+			v0, err := common.NewDecimalFromString(limit.Val, decimal)
 			if err != nil {
 				return nil, err
 			}
@@ -132,8 +132,8 @@ func (m *Monitor) Call(h *host.Host, contractName, api string, jarg string) (rtn
 	if h.Context().GValue("receipts") != nil {
 		oldReceiptLen = len(h.Context().GValue("receipts").([]*tx.Receipt))
 	}
-	amountLimit := make(map[string]*common.Fixed)
-	txAmountLimit := make(map[string]*common.Fixed)
+	amountLimit := make(map[string]*common.Decimal)
+	txAmountLimit := make(map[string]*common.Decimal)
 
 	stackHeight := h.StackHeight()
 	if stackHeight == 1 {
@@ -164,12 +164,12 @@ func (m *Monitor) Call(h *host.Host, contractName, api string, jarg string) (rtn
 		if h.Context().GValue("receipts") != nil {
 			receipts = h.Context().GValue("receipts").([]*tx.Receipt)
 		}
-		needLimit := make(map[string]*common.Fixed)
+		needLimit := make(map[string]*common.Decimal)
 		for i := oldReceiptLen; i < len(receipts); i++ {
 			cost.AddAssign(host.CommonOpCost(1))
 			receipt := receipts[i]
 			token := ""
-			amount, _ := common.NewFixed("0", 0)
+			amount, _ := common.NewDecimalFromString("0", 0)
 			args := []interface{}{}
 			if receipt.FuncName == "token.iost/transfer" || receipt.FuncName == "token.iost/transferFreeze" {
 				_ = json.Unmarshal([]byte(receipt.Content), &args)
@@ -178,11 +178,11 @@ func (m *Monitor) Call(h *host.Host, contractName, api string, jarg string) (rtn
 				to := args[2].(string)
 				if h.IsFork3_1_0 {
 					if !h.IsContract(from) {
-						amount, _ = common.NewFixed(args[3].(string), h.DB().Decimal(token))
+						amount, _ = common.NewDecimalFromString(args[3].(string), h.DB().Decimal(token))
 					}
 				} else {
 					if from != to && !h.IsContract(from) {
-						amount, _ = common.NewFixed(args[3].(string), h.DB().Decimal(token))
+						amount, _ = common.NewDecimalFromString(args[3].(string), h.DB().Decimal(token))
 					}
 				}
 			} else if receipt.FuncName == "token.iost/destroy" {
@@ -190,7 +190,7 @@ func (m *Monitor) Call(h *host.Host, contractName, api string, jarg string) (rtn
 				token = args[0].(string)
 				from := args[1].(string)
 				if !h.IsContract(from) {
-					amount, _ = common.NewFixed(args[2].(string), h.DB().Decimal(token))
+					amount, _ = common.NewDecimalFromString(args[2].(string), h.DB().Decimal(token))
 				}
 			}
 			if token != "" && amount.Value >= 0 {
@@ -201,9 +201,9 @@ func (m *Monitor) Call(h *host.Host, contractName, api string, jarg string) (rtn
 				}
 			}
 		}
-		amountTotal := make(map[string]*common.Fixed)
+		amountTotal := make(map[string]*common.Decimal)
 		if h.Context().GValue("amount_total") != nil {
-			amountTotal = h.Context().GValue("amount_total").(map[string]*common.Fixed)
+			amountTotal = h.Context().GValue("amount_total").(map[string]*common.Decimal)
 		}
 		for token, amount := range needLimit {
 			if a, ok := amountTotal[token]; ok {
@@ -214,20 +214,20 @@ func (m *Monitor) Call(h *host.Host, contractName, api string, jarg string) (rtn
 			if !checkLimit(amountLimit, token, amount) {
 				return nil, cost,
 					fmt.Errorf("token %s exceed amountLimit in abi. need %v",
-						token, amount.ToString())
+						token, amount.String())
 			}
 			if h.IsFork3_1_0 {
 				if !checkLimit(txAmountLimit, token, amountTotal[token]) {
 					return nil, cost,
 						fmt.Errorf("token %s exceed amountLimit in tx. need %v",
-							token, amount.ToString())
+							token, amount.String())
 				}
 
 			} else {
 				if !checkLimit(txAmountLimit, token, amount) {
 					return nil, cost,
 						fmt.Errorf("token %s exceed amountLimit in tx. need %v",
-							token, amount.ToString())
+							token, amount.String())
 				}
 			}
 		}

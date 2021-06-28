@@ -301,7 +301,7 @@ func (as *APIService) GetAccount(ctx context.Context, req *rpcpb.GetAccountReque
 	ret := toPbAccount(acc)
 
 	// pack balance and ram information
-	balance := dbVisitor.TokenBalanceFixed("iost", req.GetName()).ToFloat()
+	balance := dbVisitor.TokenBalanceFixed("iost", req.GetName()).Float64()
 	ret.Balance = balance
 	ramInfo := dbVisitor.RAMHandler.GetAccountRAMInfo(req.GetName())
 	ret.RamInfo = &rpcpb.Account_RAMInfo{
@@ -319,18 +319,18 @@ func (as *APIService) GetAccount(ctx context.Context, req *rpcpb.GetAccountReque
 	}
 	totalGas := dbVisitor.PGasAtTime(req.GetName(), blkTime)
 	gasLimit := dbVisitor.GasLimit(req.GetName())
-	gasRate := dbVisitor.GasPledgeTotal(req.GetName()).Multiply(database.GasIncreaseRate)
+	gasRate := dbVisitor.GasPledgeTotal(req.GetName()).Mul(database.GasIncreaseRate)
 	pledgedInfo := dbVisitor.PledgerInfo(req.GetName())
 	ret.GasInfo = &rpcpb.Account_GasInfo{
-		CurrentTotal:    totalGas.ToFloat(),
-		PledgeGas:       totalGas.ToFloat(),
+		CurrentTotal:    totalGas.Float64(),
+		PledgeGas:       totalGas.Float64(),
 		TransferableGas: 0,
-		Limit:           gasLimit.ToFloat(),
-		IncreaseSpeed:   gasRate.ToFloat(),
+		Limit:           gasLimit.Float64(),
+		IncreaseSpeed:   gasRate.Float64(),
 	}
 	for _, p := range pledgedInfo {
 		ret.GasInfo.PledgedInfo = append(ret.GasInfo.PledgedInfo, &rpcpb.Account_PledgeInfo{
-			Amount:  p.Amount.ToFloat(),
+			Amount:  p.Amount.Float64(),
 			Pledger: p.Pledger,
 		})
 	}
@@ -345,8 +345,8 @@ func (as *APIService) GetAccount(ctx context.Context, req *rpcpb.GetAccountReque
 	for _, v := range voteInfo {
 		ret.VoteInfos = append(ret.VoteInfos, &rpcpb.VoteInfo{
 			Option:       v.Option,
-			Votes:        v.Votes.ToFloat(),
-			ClearedVotes: v.ClearedVotes.ToFloat(),
+			Votes:        v.Votes.Float64(),
+			ClearedVotes: v.ClearedVotes.Float64(),
 		})
 	}
 
@@ -368,7 +368,7 @@ func (as *APIService) GetTokenBalance(ctx context.Context, req *rpcpb.GetTokenBa
 	//if acc == nil {
 	//	return nil, errors.New("account not found")
 	//}
-	balance := dbVisitor.TokenBalanceFixed(req.GetToken(), req.GetAccount()).ToFloat()
+	balance := dbVisitor.TokenBalanceFixed(req.GetToken(), req.GetAccount()).Float64()
 	// pack frozen balance information
 	frozen := dbVisitor.AllFreezedTokenBalanceFixed(req.GetToken(), req.GetAccount())
 	unfrozen, stillFrozen := as.getUnfrozenToken(frozen, req.ByLongestChain)
@@ -458,8 +458,8 @@ func (as *APIService) GetContractVote(ctx context.Context, req *rpcpb.GetContrac
 	for _, v := range voteInfo {
 		ret.VoteInfos = append(ret.VoteInfos, &rpcpb.VoteInfo{
 			Option:       v.Option,
-			Votes:        v.Votes.ToFloat(),
-			ClearedVotes: v.ClearedVotes.ToFloat(),
+			Votes:        v.Votes.Float64(),
+			ClearedVotes: v.ClearedVotes.Float64(),
 		})
 	}
 	return ret, nil
@@ -514,7 +514,7 @@ func (as *APIService) GetProducerVoteInfo(ctx context.Context, req *rpcpb.GetPro
 		IsProducer: info.IsProducer,
 		Status:     info.Status,
 		Online:     info.Online,
-		Votes:      votes.ToFloat(),
+		Votes:      votes.Float64(),
 	}, nil
 }
 
@@ -1029,10 +1029,10 @@ func (as *APIService) getUnfrozenToken(frozens []database.FreezeItemFixed, longe
 	var stillFrozen []*rpcpb.FrozenBalance
 	for _, f := range frozens {
 		if f.Ftime <= blockTime {
-			unfrozen += f.Amount.ToFloat()
+			unfrozen += f.Amount.Float64()
 		} else {
 			stillFrozen = append(stillFrozen, &rpcpb.FrozenBalance{
-				Amount: f.Amount.ToFloat(),
+				Amount: f.Amount.Float64(),
 				Time:   f.Ftime,
 			})
 		}

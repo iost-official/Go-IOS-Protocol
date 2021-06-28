@@ -32,22 +32,22 @@ const gasMaxIncreaseSeconds = 3 * 24 * 3600
 // so gas production will resume again util the limit.
 
 // GasMinPledgeOfUser Each user must pledge a minimum amount of IOST
-var GasMinPledgeOfUser = &common.Fixed{Value: 10 * IOSTRatio, Decimal: 8}
+var GasMinPledgeOfUser = common.NewDecimalFromIntWithScale(10, 8)
 
 // GasMinPledgePerAction One must (un)pledge more than 1 IOST
-var GasMinPledgePerAction = &common.Fixed{Value: 1 * IOSTRatio, Decimal: 8}
+var GasMinPledgePerAction = common.NewDecimalFromIntWithScale(1, 8)
 
 // GasImmediateReward immediate reward per IOST
-var GasImmediateReward = &common.Fixed{Value: 100000 * 100, Decimal: 2}
+var GasImmediateReward = common.NewDecimalFromIntWithScale(100000, 2)
 
 // GasLimit gas limit per IOST
-var GasLimit = &common.Fixed{Value: 300000 * 100, Decimal: 2}
+var GasLimit = common.NewDecimalFromIntWithScale(300000, 2)
 
 // GasFulfillSeconds it takes 2 days to fulfill the gas buffer.
 const GasFulfillSeconds int64 = 2 * 24 * 3600
 
 // GasIncreaseRate gas increase per IOST per second
-var GasIncreaseRate = GasLimit.Sub(GasImmediateReward).Div(GasFulfillSeconds)
+var GasIncreaseRate = GasLimit.Sub(GasImmediateReward).DivInt(GasFulfillSeconds)
 
 // IOSTRatio ...
 const IOSTRatio int64 = 100000000
@@ -55,7 +55,7 @@ const IOSTRatio int64 = 100000000
 // PledgerInfo ...
 type PledgerInfo struct {
 	Pledger string
-	Amount  *common.Fixed
+	Amount  *common.Decimal
 }
 
 // GasContractName name of basic token contract
@@ -68,21 +68,21 @@ type GasHandler struct {
 }
 
 // EmptyGas ...
-func EmptyGas() *common.Fixed {
-	return &common.Fixed{
-		Value:   0,
-		Decimal: GasDecimal,
+func EmptyGas() *common.Decimal {
+	return &common.Decimal{
+		Value: 0,
+		Scale: GasDecimal,
 	}
 }
 
 // If no key exists, return 0
-func (g *GasHandler) getFixed(key string) *common.Fixed {
+func (g *GasHandler) getFixed(key string) *common.Decimal {
 	result := MustUnmarshal(g.BasicHandler.Get(GasContractName + Separator + key))
 	if result == nil {
 		//ilog.Errorf("GasHandler failed %v", key)
 		return nil
 	}
-	value, ok := result.(*common.Fixed)
+	value, ok := result.(*common.Decimal)
 	if !ok {
 		ilog.Errorf("GasHandler failed %v %v", key, result)
 		return nil
@@ -90,17 +90,8 @@ func (g *GasHandler) getFixed(key string) *common.Fixed {
 	return value
 }
 
-// putFixed ...
-func (g *GasHandler) putFixed(key string, value *common.Fixed) {
-	if value.Err != nil {
-		ilog.Fatalf("GasHandler putFixed %v", value)
-	}
-	//fmt.Printf("putFixed %v %v\n", key, value)
-	g.BasicHandler.Put(GasContractName+Separator+key, MustMarshal(value))
-}
-
 // GasPledgeTotal ...
-func (g *GasHandler) GasPledgeTotal(name string) *common.Fixed {
+func (g *GasHandler) GasPledgeTotal(name string) *common.Decimal {
 	f := g.getFixed(name + GasPledgeTotalKey)
 	if f == nil {
 		return EmptyGas()
@@ -109,7 +100,7 @@ func (g *GasHandler) GasPledgeTotal(name string) *common.Fixed {
 }
 
 // GasLimit ...
-func (g *GasHandler) GasLimit(name string) *common.Fixed {
+func (g *GasHandler) GasLimit(name string) *common.Decimal {
 	f := g.getFixed(name + GasLimitKey)
 	if f == nil {
 		return EmptyGas()
@@ -127,7 +118,7 @@ func (g *GasHandler) GasUpdateTime(name string) int64 {
 }
 
 // GasStock `gasStock` means the gas amount at last update time.
-func (g *GasHandler) GasStock(name string) *common.Fixed {
+func (g *GasHandler) GasStock(name string) *common.Decimal {
 	f := g.getFixed(name + GasStockKey)
 	if f == nil {
 		return EmptyGas()
@@ -136,16 +127,16 @@ func (g *GasHandler) GasStock(name string) *common.Fixed {
 }
 
 // GasPledge ...
-func (g *GasHandler) GasPledge(name string, pledger string) *common.Fixed {
+func (g *GasHandler) GasPledge(name string, pledger string) *common.Decimal {
 	ok := g.MapHandler.MHas(GasContractName+Separator+pledger+GasPledgeKey, name)
 	if !ok {
-		return &common.Fixed{
-			Value:   0,
-			Decimal: 8,
+		return &common.Decimal{
+			Value: 0,
+			Scale: 8,
 		}
 	}
 	result := MustUnmarshal(g.MapHandler.MGet(GasContractName+Separator+pledger+GasPledgeKey, name))
-	value, ok := result.(*common.Fixed)
+	value, ok := result.(*common.Decimal)
 	if !ok {
 		return nil
 	}
@@ -164,7 +155,7 @@ func (g *GasHandler) PledgerInfo(name string) []PledgerInfo {
 		usedPledgees[pledgee] = true
 		s := g.MapHandler.MGet(GasContractName+Separator+name+GasPledgeKey, pledgee)
 		v := MustUnmarshal(s)
-		pledge, ok := v.(*common.Fixed)
+		pledge, ok := v.(*common.Decimal)
 		if !ok || pledge.IsZero() {
 			continue
 		}
@@ -174,7 +165,7 @@ func (g *GasHandler) PledgerInfo(name string) []PledgerInfo {
 }
 
 // PGasAtTime return pledge gas at given time. It is min(limit, last_updated_gas + time_since_last_updated * increase_speed)
-func (g *GasHandler) PGasAtTime(name string, t int64) (result *common.Fixed) {
+func (g *GasHandler) PGasAtTime(name string, t int64) (result *common.Decimal) {
 	if t <= 0 {
 		ilog.Fatalf("PGasAtTime failed. invalid t time %v", t)
 	}
@@ -190,14 +181,14 @@ func (g *GasHandler) PGasAtTime(name string, t int64) (result *common.Fixed) {
 	if durationSeconds < 0 {
 		ilog.Errorf("PGasAtTime durationSeconds invalid %v = %v - %v", durationSeconds, t, gasUpdateTime)
 	}
-	rate := g.GasPledgeTotal(name).Multiply(GasIncreaseRate)
+	rate := g.GasPledgeTotal(name).Mul(GasIncreaseRate)
 	if rate == nil {
 		// this line is compatible, since 'rate' was never nil
-		rate = g.GasPledgeTotal(name).ChangeDecimal(0).Multiply(GasIncreaseRate)
+		rate = g.GasPledgeTotal(name).Rescale(0).Mul(GasIncreaseRate)
 	}
 	limit := g.GasLimit(name)
 	//fmt.Printf("PGasAtTime user %v stock %v rate %v limit %v durationSeconds %v\n", name, result, rate, limit, durationSeconds)
-	delta := rate.TimesF(durationSeconds)
+	delta := rate.MulFloat(durationSeconds)
 	if delta == nil {
 		ilog.Errorf("PGasAtTime may overflow rate %v durationSeconds %v", rate, durationSeconds)
 		return
@@ -213,11 +204,11 @@ func (g *GasHandler) PGasAtTime(name string, t int64) (result *common.Fixed) {
 	} else {
 		result = finalResult
 	}
-	result = result.ChangeDecimal(GasDecimal)
+	result = result.Rescale(GasDecimal)
 	return
 }
 
 // TotalGasAtTime return total gas at given time..
-func (g *GasHandler) TotalGasAtTime(name string, t int64) (result *common.Fixed) {
-	return g.PGasAtTime(name, t).ChangeDecimal(GasDecimal)
+func (g *GasHandler) TotalGasAtTime(name string, t int64) (result *common.Decimal) {
+	return g.PGasAtTime(name, t).Rescale(GasDecimal)
 }

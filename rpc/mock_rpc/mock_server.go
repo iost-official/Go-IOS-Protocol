@@ -10,11 +10,14 @@ import (
 	"testing"
 	"time"
 
-	"github.com/golang/mock/gomock"
-	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"github.com/iost-official/go-iost/v3/ilog"
 	rpcpb "github.com/iost-official/go-iost/v3/rpc/pb"
+
+	"github.com/golang/mock/gomock"
+
+	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc"
+	"google.golang.org/protobuf/encoding/protojson"
 )
 
 var (
@@ -293,8 +296,10 @@ func (s *Server) startGrpc() error {
 }
 
 func (s *Server) startGateway() error {
-	mux := runtime.NewServeMux(runtime.WithMarshalerOption(runtime.MIMEWildcard,
-		&runtime.JSONPb{OrigName: true, EmitDefaults: true}))
+	marshaler := &runtime.JSONPb{
+		MarshalOptions: protojson.MarshalOptions{UseProtoNames: true, EmitUnpopulated: true}}
+	marshalerOption := runtime.WithMarshalerOption(runtime.MIMEWildcard, marshaler)
+	mux := runtime.NewServeMux(marshalerOption)
 	opts := []grpc.DialOption{grpc.WithInsecure()}
 	err := rpcpb.RegisterApiServiceHandlerFromEndpoint(context.Background(), mux, grpcAddr, opts)
 	if err != nil {

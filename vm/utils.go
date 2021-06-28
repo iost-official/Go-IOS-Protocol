@@ -10,12 +10,12 @@ import (
 )
 
 // CheckTxGasLimitValid ...
-func CheckTxGasLimitValid(t *tx.Tx, currentGas *common.Fixed, dbVisitor *database.Visitor) (err error) {
-	gasLimit := &common.Fixed{Value: t.GasLimit, Decimal: 2}
+func CheckTxGasLimitValid(t *tx.Tx, currentGas *common.Decimal, dbVisitor *database.Visitor) (err error) {
+	gasLimit := &common.Decimal{Value: t.GasLimit, Scale: 2}
 	if !currentGas.LessThan(gasLimit) {
 		return nil
 	}
-	defaultErr := fmt.Errorf("gas not enough: user %v has %v < %v", t.Publisher, currentGas.ToString(), gasLimit.ToString())
+	defaultErr := fmt.Errorf("gas not enough: user %v has %v < %v", t.Publisher, currentGas.String(), gasLimit.String())
 	if !(len(t.Actions) == 1 && t.Actions[0].Contract == native.GasContractName && t.Actions[0].ActionName == "pledge") {
 		return defaultErr
 	}
@@ -28,7 +28,7 @@ func CheckTxGasLimitValid(t *tx.Tx, currentGas *common.Fixed, dbVisitor *databas
 		return defaultErr
 	}
 	balance := dbVisitor.TokenBalanceFixed("iost", t.Publisher)
-	pledgeAmount, err := common.NewFixed(args[2].(string), 8)
+	pledgeAmount, err := common.NewDecimalFromString(args[2].(string), 8)
 	if err != nil {
 		return fmt.Errorf("invalid gas pledge amount %v %v", err, args[2].(string))
 	}
@@ -36,11 +36,11 @@ func CheckTxGasLimitValid(t *tx.Tx, currentGas *common.Fixed, dbVisitor *databas
 		return fmt.Errorf("invalid gas pledge amount %v %v", err, args[2].(string))
 	}
 	if balance.LessThan(pledgeAmount) {
-		return fmt.Errorf("iost token amount not enough for pledgement %v < %v", balance.ToString(), pledgeAmount.ToString())
+		return fmt.Errorf("iost token amount not enough for pledgement %v < %v", balance.String(), pledgeAmount.String())
 	}
-	if currentGas.Add(pledgeAmount.Multiply(database.GasImmediateReward)).LessThan(gasLimit) {
+	if currentGas.Add(pledgeAmount.Mul(database.GasImmediateReward)).LessThan(gasLimit) {
 		return fmt.Errorf("gas not enough even if considering the new gas pledgement %v + %v < %v",
-			currentGas.ToString(), pledgeAmount.Multiply(database.GasImmediateReward).ToString(), gasLimit.ToString())
+			currentGas.String(), pledgeAmount.Mul(database.GasImmediateReward).String(), gasLimit.String())
 	}
 	return nil
 }

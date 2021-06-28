@@ -21,7 +21,7 @@ const codeSizeLimit = 49152
 // FixedAmount the limit amount of token used by contract
 type FixedAmount struct {
 	Token string
-	Val   *common.Fixed
+	Val   *common.Decimal
 }
 
 // Encode contract to string using proto buf

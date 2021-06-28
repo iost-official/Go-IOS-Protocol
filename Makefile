@@ -53,6 +53,9 @@ iwallet:
 itest:
 	$(GO_BUILD) -o $(TARGET_DIR)/itest ./cmd/itest
 
+format:
+	find . -name "*.go" |grep -v vendor |xargs gofmt -s -w
+
 lint:
 	golangci-lint run
 
@@ -120,9 +123,6 @@ devpush: dev_image_tag
 
 release: devimage devpush release_image
 	docker push $(DOCKER_RELEASE_IMAGE)
-
-swagger:
-	./script/gen_swagger.sh
 
 protobuf:
 	./script/gen_protobuf.sh

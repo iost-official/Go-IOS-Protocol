@@ -25,7 +25,7 @@ type FreezeItem struct {
 
 // FreezeItemFixed ...
 type FreezeItemFixed struct {
-	Amount common.Fixed
+	Amount common.Decimal
 	Ftime  int64
 }
 
@@ -54,9 +54,9 @@ func (m *TokenHandler) TokenBalance(tokenName, acc string) int64 {
 }
 
 // TokenBalanceFixed get token balance of acc
-func (m *TokenHandler) TokenBalanceFixed(tokenName, acc string) *common.Fixed {
+func (m *TokenHandler) TokenBalanceFixed(tokenName, acc string) *common.Decimal {
 	ib := m.TokenBalance(tokenName, acc)
-	return &common.Fixed{Value: ib, Decimal: m.Decimal(tokenName)}
+	return &common.Decimal{Value: ib, Scale: m.Decimal(tokenName)}
 }
 
 // FreezedTokenBalance get freezed token balance of acc
@@ -102,15 +102,15 @@ func (m *TokenHandler) AllFreezedTokenBalanceFixed(tokenName, acc string) []Free
 	freezeList := m.AllFreezedTokenBalance(tokenName, acc)
 	result := make([]FreezeItemFixed, 0)
 	for _, item := range freezeList {
-		result = append(result, FreezeItemFixed{Amount: common.Fixed{Value: item.Amount, Decimal: m.Decimal(tokenName)}, Ftime: item.Ftime})
+		result = append(result, FreezeItemFixed{Amount: common.Decimal{Value: item.Amount, Scale: m.Decimal(tokenName)}, Ftime: item.Ftime})
 	}
 	return result
 }
 
 // FreezedTokenBalanceFixed get token balance of acc
-func (m *TokenHandler) FreezedTokenBalanceFixed(tokenName, acc string) *common.Fixed {
+func (m *TokenHandler) FreezedTokenBalanceFixed(tokenName, acc string) *common.Decimal {
 	ib := m.FreezedTokenBalance(tokenName, acc)
-	return &common.Fixed{Value: ib, Decimal: m.Decimal(tokenName)}
+	return &common.Decimal{Value: ib, Scale: m.Decimal(tokenName)}
 }
 
 // SetTokenBalance set token balance of acc, used for test
@@ -120,7 +120,7 @@ func (m *TokenHandler) SetTokenBalance(tokenName, acc string, amount int64) {
 
 // SetTokenBalanceFixed set token balance of acc, used for test
 func (m *TokenHandler) SetTokenBalanceFixed(tokenName, acc string, amountStr string) {
-	amountNumber, err := common.NewFixed(amountStr, m.Decimal(tokenName))
+	amountNumber, err := common.NewDecimalFromString(amountStr, m.Decimal(tokenName))
 	if err != nil {
 		panic(errors.New("construct Fixed number failed. str = " + amountStr + ", decimal = " + fmt.Sprintf("%d", m.Decimal(tokenName))))
 	}
