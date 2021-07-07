@@ -36,7 +36,7 @@ require (
 	github.com/prometheus/client_golang v1.4.1
 	github.com/prometheus/procfs v0.0.10 // indirect
 	github.com/rs/cors v1.7.0
-	github.com/shirou/gopsutil v3.21.1+incompatible
+	github.com/shirou/gopsutil v3.21.6+incompatible
 	github.com/smartystreets/assertions v1.2.0 // indirect
 	github.com/smartystreets/goconvey v1.6.4
 	github.com/spf13/afero v1.2.2 // indirect
@@ -47,6 +47,7 @@ require (
 	github.com/spf13/viper v1.6.2
 	github.com/stretchr/testify v1.4.0
 	github.com/syndtr/goleveldb v1.0.1-0.20200815110645-5c35d600f0ca
+	github.com/tklauser/go-sysconf v0.3.6 // indirect
 	github.com/urfave/cli v1.22.2
 	github.com/wcharczuk/go-chart v2.0.2-0.20181012164330-3cb33d48d32d+incompatible
 	github.com/whyrusleeping/go-smux-multiplex v3.0.16+incompatible
@@ -62,7 +63,6 @@ require (
 	golang.org/x/lint v0.0.0-20200130185559-910be7a94367 // indirect
 	golang.org/x/mod v0.4.1 // indirect
 	golang.org/x/net v0.0.0-20201021035429-f5854403a974
-	golang.org/x/sys v0.0.0-20210228012217-479acdf4ea46 // indirect
 	golang.org/x/term v0.0.0-20210503060354-a79de5458b56
 	golang.org/x/time v0.0.0-20191024005414-555d28b269f0
 	golang.org/x/tools v0.1.0 // indirect
