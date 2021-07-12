@@ -31,6 +31,9 @@ func getTotalMem() float64 {
 }
 
 func getDiskSize() float64 {
+	if runtime.GOOS != "linux" {
+		return 0
+	}
 	diskStat, err := disk.Usage(global.GetGlobalConf().DB.LdbPath)
 	if err != nil {
 		ilog.Errorf("Getting disk info failed. err=%v", err)

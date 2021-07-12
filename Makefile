@@ -73,10 +73,13 @@ else
 	$(GO_TEST) -v ./...
 endif
 
-e2e_test_local:
+e2e_test_local: clear_debug_file build
+	target/iserver -f config/iserver.yml &
+	sleep 20
 	$(TARGET_DIR)/itest run a_case
 	$(TARGET_DIR)/itest run t_case
 	$(TARGET_DIR)/itest run c_case
+	killall iserver
 
 e2e_test: image
 	docker rm -f iserver || true

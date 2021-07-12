@@ -7,6 +7,7 @@ import (
 
 	"github.com/iost-official/go-iost/v3/ilog"
 	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/collectors"
 	"github.com/prometheus/client_golang/prometheus/push"
 )
 
@@ -45,7 +46,7 @@ func (c *Client) SetPusher(addr, username, password string) error {
 	for _, colloctor := range c.collectorCache {
 		c.pusher.Collector(colloctor)
 	}
-	c.pusher.Collector(prometheus.NewGoCollector())
+	c.pusher.Collector(collectors.NewGoCollector())
 	return nil
 }
 

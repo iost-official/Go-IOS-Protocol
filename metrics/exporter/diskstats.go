@@ -5,6 +5,7 @@ package exporter
 import (
 	"fmt"
 	"path/filepath"
+	"runtime"
 	"strings"
 
 	"github.com/shirou/gopsutil/disk"
@@ -28,11 +29,11 @@ type diskstatsCollector struct {
 }
 
 func init() {
-	registerCollector("diskstats", true, newDiskstatsCollector)
+	registerCollector("diskstats", runtime.GOOS == "linux", newDiskstatsCollector)
 }
 
 // newDiskstatsCollector creates diskstatsCollector
-func newDiskstatsCollector() (collector, error) {
+func newDiskstatsCollector() (c collector, e error) {
 	dev, err := findDeviceOfPath(global.GetGlobalConf().DB.LdbPath)
 	if err != nil {
 		return nil, err

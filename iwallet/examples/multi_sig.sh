@@ -34,13 +34,16 @@ function split_account_perm() {
 		auth.iost assignPermission \[\"$TEST_USER_ID\",\"owner\",\"manager2@active\",34\] \
 		auth.iost assignPermission \[\"$TEST_USER_ID\",\"owner\",\"manager3@active\",34\] \
 		auth.iost revokePermission \[\"$TEST_USER_ID\",\"owner\",\"$pubkey1\"\]
-			echo "split permission done"
-		}
+	echo "split permission done"
+}
 
-	function test_singlesig_fail() {
-		# We expected the old keypair is invalid now
-		$IWALLET_CMD --account $TEST_USER_ID call token.iost transfer [\"iost\",\"$TEST_USER_ID\",\"admin\",\"10\",\"\"] && (echo "should fail, but succeed"; exit 1) || echo "command failed as expected"
-	}
+function test_singlesig_fail() {
+	# We expected the old keypair is invalid now
+	$IWALLET_CMD --account $TEST_USER_ID call token.iost transfer [\"iost\",\"$TEST_USER_ID\",\"admin\",\"10\",\"\"] && (
+		echo "should fail, but succeed"
+		exit 1
+	) || echo "command failed as expected"
+}
 
 function test_multisig_usage() {
 	delay_seconds=5 # In practice, since you need to send tx file to different persons and collect their signatures, 600(10 minutes) or 1200(20 minutes) may be a better choice for this parameter.
@@ -55,7 +58,10 @@ function test_multisig_usage() {
 	$IWALLET_CMD sign --as_publisher_sign $txFile ~/.iwallet/manager2.json sig3
 	$IWALLET_CMD sign --as_publisher_sign $txFile ~/.iwallet/manager3.json sig4
 	# Finally, the operator send to signed tx to the blockchain.
-	$IWALLET_CMD --account $TEST_USER_ID send --signature_files sig2,sig3,sig4 --as_publisher_sign $txFile || (echo "should succeed, but fail"; exit 1)
+	$IWALLET_CMD --account $TEST_USER_ID send --signature_files sig2,sig3,sig4 --as_publisher_sign $txFile || (
+		echo "should succeed, but fail"
+		exit 1
+	)
 }
 
 #clean_account
